@@ -8,7 +8,7 @@ def calculate_orbit(tle, end_time_hours, samples):
     возвращает фукнция массив координат (долгота, широта, высота)
     '''
     ts = load.timescale()
-    times = ts.now() + np.linspace(0, end_time_hours / 24, samples) #нужен знак минуса чтобы смотреть в будущее
+    times = ts.now() + np.linspace(0, end_time_hours / 24, samples) 
     satellite = EarthSatellite(tle[1], tle[2], tle[0])
 
     latitudes = []
@@ -23,5 +23,8 @@ def calculate_orbit(tle, end_time_hours, samples):
         longitudes.append(subpoint.longitude.degrees)
         elevations.append(subpoint.elevation.km)
 
-    return longitudes, latitudes, elevations
+    time_utc = ts.now().utc_iso().replace('T', ' ').replace('Z', ' UTC')
+    
+    sat_coordinates = [tle[0], longitudes, latitudes, elevations, time_utc]
+    return sat_coordinates
 

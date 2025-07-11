@@ -1,8 +1,5 @@
 import requests
 
-url = "https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE"
-noaa_active_names = ['NOAA 15', 'NOAA 18', 'NOAA 19', 'NOAA 20', 'NOAA 21']
-
 #дописать код на случай если тле начинается с первой или второй строки
 def get_not_deb_tle(url, active_names):
     '''
@@ -32,4 +29,3 @@ def get_not_deb_tle(url, active_names):
     else:
         return f"Ошибка загрузки данных. Код ошибки: {data.status_code}"
     
-print(get_not_deb_tle(url, noaa_active_names))
