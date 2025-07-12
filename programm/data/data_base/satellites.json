@@ -35,14 +35,14 @@
     "group": "NOAA"
   },
   {
-    "name": "Meteor-M2",
+    "name": "METEOR-M 2",
     "frequency": 137,
     "min_record_time": 6,
     "signal_type": "LRPT",
     "group": "Meteor"
   },
   {
-    "name": "Meteor-M2-2",
+    "name": "METEOR-M2 2",
     "frequency": 137,
     "min_record_time": 6,
     "signal_type": "LRPT",
