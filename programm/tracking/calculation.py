@@ -28,3 +28,7 @@ def calculate_orbit(tle, end_time_hours, samples):
     sat_coordinates = [tle[0], longitudes, latitudes, elevations, time_utc]
     return sat_coordinates
 
+def calculate_radius_of_satellite_reception(sat_elev, lons_obs, lats_obs, angle  = 10):
+    angle = angle * 180 / np.pi
+    
+     
