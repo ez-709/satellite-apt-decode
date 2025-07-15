@@ -4,7 +4,7 @@ import os
 from storage import json_to_py, find_satellites, active_names, create_urls_to_htpp, write_or_update_tles, update_calculations_of_coordinates
 from tracking.parsing import get_not_deb_tle
 from tracking.calculation import calculate_orbit, calculate_samples_from_hours
-from tracking.visualization import visualization_orbit_for_one_satellite, visualization_orbit_for_satellites
+from tracking.visualization import visualization_orbit_for_satellites
 
 ts = load.timescale()
 utc_time_now = ts.now().utc_iso().replace('T', ' ').replace('Z', ' UTC')
@@ -28,8 +28,9 @@ for tle_group in tles:
 '''
 
 #расчет координат на ближайшие 8 часов
-end_time_hours = 8
+end_time_hours = 48
 samples, step  = calculate_samples_from_hours(end_time_hours)
+
 '''
 sats_tle = json_to_py(cd_tle)
 calc_sats = []
@@ -43,4 +44,4 @@ update_calculations_of_coordinates(calc_sats, cd_coordinates)
 tles = json_to_py(cd_tle)
 
 sat_inf = json_to_py(cd_coordinates)
-visualization_orbit_for_satellites(sat_inf, utc_time_now, 24, step, 37.6155600, 55.7522200, print_elevation=False)
+visualization_orbit_for_satellites(sat_inf, utc_time_now, 24, step, 37.6155600, 55.7522200)

@@ -5776,12 +5776,12 @@ def binary_search_for_urc_time(utc, time):
         if len(sec) != 2:
             sec = '0' + sec
     
-    target_time = int(time[11:13] + time[14:16] + sec)
+    target_time = int(time[0:4] + time[5:7] + time[8:10] + time[11:13] + time[14:16] + sec)
     right, left = 0, len(time_utc) - 1
     mid = (right + left) // 2
     while right <= left:
         mid = (right + left) // 2
-        check_time = int(time_utc[mid][11:13] + time_utc[mid][14:16] + time_utc[mid][17:19])
+        check_time = int(time_utc[mid][0:4] + time_utc[mid][5:7] + time_utc[mid][8:10] + time_utc[mid][11:13] + time_utc[mid][14:16] + time_utc[mid][17:19])
         if check_time < target_time:
             right = mid + 1
         else:
@@ -5789,7 +5789,4 @@ def binary_search_for_urc_time(utc, time):
 
     return mid
 
-print(time_utc[binary_search_for_urc_time(time_utc, time_now)], binary_search_for_urc_time(time_utc, time_now))
-print(time_utc[binary_search_for_urc_time(time_utc, time_end)], binary_search_for_urc_time(time_utc, time_end))
-
-print(time_utc[binary_search_for_urc_time(time_utc, time_now):binary_search_for_urc_time(time_utc, time_end) + 1])
+print(time_utc[binary_search_for_urc_time(time_utc, time_now)], binary_search_for_urc_time(time_utc, time_now), len(time_utc))
