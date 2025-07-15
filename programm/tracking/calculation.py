@@ -1,19 +1,22 @@
 import numpy as np
 from skyfield.api import load, EarthSatellite 
 
-def calculate_orbit(tle, end_time_hours, samples):
+def calculate_orbit(sat_tle, end_time_hours, samples):
     '''
-    функция принимает на вход tle список c именем в начале, где каждый элемент - это новая строка tle, 
+    функция принимает на вход словарь sat_tle,
+    где значения - это строки tle (имя, первая строка tle, вторая строка tle), 
     на сколько часов составить прогноз end_ttime_hours, частота дескритищации samples
-    возвращает фукнция массив координат (долгота, широта, высота)
+    возвращает фукнция словарь, где ключ - имя спутника, а значение -  список списокв
+    долгот, широт, высот, список временных точке
     '''
     ts = load.timescale()
     times = ts.now() + np.linspace(0, end_time_hours / 24, samples) 
-    satellite = EarthSatellite(tle[1], tle[2], tle[0])
+    satellite = EarthSatellite(sat_tle['first tle line'], sat_tle["second tle line"], sat_tle["name"])
 
     latitudes = []
     longitudes = []
     elevations = []
+    times_utc = []
 
     for time in times:
         geocentric = satellite.at(time)
@@ -22,11 +25,25 @@ def calculate_orbit(tle, end_time_hours, samples):
         latitudes.append(subpoint.latitude.degrees)
         longitudes.append(subpoint.longitude.degrees)
         elevations.append(subpoint.elevation.km)
-
-    time_utc = ts.now().utc_iso().replace('T', ' ').replace('Z', ' UTC')
+        times_utc.append(time.utc_iso().replace('T', ' ').replace('Z', ' UTC'))
     
-    sat_coordinates = [tle[0], longitudes, latitudes, elevations, time_utc]
+    
+    sat_coordinates = {
+        'name': sat_tle['name'],
+        'longitudes': longitudes,
+        'latitudes': latitudes,
+        'elevations': elevations,
+        'times in utc': times_utc 
+    }
     return sat_coordinates
+
+def calculate_samples_from_hours(end_time_hours, step = 120):
+    '''
+    функция рассчитывает количество семлов от заданого числа часов
+    step = 120 то есть по умолчанию 120 семплов на один час или же 2 семпла на одну минуту
+    '''
+    samples = step * end_time_hours
+    return samples
 
 def calculate_radius_of_satellite_reception(sat_elev, lons_obs, lats_obs, angle  = 10):
     angle = angle * 180 / np.pi

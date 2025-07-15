@@ -3,18 +3,13 @@ import os
 
 from tracking.parsing import get_not_deb_tle
 
-cd = os.getcwd() 
-cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.json')
-
 def json_to_py(cd_json):
-    '''Читает json с именем 'name_json" и возвращаtn один единый словарь или список словарей'''
+    '''Читает json с путем  'cd_json' и возвращает список словарей'''
     with open(cd_json, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
-def find_satellites(name=None, frequency=None, min_record_time=None, signal_type=None, group=None):
+def find_satellites(cd_sat, name=None, frequency=None, min_record_time=None, signal_type=None, group=None):
     '''
     Фильтрует спутники по заданным параметрам
     Возвращает список словарей с подходящими спутниками
@@ -39,7 +34,7 @@ def find_satellites(name=None, frequency=None, min_record_time=None, signal_type
     
     return res
 
-def active_names():
+def active_names(cd_sat):
     """
     функция возвращает список всех спутников из файла satellites.json
     """
@@ -52,7 +47,10 @@ def active_names():
     return names
 
 
-def create_urls_to_htpp():
+def create_urls_to_htpp(cd_sat):
+    '''
+    создает список url для htpp запросов по всем возможным семействам всех спутников
+    '''
     sat_data = json_to_py(cd_sat)
     base = "https://celestrak.org/NORAD/elements/gp.php?NAME="
     form = "&FORMAT=TLE"
@@ -68,27 +66,46 @@ def create_urls_to_htpp():
 
     return urls
 
-def write_or_update_tles(new_tles):
+def write_or_update_tles(new_tles, cd_tle):
     '''
-    на вход в функцию поступает список tles
-    результатом работы функции является обновленный tle.json
+    на вход в функцию поступает список tles, где в tles[i] - tles[i][0] - имя i-того спутника, 
+    tles[i][1] - первая tle строка i-того спутника, tles[i][2] - вторая tle строка i-того спутника, 
+    результатом работы функции является обновленный tle.json в формате списка словарей,
+    где каждый словарь - строчки tle
     '''
     try:
         tle_json = json_to_py(cd_tle)
     except:
-        tle_json = {}
+        tle_json = []
 
     for sat_tle in new_tles:
-        if sat_tle[0] not in tle_json:
-            tle_json[sat_tle[0]] = sat_tle
+        if sat_tle[0] not in [sat['name'] for sat in tle_json]:
+            tle_json.append({'name': sat_tle[0], 'first tle line': sat_tle[1], 'second tle line': sat_tle[2]})
     
     for sat in tle_json:
         for tle in new_tles:
-            if sat == tle[0]:
-                if tle_json[sat][0] != tle[1] or tle_json[sat][1] != tle[2]:
-                    tle_json[sat] = [tle[1], tle[2]]
-    
+            if tle[0] == sat['name']: 
+                if sat["first tle line"] != tle[1] or sat["second tle line"] != tle[2]:
+                    sat["first tle line"] = tle[1]
+                    sat["second tle line"] = tle[2]
+
     with open(cd_tle, 'w') as f:
         json.dump(tle_json, f, indent=4)
 
+def update_calculations_of_coordinates(new_coors, cd_coor):
+    '''
+    на вход функция принимает список словарей с именем спутника, долготами, широтами, высотами, списком временных точек
+    долгот, широт, высот.
+    Результатом работы функции является обновленный coordinates.json, где хранятся орбиты спутников,
+    привязанные ко времени
+    '''
+    try:
+        coor_json = json_to_py(cd_coor)
+    except:
+        coor_json = []
 
+    for new_coor in new_coors:
+        coor_json.append(new_coor)
+    
+    with open(cd_coor, 'w') as f:
+        json.dump(coor_json, f, indent = 4)
