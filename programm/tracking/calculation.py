@@ -37,15 +37,15 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
     }
     return sat_coordinates
 
-def calculate_samples_from_hours(end_time_hours, step = 120):
+def calculate_samples_from_hours(end_time_hours, step = 720): 
     '''
     функция рассчитывает количество семлов от заданого числа часов
-    step = 120 то есть по умолчанию 120 семплов на один час или же 2 семпла на одну минуту
+    step = 720, то есть шаг равен пяти секундам
     '''
     samples = step * end_time_hours
-    return samples
+    return samples, step
 
 def calculate_radius_of_satellite_reception(sat_elev, lons_obs, lats_obs, angle  = 10):
     angle = angle * 180 / np.pi
+
     
-     

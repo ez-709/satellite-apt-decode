@@ -9,7 +9,7 @@ def json_to_py(cd_json):
         data = json.load(file)
     return data
 
-def find_satellites(cd_sat, name=None, frequency=None, min_record_time=None, signal_type=None, group=None):
+def find_satellites(cd_sat, name=None, norad_id = None, frequency=None, min_record_time=None, signal_type=None, group=None):
     '''
     Фильтрует спутники по заданным параметрам
     Возвращает список словарей с подходящими спутниками
@@ -19,6 +19,9 @@ def find_satellites(cd_sat, name=None, frequency=None, min_record_time=None, sig
     
     if name is not None:
         res = [sat for sat in res if sat['name'] == name]
+
+    if norad_id is not None:
+        res = [sat for sat in res if sat['norad_id'] == name]
     
     if frequency is not None:
         res = [sat for sat in res if sat['frequency'] == frequency]
@@ -99,10 +102,7 @@ def update_calculations_of_coordinates(new_coors, cd_coor):
     Результатом работы функции является обновленный coordinates.json, где хранятся орбиты спутников,
     привязанные ко времени
     '''
-    try:
-        coor_json = json_to_py(cd_coor)
-    except:
-        coor_json = []
+    coor_json = []
 
     for new_coor in new_coors:
         coor_json.append(new_coor)
