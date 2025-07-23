@@ -6,20 +6,20 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.feature.nightshade import Nightshade
 
-def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, print_time = True, print_elevation = True):
+def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lats_obs, lons_obs, print_time = True, print_altitude = True):
     colors = ['r', 'y', 'g', 'b', 'm', 'c', 'k', 'orange', 'purple', 'pink']
     
-    def binary_search_for_utc(utc, time):
+    def binary_search_for_utc(time):
         '''
         функция предназначена для нахождения индекса ближайшего подходящего времени во временном списке utc
         '''
-        if time[:10] == utc[0][:10]:
-            if int(time[17:19]) % 10 <= 2 or int(time[17:19]) % 10 >= 8:
-                sec = str((int(time[17:19]) + 5) // 10 * 10)
-            else: 
-                sec = str((int(time[17:19]) + 2) // 5 * 5) 
-            if len(sec) != 2:
-                sec = '0' + sec
+        # надо переписать динарный поиск под более вариационный шаг
+        if int(time[17:19]) % 10 <= 2 or int(time[17:19]) % 10 >= 8:
+            sec = str((int(time[17:19]) + 5) // 10 * 10)
+        else: 
+            sec = str((int(time[17:19]) + 2) // 5 * 5) 
+        if len(sec) != 2:
+            sec = '0' + sec
         
         target_time = int(time[0:4] + time[5:7] + time[8:10] + time[11:13] + time[14:16] + sec)
         right, left = 0, len(time_utc) - 1
@@ -46,7 +46,7 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
     ax.stock_img() 
 
     ax.gridlines(draw_labels=True, linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-    ax.plot(lons_obs, lats_obs, 'bo', markersize=3, transform=ccrs.PlateCarree(), label='Your location')
+    ax.plot(lons_obs, lats_obs, 'bo', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
     if print_time == True:
         ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(), label= time_now)
 
@@ -54,14 +54,14 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
         sat_name = sats[i]['name']
         sat_lons = sats[i]['longitudes']
         sat_lats = sats[i]['latitudes']
-        sat_elev = sats[i]['elevations']
+        sat_altitude = sats[i]['altitude']
         time_utc = sats[i]['times in utc']
 
-        right = binary_search_for_utc(time_utc, time_now)
+        right = binary_search_for_utc(time_now)
         sat_lons = sat_lons[right: right + end_hour * step]
         sat_lats = sat_lats[right:]
-        if print_elevation == True:
-            ax.plot(sat_lons[0], sat_lats[0], f'{colors[i]}*', markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}: elevation is {str(sat_elev[right])[0:7]} km')
+        if print_altitude == True:
+            ax.plot(sat_lons[0], sat_lats[0], f'{colors[i]}*', markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}: altitude is {str(sat_altitude[right])[0:7]} km')
         else:
             ax.plot(sat_lons[0], sat_lats[0], f'{colors[i]}*', markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}')
         #решение проблемы отрисовки горизонтальных линий

@@ -95,17 +95,17 @@ def write_or_update_tles(new_tles, cd_tle):
     with open(cd_tle, 'w') as f:
         json.dump(tle_json, f, indent=4)
 
-def update_calculations_of_coordinates(new_coors, cd_coor):
+
+def update_calculations(new_calcs, cd_calc):
     '''
-    на вход функция принимает список словарей с именем спутника, долготами, широтами, высотами, списком временных точек
-    долгот, широт, высот.
+    на вход функция принимает список словарей с именем спутника и прочими атрибутами
     Результатом работы функции является обновленный coordinates.json, где хранятся орбиты спутников,
     привязанные ко времени
     '''
     coor_json = []
 
-    for new_coor in new_coors:
+    for new_coor in new_calcs:
         coor_json.append(new_coor)
     
-    with open(cd_coor, 'w') as f:
+    with open(cd_calc, 'w') as f:
         json.dump(coor_json, f, indent = 4)
