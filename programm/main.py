@@ -18,6 +18,7 @@ cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.js
 cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
 
+'''
 #htpp запрос и обновление tle
 tles = []
 urls = create_urls_to_htpp(cd_sat)
@@ -27,29 +28,26 @@ for url in urls:
 
 for tle_group in tles:
     write_or_update_tles(tle_group, cd_tle)
-
-
+'''
 
 end_time_hours = 48
 samples, step  = calculate_samples_from_hours(end_time_hours)
 
-
-sats_tle = json_to_py(cd_tle)
 '''
+sats_tle = json_to_py(cd_tle)
+
 calc_sats = []
 for sat_tle in sats_tle:
     calc_sats.append(calculate_orbit(sat_tle, end_time_hours, samples))
 
 update_calculations(calc_sats, cd_coordinates)
-'''
-'''
+
 calc_passes = []
 for sat_tle in sats_tle:
     calc_passes.append(calculate_passes(sat_tle, end_time_hours, obs_lat, obs_lon, obs_elev))
 
 update_calculations(calc_passes, cd_passes)
 '''
-
+print(utc_time_now)
 sat_inf = json_to_py(cd_coordinates)
 visualization_orbit_for_satellites(sat_inf, utc_time_now, 3, step, obs_lat, obs_lon)
-
