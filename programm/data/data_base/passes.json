@@ -3,121 +3,88 @@
         "name": "NOAA 15",
         "points": [
             {
-                "2025-07-24 03:31:49 UTC": "rise"
+                "rise": "2025-07-25 03:06:40 UTC",
+                "culmination": "2025-07-25 03:09:05 UTC with 809.584 altitude",
+                "set": "2025-07-25 03:11:30 UTC",
+                "duration (sec)": 290
             },
             {
-                "2025-07-24 03:35:39 UTC": "culmination with 803.444 altitude"
+                "rise": "2025-07-25 04:44:42 UTC",
+                "culmination": "2025-07-25 04:49:58 UTC with 809.584 altitude",
+                "set": "2025-07-25 04:55:10 UTC",
+                "duration (sec)": 628
             },
             {
-                "2025-07-24 03:39:27 UTC": "set"
+                "rise": "2025-07-25 06:24:47 UTC",
+                "culmination": "2025-07-25 06:29:29 UTC with 809.584 altitude",
+                "set": "2025-07-25 06:34:10 UTC",
+                "duration (sec)": 563
             },
             {
-                "2025-07-24 05:10:49 UTC": "rise"
+                "rise": "2025-07-25 08:06:24 UTC",
+                "culmination": "2025-07-25 08:07:49 UTC with 809.584 altitude",
+                "set": "2025-07-25 08:09:15 UTC",
+                "duration (sec)": 171
             },
             {
-                "2025-07-24 05:16:09 UTC": "culmination with 803.444 altitude"
+                "rise": "2025-07-25 12:57:21 UTC",
+                "culmination": "2025-07-25 12:59:57 UTC with 809.584 altitude",
+                "set": "2025-07-25 13:02:33 UTC",
+                "duration (sec)": 312
             },
             {
-                "2025-07-24 05:21:26 UTC": "set"
+                "rise": "2025-07-25 14:33:31 UTC",
+                "culmination": "2025-07-25 14:38:32 UTC with 809.584 altitude",
+                "set": "2025-07-25 14:43:33 UTC",
+                "duration (sec)": 602
             },
             {
-                "2025-07-24 06:51:09 UTC": "rise"
+                "rise": "2025-07-25 16:13:16 UTC",
+                "culmination": "2025-07-25 16:18:19 UTC with 809.584 altitude",
+                "set": "2025-07-25 16:23:24 UTC",
+                "duration (sec)": 608
             },
             {
-                "2025-07-24 06:55:21 UTC": "culmination with 803.445 altitude"
+                "rise": "2025-07-26 04:18:42 UTC",
+                "culmination": "2025-07-26 04:23:41 UTC with 809.584 altitude",
+                "set": "2025-07-26 04:28:38 UTC",
+                "duration (sec)": 596
             },
             {
-                "2025-07-24 06:59:32 UTC": "set"
+                "rise": "2025-07-26 05:58:29 UTC",
+                "culmination": "2025-07-26 06:03:33 UTC with 809.584 altitude",
+                "set": "2025-07-26 06:08:34 UTC",
+                "duration (sec)": 605
             },
             {
-                "2025-07-24 13:22:08 UTC": "rise"
+                "rise": "2025-07-26 07:39:24 UTC",
+                "culmination": "2025-07-26 07:42:11 UTC with 809.584 altitude",
+                "set": "2025-07-26 07:44:57 UTC",
+                "duration (sec)": 333
             },
             {
-                "2025-07-24 13:25:39 UTC": "culmination with 803.445 altitude"
+                "rise": "2025-07-26 12:33:18 UTC",
+                "culmination": "2025-07-26 12:34:19 UTC with 809.584 altitude",
+                "set": "2025-07-26 12:35:20 UTC",
+                "duration (sec)": 122
             },
             {
-                "2025-07-24 13:29:11 UTC": "set"
+                "rise": "2025-07-26 14:07:58 UTC",
+                "culmination": "2025-07-26 14:12:36 UTC with 809.584 altitude",
+                "set": "2025-07-26 14:17:14 UTC",
+                "duration (sec)": 556
             },
             {
-                "2025-07-24 14:59:18 UTC": "rise"
+                "rise": "2025-07-26 15:46:47 UTC",
+                "culmination": "2025-07-26 15:52:03 UTC with 809.584 altitude",
+                "set": "2025-07-26 15:57:22 UTC",
+                "duration (sec)": 635
             },
             {
-                "2025-07-24 15:04:32 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-24 15:09:48 UTC": "set"
-            },
-            {
-                "2025-07-24 16:40:03 UTC": "rise"
-            },
-            {
-                "2025-07-24 16:44:40 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-24 16:49:19 UTC": "set"
-            },
-            {
-                "2025-07-25 03:06:40 UTC": "rise"
-            },
-            {
-                "2025-07-25 03:09:05 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 03:11:30 UTC": "set"
-            },
-            {
-                "2025-07-25 04:44:42 UTC": "rise"
-            },
-            {
-                "2025-07-25 04:49:58 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 04:55:10 UTC": "set"
-            },
-            {
-                "2025-07-25 06:24:47 UTC": "rise"
-            },
-            {
-                "2025-07-25 06:29:29 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 06:34:10 UTC": "set"
-            },
-            {
-                "2025-07-25 08:06:24 UTC": "rise"
-            },
-            {
-                "2025-07-25 08:07:49 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 08:09:15 UTC": "set"
-            },
-            {
-                "2025-07-25 12:57:21 UTC": "rise"
-            },
-            {
-                "2025-07-25 12:59:57 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 13:02:33 UTC": "set"
-            },
-            {
-                "2025-07-25 14:33:31 UTC": "rise"
-            },
-            {
-                "2025-07-25 14:38:31 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 14:43:33 UTC": "set"
-            },
-            {
-                "2025-07-25 16:13:16 UTC": "rise"
-            },
-            {
-                "2025-07-25 16:18:19 UTC": "culmination with 803.445 altitude"
-            },
-            {
-                "2025-07-25 16:23:24 UTC": "set"
+                "rise": "2025-07-26 17:30:01 UTC",
+                "culmination": "2025-07-26 17:32:51 UTC with 809.584 altitude",
+                "set": "2025-07-26 17:35:41 UTC",
+                "duration (sec)": 340
             }
         ]
     },
@@ -125,112 +92,82 @@
         "name": "NOAA 18",
         "points": [
             {
-                "2025-07-24 07:19:54 UTC": "rise"
+                "rise": "2025-07-24 18:53:58 UTC",
+                "culmination": "2025-07-24 18:59:25 UTC with 877.288 altitude",
+                "set": "2025-07-24 19:04:56 UTC",
+                "duration (sec)": 658
             },
             {
-                "2025-07-24 07:24:15 UTC": "culmination with 860.401 altitude"
+                "rise": "2025-07-24 20:36:23 UTC",
+                "culmination": "2025-07-24 20:40:42 UTC with 877.288 altitude",
+                "set": "2025-07-24 20:45:04 UTC",
+                "duration (sec)": 521
             },
             {
-                "2025-07-24 07:28:36 UTC": "set"
+                "rise": "2025-07-25 07:07:15 UTC",
+                "culmination": "2025-07-25 07:11:09 UTC with 877.288 altitude",
+                "set": "2025-07-25 07:15:03 UTC",
+                "duration (sec)": 468
             },
             {
-                "2025-07-24 09:00:00 UTC": "rise"
+                "rise": "2025-07-25 08:47:04 UTC",
+                "culmination": "2025-07-25 08:52:38 UTC with 877.288 altitude",
+                "set": "2025-07-25 08:58:10 UTC",
+                "duration (sec)": 666
             },
             {
-                "2025-07-24 09:05:33 UTC": "culmination with 860.401 altitude"
+                "rise": "2025-07-25 10:28:13 UTC",
+                "culmination": "2025-07-25 10:32:47 UTC with 877.288 altitude",
+                "set": "2025-07-25 10:37:20 UTC",
+                "duration (sec)": 547
             },
             {
-                "2025-07-24 09:11:05 UTC": "set"
+                "rise": "2025-07-25 17:02:52 UTC",
+                "culmination": "2025-07-25 17:06:43 UTC with 877.288 altitude",
+                "set": "2025-07-25 17:10:35 UTC",
+                "duration (sec)": 463
             },
             {
-                "2025-07-24 10:41:16 UTC": "rise"
+                "rise": "2025-07-25 18:41:07 UTC",
+                "culmination": "2025-07-25 18:46:31 UTC with 877.288 altitude",
+                "set": "2025-07-25 18:51:59 UTC",
+                "duration (sec)": 652
             },
             {
-                "2025-07-24 10:45:32 UTC": "culmination with 860.401 altitude"
+                "rise": "2025-07-25 20:22:57 UTC",
+                "culmination": "2025-07-25 20:27:37 UTC with 877.288 altitude",
+                "set": "2025-07-25 20:32:20 UTC",
+                "duration (sec)": 563
             },
             {
-                "2025-07-24 10:49:49 UTC": "set"
+                "rise": "2025-07-26 06:54:43 UTC",
+                "culmination": "2025-07-26 06:58:01 UTC with 877.288 altitude",
+                "set": "2025-07-26 07:01:19 UTC",
+                "duration (sec)": 396
             },
             {
-                "2025-07-24 17:15:17 UTC": "rise"
+                "rise": "2025-07-26 08:34:09 UTC",
+                "culmination": "2025-07-26 08:39:41 UTC with 877.288 altitude",
+                "set": "2025-07-26 08:45:12 UTC",
+                "duration (sec)": 663
             },
             {
-                "2025-07-24 17:19:27 UTC": "culmination with 860.401 altitude"
+                "rise": "2025-07-26 10:15:11 UTC",
+                "culmination": "2025-07-26 10:20:00 UTC with 877.288 altitude",
+                "set": "2025-07-26 10:24:48 UTC",
+                "duration (sec)": 577
             },
             {
-                "2025-07-24 17:23:39 UTC": "set"
+                "rise": "2025-07-26 11:57:36 UTC",
+                "culmination": "2025-07-26 11:59:07 UTC with 877.288 altitude",
+                "set": "2025-07-26 12:00:38 UTC",
+                "duration (sec)": 182
             },
             {
-                "2025-07-24 18:53:58 UTC": "rise"
-            },
-            {
-                "2025-07-24 18:59:25 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-24 19:04:56 UTC": "set"
-            },
-            {
-                "2025-07-24 20:36:23 UTC": "rise"
-            },
-            {
-                "2025-07-24 20:40:42 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-24 20:45:04 UTC": "set"
-            },
-            {
-                "2025-07-25 07:07:15 UTC": "rise"
-            },
-            {
-                "2025-07-25 07:11:09 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 07:15:03 UTC": "set"
-            },
-            {
-                "2025-07-25 08:47:04 UTC": "rise"
-            },
-            {
-                "2025-07-25 08:52:37 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 08:58:10 UTC": "set"
-            },
-            {
-                "2025-07-25 10:28:13 UTC": "rise"
-            },
-            {
-                "2025-07-25 10:32:47 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 10:37:20 UTC": "set"
-            },
-            {
-                "2025-07-25 17:02:51 UTC": "rise"
-            },
-            {
-                "2025-07-25 17:06:43 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 17:10:35 UTC": "set"
-            },
-            {
-                "2025-07-25 18:41:07 UTC": "rise"
-            },
-            {
-                "2025-07-25 18:46:31 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 18:51:59 UTC": "set"
-            },
-            {
-                "2025-07-25 20:22:57 UTC": "rise"
-            },
-            {
-                "2025-07-25 20:27:37 UTC": "culmination with 860.401 altitude"
-            },
-            {
-                "2025-07-25 20:32:20 UTC": "set"
+                "rise": "2025-07-26 16:50:30 UTC",
+                "culmination": "2025-07-26 16:53:59 UTC with 877.288 altitude",
+                "set": "2025-07-26 16:57:30 UTC",
+                "duration (sec)": 420
             }
         ]
     },
@@ -238,130 +175,88 @@
         "name": "NOAA 19",
         "points": [
             {
-                "2025-07-24 05:58:47 UTC": "rise"
+                "rise": "2025-07-24 19:13:40 UTC",
+                "culmination": "2025-07-24 19:18:41 UTC with 845.146 altitude",
+                "set": "2025-07-24 19:23:43 UTC",
+                "duration (sec)": 603
             },
             {
-                "2025-07-24 06:02:02 UTC": "culmination with 866.306 altitude"
+                "rise": "2025-07-25 05:46:44 UTC",
+                "culmination": "2025-07-25 05:49:07 UTC with 845.146 altitude",
+                "set": "2025-07-25 05:51:29 UTC",
+                "duration (sec)": 285
             },
             {
-                "2025-07-24 06:05:16 UTC": "set"
+                "rise": "2025-07-25 07:25:31 UTC",
+                "culmination": "2025-07-25 07:30:59 UTC with 845.146 altitude",
+                "set": "2025-07-25 07:36:24 UTC",
+                "duration (sec)": 653
             },
             {
-                "2025-07-24 07:38:11 UTC": "rise"
+                "rise": "2025-07-25 09:06:25 UTC",
+                "culmination": "2025-07-25 09:11:28 UTC with 845.146 altitude",
+                "set": "2025-07-25 09:16:29 UTC",
+                "duration (sec)": 604
             },
             {
-                "2025-07-24 07:43:44 UTC": "culmination with 866.306 altitude"
+                "rise": "2025-07-25 10:48:22 UTC",
+                "culmination": "2025-07-25 10:50:44 UTC with 845.146 altitude",
+                "set": "2025-07-25 10:53:05 UTC",
+                "duration (sec)": 283
             },
             {
-                "2025-07-24 07:49:13 UTC": "set"
+                "rise": "2025-07-25 15:42:21 UTC",
+                "culmination": "2025-07-25 15:45:36 UTC with 845.146 altitude",
+                "set": "2025-07-25 15:48:50 UTC",
+                "duration (sec)": 389
             },
             {
-                "2025-07-24 09:19:12 UTC": "rise"
+                "rise": "2025-07-25 17:19:48 UTC",
+                "culmination": "2025-07-25 17:25:07 UTC with 845.146 altitude",
+                "set": "2025-07-25 17:30:27 UTC",
+                "duration (sec)": 639
             },
             {
-                "2025-07-24 09:24:03 UTC": "culmination with 866.306 altitude"
+                "rise": "2025-07-25 19:00:40 UTC",
+                "culmination": "2025-07-25 19:05:53 UTC with 845.146 altitude",
+                "set": "2025-07-25 19:11:08 UTC",
+                "duration (sec)": 628
             },
             {
-                "2025-07-24 09:28:51 UTC": "set"
+                "rise": "2025-07-26 05:35:43 UTC",
+                "culmination": "2025-07-26 05:36:09 UTC with 845.146 altitude",
+                "set": "2025-07-26 05:36:35 UTC",
+                "duration (sec)": 52
             },
             {
-                "2025-07-24 11:01:28 UTC": "rise"
+                "rise": "2025-07-26 07:12:53 UTC",
+                "culmination": "2025-07-26 07:18:13 UTC with 845.146 altitude",
+                "set": "2025-07-26 07:23:31 UTC",
+                "duration (sec)": 638
             },
             {
-                "2025-07-24 11:03:10 UTC": "culmination with 866.306 altitude"
+                "rise": "2025-07-26 08:53:39 UTC",
+                "culmination": "2025-07-26 08:58:52 UTC with 845.146 altitude",
+                "set": "2025-07-26 09:04:03 UTC",
+                "duration (sec)": 624
             },
             {
-                "2025-07-24 11:04:52 UTC": "set"
+                "rise": "2025-07-26 10:35:24 UTC",
+                "culmination": "2025-07-26 10:38:17 UTC with 845.146 altitude",
+                "set": "2025-07-26 10:41:09 UTC",
+                "duration (sec)": 345
             },
             {
-                "2025-07-24 15:54:26 UTC": "rise"
+                "rise": "2025-07-26 15:30:21 UTC",
+                "culmination": "2025-07-26 15:33:08 UTC with 845.146 altitude",
+                "set": "2025-07-26 15:35:54 UTC",
+                "duration (sec)": 333
             },
             {
-                "2025-07-24 15:58:05 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-24 16:01:43 UTC": "set"
-            },
-            {
-                "2025-07-24 17:32:19 UTC": "rise"
-            },
-            {
-                "2025-07-24 17:37:45 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-24 17:43:12 UTC": "set"
-            },
-            {
-                "2025-07-24 19:13:40 UTC": "rise"
-            },
-            {
-                "2025-07-24 19:18:41 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-24 19:23:43 UTC": "set"
-            },
-            {
-                "2025-07-25 05:46:44 UTC": "rise"
-            },
-            {
-                "2025-07-25 05:49:07 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 05:51:29 UTC": "set"
-            },
-            {
-                "2025-07-25 07:25:31 UTC": "rise"
-            },
-            {
-                "2025-07-25 07:30:59 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 07:36:24 UTC": "set"
-            },
-            {
-                "2025-07-25 09:06:25 UTC": "rise"
-            },
-            {
-                "2025-07-25 09:11:28 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 09:16:29 UTC": "set"
-            },
-            {
-                "2025-07-25 10:48:22 UTC": "rise"
-            },
-            {
-                "2025-07-25 10:50:44 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 10:53:05 UTC": "set"
-            },
-            {
-                "2025-07-25 15:42:21 UTC": "rise"
-            },
-            {
-                "2025-07-25 15:45:36 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 15:48:50 UTC": "set"
-            },
-            {
-                "2025-07-25 17:19:48 UTC": "rise"
-            },
-            {
-                "2025-07-25 17:25:07 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 17:30:27 UTC": "set"
-            },
-            {
-                "2025-07-25 19:00:40 UTC": "rise"
-            },
-            {
-                "2025-07-25 19:05:52 UTC": "culmination with 866.306 altitude"
-            },
-            {
-                "2025-07-25 19:11:08 UTC": "set"
+                "rise": "2025-07-26 17:07:20 UTC",
+                "culmination": "2025-07-26 17:12:30 UTC with 845.146 altitude",
+                "set": "2025-07-26 17:17:42 UTC",
+                "duration (sec)": 622
             }
         ]
     },
@@ -369,112 +264,82 @@
         "name": "NOAA 20 (JPSS-1)",
         "points": [
             {
-                "2025-07-23 21:55:55 UTC": "rise"
+                "rise": "2025-07-24 21:37:34 UTC",
+                "culmination": "2025-07-24 21:41:03 UTC with 838.507 altitude",
+                "set": "2025-07-24 21:44:31 UTC",
+                "duration (sec)": 417
             },
             {
-                "2025-07-23 22:00:08 UTC": "culmination with 844.044 altitude"
+                "rise": "2025-07-24 23:16:47 UTC",
+                "culmination": "2025-07-24 23:22:13 UTC with 838.507 altitude",
+                "set": "2025-07-24 23:27:36 UTC",
+                "duration (sec)": 649
             },
             {
-                "2025-07-23 22:04:20 UTC": "set"
+                "rise": "2025-07-25 00:57:29 UTC",
+                "culmination": "2025-07-25 01:02:02 UTC with 838.507 altitude",
+                "set": "2025-07-25 01:06:34 UTC",
+                "duration (sec)": 545
             },
             {
-                "2025-07-23 23:35:36 UTC": "rise"
+                "rise": "2025-07-25 07:30:55 UTC",
+                "culmination": "2025-07-25 07:34:24 UTC with 838.507 altitude",
+                "set": "2025-07-25 07:37:53 UTC",
+                "duration (sec)": 418
             },
             {
-                "2025-07-23 23:41:02 UTC": "culmination with 844.044 altitude"
+                "rise": "2025-07-25 09:08:25 UTC",
+                "culmination": "2025-07-25 09:13:42 UTC with 838.507 altitude",
+                "set": "2025-07-25 09:19:01 UTC",
+                "duration (sec)": 636
             },
             {
-                "2025-07-23 23:46:25 UTC": "set"
+                "rise": "2025-07-25 10:49:27 UTC",
+                "culmination": "2025-07-25 10:54:15 UTC with 838.507 altitude",
+                "set": "2025-07-25 10:59:06 UTC",
+                "duration (sec)": 579
             },
             {
-                "2025-07-24 01:16:28 UTC": "rise"
+                "rise": "2025-07-25 21:19:37 UTC",
+                "culmination": "2025-07-25 21:21:55 UTC with 838.507 altitude",
+                "set": "2025-07-25 21:24:13 UTC",
+                "duration (sec)": 276
             },
             {
-                "2025-07-24 01:20:37 UTC": "culmination with 844.044 altitude"
+                "rise": "2025-07-25 22:58:01 UTC",
+                "culmination": "2025-07-25 23:03:21 UTC with 838.507 altitude",
+                "set": "2025-07-25 23:08:39 UTC",
+                "duration (sec)": 638
             },
             {
-                "2025-07-24 01:24:45 UTC": "set"
+                "rise": "2025-07-26 00:38:32 UTC",
+                "culmination": "2025-07-26 00:43:25 UTC with 838.507 altitude",
+                "set": "2025-07-26 00:48:16 UTC",
+                "duration (sec)": 584
             },
             {
-                "2025-07-24 07:48:55 UTC": "rise"
+                "rise": "2025-07-26 02:20:19 UTC",
+                "culmination": "2025-07-26 02:22:16 UTC with 838.507 altitude",
+                "set": "2025-07-26 02:24:13 UTC",
+                "duration (sec)": 234
             },
             {
-                "2025-07-24 07:52:55 UTC": "culmination with 844.044 altitude"
+                "rise": "2025-07-26 07:13:04 UTC",
+                "culmination": "2025-07-26 07:15:54 UTC with 838.507 altitude",
+                "set": "2025-07-26 07:18:45 UTC",
+                "duration (sec)": 341
             },
             {
-                "2025-07-24 07:56:56 UTC": "set"
+                "rise": "2025-07-26 08:49:52 UTC",
+                "culmination": "2025-07-26 08:54:59 UTC with 838.507 altitude",
+                "set": "2025-07-26 09:00:08 UTC",
+                "duration (sec)": 616
             },
             {
-                "2025-07-24 09:27:04 UTC": "rise"
-            },
-            {
-                "2025-07-24 09:32:27 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-24 09:37:52 UTC": "set"
-            },
-            {
-                "2025-07-24 11:08:54 UTC": "rise"
-            },
-            {
-                "2025-07-24 11:13:16 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-24 11:17:39 UTC": "set"
-            },
-            {
-                "2025-07-24 21:37:34 UTC": "rise"
-            },
-            {
-                "2025-07-24 21:41:03 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-24 21:44:31 UTC": "set"
-            },
-            {
-                "2025-07-24 23:16:47 UTC": "rise"
-            },
-            {
-                "2025-07-24 23:22:13 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-24 23:27:36 UTC": "set"
-            },
-            {
-                "2025-07-25 00:57:29 UTC": "rise"
-            },
-            {
-                "2025-07-25 01:02:02 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-25 01:06:34 UTC": "set"
-            },
-            {
-                "2025-07-25 07:30:55 UTC": "rise"
-            },
-            {
-                "2025-07-25 07:34:24 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-25 07:37:53 UTC": "set"
-            },
-            {
-                "2025-07-25 09:08:25 UTC": "rise"
-            },
-            {
-                "2025-07-25 09:13:42 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-25 09:19:01 UTC": "set"
-            },
-            {
-                "2025-07-25 10:49:27 UTC": "rise"
-            },
-            {
-                "2025-07-25 10:54:15 UTC": "culmination with 844.044 altitude"
-            },
-            {
-                "2025-07-25 10:59:06 UTC": "set"
+                "rise": "2025-07-26 10:30:11 UTC",
+                "culmination": "2025-07-26 10:35:18 UTC with 838.507 altitude",
+                "set": "2025-07-26 10:40:27 UTC",
+                "duration (sec)": 616
             }
         ]
     },
@@ -482,130 +347,82 @@
         "name": "NOAA 21 (JPSS-2)",
         "points": [
             {
-                "2025-07-23 22:46:34 UTC": "rise"
+                "rise": "2025-07-24 22:27:54 UTC",
+                "culmination": "2025-07-24 22:32:52 UTC with 856.184 altitude",
+                "set": "2025-07-24 22:37:49 UTC",
+                "duration (sec)": 595
             },
             {
-                "2025-07-23 22:51:48 UTC": "culmination with 833.146 altitude"
+                "rise": "2025-07-25 00:08:05 UTC",
+                "culmination": "2025-07-25 00:13:20 UTC with 856.184 altitude",
+                "set": "2025-07-25 00:18:34 UTC",
+                "duration (sec)": 629
             },
             {
-                "2025-07-23 22:57:00 UTC": "set"
+                "rise": "2025-07-25 01:49:18 UTC",
+                "culmination": "2025-07-25 01:52:33 UTC with 856.184 altitude",
+                "set": "2025-07-25 01:55:48 UTC",
+                "duration (sec)": 390
             },
             {
-                "2025-07-24 00:26:59 UTC": "rise"
+                "rise": "2025-07-25 06:45:06 UTC",
+                "culmination": "2025-07-25 06:46:13 UTC with 856.184 altitude",
+                "set": "2025-07-25 06:47:21 UTC",
+                "duration (sec)": 135
             },
             {
-                "2025-07-24 00:32:02 UTC": "culmination with 833.146 altitude"
+                "rise": "2025-07-25 08:20:18 UTC",
+                "culmination": "2025-07-25 08:24:57 UTC with 856.184 altitude",
+                "set": "2025-07-25 08:29:38 UTC",
+                "duration (sec)": 560
             },
             {
-                "2025-07-24 00:37:03 UTC": "set"
+                "rise": "2025-07-25 09:59:30 UTC",
+                "culmination": "2025-07-25 10:04:52 UTC with 856.184 altitude",
+                "set": "2025-07-25 10:10:17 UTC",
+                "duration (sec)": 647
             },
             {
-                "2025-07-24 02:08:29 UTC": "rise"
+                "rise": "2025-07-25 11:43:02 UTC",
+                "culmination": "2025-07-25 11:46:08 UTC with 856.184 altitude",
+                "set": "2025-07-25 11:49:15 UTC",
+                "duration (sec)": 373
             },
             {
-                "2025-07-24 02:11:02 UTC": "culmination with 833.146 altitude"
+                "rise": "2025-07-25 22:09:18 UTC",
+                "culmination": "2025-07-25 22:13:53 UTC with 856.184 altitude",
+                "set": "2025-07-25 22:18:26 UTC",
+                "duration (sec)": 548
             },
             {
-                "2025-07-24 02:13:34 UTC": "set"
+                "rise": "2025-07-25 23:49:13 UTC",
+                "culmination": "2025-07-25 23:54:36 UTC with 856.184 altitude",
+                "set": "2025-07-25 23:59:58 UTC",
+                "duration (sec)": 645
             },
             {
-                "2025-07-24 07:02:21 UTC": "rise"
+                "rise": "2025-07-26 01:30:13 UTC",
+                "culmination": "2025-07-26 01:34:03 UTC with 856.184 altitude",
+                "set": "2025-07-26 01:37:51 UTC",
+                "duration (sec)": 458
             },
             {
-                "2025-07-24 07:04:39 UTC": "culmination with 833.146 altitude"
+                "rise": "2025-07-26 08:02:04 UTC",
+                "culmination": "2025-07-26 08:06:22 UTC with 856.184 altitude",
+                "set": "2025-07-26 08:10:40 UTC",
+                "duration (sec)": 516
             },
             {
-                "2025-07-24 07:06:57 UTC": "set"
+                "rise": "2025-07-26 09:40:39 UTC",
+                "culmination": "2025-07-26 09:46:02 UTC with 856.184 altitude",
+                "set": "2025-07-26 09:51:29 UTC",
+                "duration (sec)": 650
             },
             {
-                "2025-07-24 08:38:38 UTC": "rise"
-            },
-            {
-                "2025-07-24 08:43:36 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-24 08:48:34 UTC": "set"
-            },
-            {
-                "2025-07-24 10:18:30 UTC": "rise"
-            },
-            {
-                "2025-07-24 10:23:45 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-24 10:29:02 UTC": "set"
-            },
-            {
-                "2025-07-24 12:03:44 UTC": "rise"
-            },
-            {
-                "2025-07-24 12:05:17 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-24 12:06:51 UTC": "set"
-            },
-            {
-                "2025-07-24 22:27:54 UTC": "rise"
-            },
-            {
-                "2025-07-24 22:32:52 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-24 22:37:49 UTC": "set"
-            },
-            {
-                "2025-07-25 00:08:05 UTC": "rise"
-            },
-            {
-                "2025-07-25 00:13:20 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 00:18:34 UTC": "set"
-            },
-            {
-                "2025-07-25 01:49:18 UTC": "rise"
-            },
-            {
-                "2025-07-25 01:52:33 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 01:55:48 UTC": "set"
-            },
-            {
-                "2025-07-25 06:45:06 UTC": "rise"
-            },
-            {
-                "2025-07-25 06:46:13 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 06:47:21 UTC": "set"
-            },
-            {
-                "2025-07-25 08:20:18 UTC": "rise"
-            },
-            {
-                "2025-07-25 08:24:57 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 08:29:38 UTC": "set"
-            },
-            {
-                "2025-07-25 09:59:30 UTC": "rise"
-            },
-            {
-                "2025-07-25 10:04:52 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 10:10:17 UTC": "set"
-            },
-            {
-                "2025-07-25 11:43:02 UTC": "rise"
-            },
-            {
-                "2025-07-25 11:46:08 UTC": "culmination with 833.146 altitude"
-            },
-            {
-                "2025-07-25 11:49:15 UTC": "set"
+                "rise": "2025-07-26 11:23:05 UTC",
+                "culmination": "2025-07-26 11:27:02 UTC with 856.184 altitude",
+                "set": "2025-07-26 11:31:01 UTC",
+                "duration (sec)": 476
             }
         ]
     },
@@ -613,121 +430,76 @@
         "name": "METEOR-M 2",
         "points": [
             {
-                "2025-07-24 01:29:20 UTC": "rise"
+                "rise": "2025-07-25 01:09:00 UTC",
+                "culmination": "2025-07-25 01:13:38 UTC with 835.070 altitude",
+                "set": "2025-07-25 01:18:12 UTC",
+                "duration (sec)": 552
             },
             {
-                "2025-07-24 01:34:22 UTC": "culmination with 845.650 altitude"
+                "rise": "2025-07-25 02:48:51 UTC",
+                "culmination": "2025-07-25 02:54:14 UTC with 835.071 altitude",
+                "set": "2025-07-25 02:59:34 UTC",
+                "duration (sec)": 643
             },
             {
-                "2025-07-24 01:39:21 UTC": "set"
+                "rise": "2025-07-25 04:29:48 UTC",
+                "culmination": "2025-07-25 04:33:33 UTC with 835.071 altitude",
+                "set": "2025-07-25 04:37:17 UTC",
+                "duration (sec)": 449
             },
             {
-                "2025-07-24 03:09:29 UTC": "rise"
+                "rise": "2025-07-25 11:01:09 UTC",
+                "culmination": "2025-07-25 11:05:22 UTC with 835.071 altitude",
+                "set": "2025-07-25 11:09:37 UTC",
+                "duration (sec)": 508
             },
             {
-                "2025-07-24 03:14:42 UTC": "culmination with 845.650 altitude"
+                "rise": "2025-07-25 12:39:32 UTC",
+                "culmination": "2025-07-25 12:44:55 UTC with 835.071 altitude",
+                "set": "2025-07-25 12:50:22 UTC",
+                "duration (sec)": 650
             },
             {
-                "2025-07-24 03:19:53 UTC": "set"
+                "rise": "2025-07-25 14:21:46 UTC",
+                "culmination": "2025-07-25 14:25:48 UTC with 835.071 altitude",
+                "set": "2025-07-25 14:29:51 UTC",
+                "duration (sec)": 485
             },
             {
-                "2025-07-24 04:50:40 UTC": "rise"
+                "rise": "2025-07-26 00:48:49 UTC",
+                "culmination": "2025-07-26 00:52:49 UTC with 835.071 altitude",
+                "set": "2025-07-26 00:56:48 UTC",
+                "duration (sec)": 479
             },
             {
-                "2025-07-24 04:53:46 UTC": "culmination with 845.650 altitude"
+                "rise": "2025-07-26 02:28:16 UTC",
+                "culmination": "2025-07-26 02:33:42 UTC with 835.071 altitude",
+                "set": "2025-07-26 02:39:06 UTC",
+                "duration (sec)": 650
             },
             {
-                "2025-07-24 04:56:52 UTC": "set"
+                "rise": "2025-07-26 04:09:01 UTC",
+                "culmination": "2025-07-26 04:13:16 UTC with 835.071 altitude",
+                "set": "2025-07-26 04:17:31 UTC",
+                "duration (sec)": 510
             },
             {
-                "2025-07-24 09:46:11 UTC": "rise"
+                "rise": "2025-07-26 10:41:24 UTC",
+                "culmination": "2025-07-26 10:45:06 UTC with 835.071 altitude",
+                "set": "2025-07-26 10:48:49 UTC",
+                "duration (sec)": 445
             },
             {
-                "2025-07-24 09:47:03 UTC": "culmination with 845.650 altitude"
+                "rise": "2025-07-26 12:19:05 UTC",
+                "culmination": "2025-07-26 12:24:25 UTC with 835.071 altitude",
+                "set": "2025-07-26 12:29:47 UTC",
+                "duration (sec)": 642
             },
             {
-                "2025-07-24 09:47:56 UTC": "set"
-            },
-            {
-                "2025-07-24 11:21:03 UTC": "rise"
-            },
-            {
-                "2025-07-24 11:25:41 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-24 11:30:21 UTC": "set"
-            },
-            {
-                "2025-07-24 13:00:08 UTC": "rise"
-            },
-            {
-                "2025-07-24 13:05:30 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-24 13:10:54 UTC": "set"
-            },
-            {
-                "2025-07-24 14:43:32 UTC": "rise"
-            },
-            {
-                "2025-07-24 14:46:40 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-24 14:49:48 UTC": "set"
-            },
-            {
-                "2025-07-25 01:09:00 UTC": "rise"
-            },
-            {
-                "2025-07-25 01:13:38 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 01:18:12 UTC": "set"
-            },
-            {
-                "2025-07-25 02:48:51 UTC": "rise"
-            },
-            {
-                "2025-07-25 02:54:14 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 02:59:34 UTC": "set"
-            },
-            {
-                "2025-07-25 04:29:48 UTC": "rise"
-            },
-            {
-                "2025-07-25 04:33:33 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 04:37:17 UTC": "set"
-            },
-            {
-                "2025-07-25 11:01:09 UTC": "rise"
-            },
-            {
-                "2025-07-25 11:05:22 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 11:09:37 UTC": "set"
-            },
-            {
-                "2025-07-25 12:39:32 UTC": "rise"
-            },
-            {
-                "2025-07-25 12:44:56 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 12:50:22 UTC": "set"
-            },
-            {
-                "2025-07-25 14:21:46 UTC": "rise"
-            },
-            {
-                "2025-07-25 14:25:48 UTC": "culmination with 845.650 altitude"
-            },
-            {
-                "2025-07-25 14:29:51 UTC": "set"
+                "rise": "2025-07-26 14:00:23 UTC",
+                "culmination": "2025-07-26 14:05:00 UTC with 835.071 altitude",
+                "set": "2025-07-26 14:09:39 UTC",
+                "duration (sec)": 556
             }
         ]
     },
@@ -735,121 +507,76 @@
         "name": "METEOR-M2 2",
         "points": [
             {
-                "2025-07-24 01:25:01 UTC": "rise"
+                "rise": "2025-07-25 01:01:48 UTC",
+                "culmination": "2025-07-25 01:06:34 UTC with 824.503 altitude",
+                "set": "2025-07-25 01:11:18 UTC",
+                "duration (sec)": 570
             },
             {
-                "2025-07-24 01:30:09 UTC": "culmination with 837.048 altitude"
+                "rise": "2025-07-25 02:41:32 UTC",
+                "culmination": "2025-07-25 02:46:47 UTC with 824.503 altitude",
+                "set": "2025-07-25 02:51:59 UTC",
+                "duration (sec)": 627
             },
             {
-                "2025-07-24 01:35:15 UTC": "set"
+                "rise": "2025-07-25 04:22:20 UTC",
+                "culmination": "2025-07-25 04:25:45 UTC with 824.503 altitude",
+                "set": "2025-07-25 04:29:09 UTC",
+                "duration (sec)": 409
             },
             {
-                "2025-07-24 03:05:03 UTC": "rise"
+                "rise": "2025-07-25 10:52:24 UTC",
+                "culmination": "2025-07-25 10:56:51 UTC with 824.503 altitude",
+                "set": "2025-07-25 11:01:20 UTC",
+                "duration (sec)": 536
             },
             {
-                "2025-07-24 03:10:04 UTC": "culmination with 837.048 altitude"
+                "rise": "2025-07-25 12:31:02 UTC",
+                "culmination": "2025-07-25 12:36:21 UTC with 824.503 altitude",
+                "set": "2025-07-25 12:41:42 UTC",
+                "duration (sec)": 640
             },
             {
-                "2025-07-24 03:15:03 UTC": "set"
+                "rise": "2025-07-25 14:13:46 UTC",
+                "culmination": "2025-07-25 14:17:09 UTC with 824.503 altitude",
+                "set": "2025-07-25 14:20:34 UTC",
+                "duration (sec)": 408
             },
             {
-                "2025-07-24 04:46:12 UTC": "rise"
+                "rise": "2025-07-26 00:38:44 UTC",
+                "culmination": "2025-07-26 00:42:54 UTC with 824.503 altitude",
+                "set": "2025-07-26 00:47:02 UTC",
+                "duration (sec)": 498
             },
             {
-                "2025-07-24 04:48:45 UTC": "culmination with 837.048 altitude"
+                "rise": "2025-07-26 02:18:05 UTC",
+                "culmination": "2025-07-26 02:23:26 UTC with 824.503 altitude",
+                "set": "2025-07-26 02:28:45 UTC",
+                "duration (sec)": 640
             },
             {
-                "2025-07-24 04:51:19 UTC": "set"
+                "rise": "2025-07-26 03:58:38 UTC",
+                "culmination": "2025-07-26 04:02:41 UTC with 824.503 altitude",
+                "set": "2025-07-26 04:06:43 UTC",
+                "duration (sec)": 485
             },
             {
-                "2025-07-24 09:39:21 UTC": "rise"
+                "rise": "2025-07-26 10:29:48 UTC",
+                "culmination": "2025-07-26 10:33:44 UTC with 824.503 altitude",
+                "set": "2025-07-26 10:37:41 UTC",
+                "duration (sec)": 473
             },
             {
-                "2025-07-24 09:41:27 UTC": "culmination with 837.048 altitude"
+                "rise": "2025-07-26 12:07:38 UTC",
+                "culmination": "2025-07-26 12:12:56 UTC with 824.503 altitude",
+                "set": "2025-07-26 12:18:17 UTC",
+                "duration (sec)": 639
             },
             {
-                "2025-07-24 09:43:34 UTC": "set"
-            },
-            {
-                "2025-07-24 11:15:11 UTC": "rise"
-            },
-            {
-                "2025-07-24 11:20:02 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-24 11:24:55 UTC": "set"
-            },
-            {
-                "2025-07-24 12:54:38 UTC": "rise"
-            },
-            {
-                "2025-07-24 12:59:49 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-24 13:05:03 UTC": "set"
-            },
-            {
-                "2025-07-24 14:39:15 UTC": "rise"
-            },
-            {
-                "2025-07-24 14:40:58 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-24 14:42:42 UTC": "set"
-            },
-            {
-                "2025-07-25 01:01:48 UTC": "rise"
-            },
-            {
-                "2025-07-25 01:06:34 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 01:11:18 UTC": "set"
-            },
-            {
-                "2025-07-25 02:41:32 UTC": "rise"
-            },
-            {
-                "2025-07-25 02:46:47 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 02:51:59 UTC": "set"
-            },
-            {
-                "2025-07-25 04:22:20 UTC": "rise"
-            },
-            {
-                "2025-07-25 04:25:45 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 04:29:09 UTC": "set"
-            },
-            {
-                "2025-07-25 10:52:24 UTC": "rise"
-            },
-            {
-                "2025-07-25 10:56:51 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 11:01:20 UTC": "set"
-            },
-            {
-                "2025-07-25 12:31:02 UTC": "rise"
-            },
-            {
-                "2025-07-25 12:36:21 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 12:41:42 UTC": "set"
-            },
-            {
-                "2025-07-25 14:13:46 UTC": "rise"
-            },
-            {
-                "2025-07-25 14:17:09 UTC": "culmination with 837.048 altitude"
-            },
-            {
-                "2025-07-25 14:20:34 UTC": "set"
+                "rise": "2025-07-26 13:49:09 UTC",
+                "culmination": "2025-07-26 13:53:25 UTC with 824.503 altitude",
+                "set": "2025-07-26 13:57:43 UTC",
+                "duration (sec)": 514
             }
         ]
     }

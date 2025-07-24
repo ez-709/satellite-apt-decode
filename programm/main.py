@@ -1,4 +1,4 @@
-from skyfield.api import load, EarthSatellite 
+from skyfield.api import load
 import os
 
 from storage import json_to_py, find_satellites, active_names, create_urls_to_htpp, write_or_update_tles, update_calculations
@@ -33,9 +33,9 @@ for tle_group in tles:
 end_time_hours = 48
 samples, step  = calculate_samples_from_hours(end_time_hours)
 
-'''
-sats_tle = json_to_py(cd_tle)
 
+sats_tle = json_to_py(cd_tle)
+'''
 calc_sats = []
 for sat_tle in sats_tle:
     calc_sats.append(calculate_orbit(sat_tle, end_time_hours, samples))
@@ -48,6 +48,9 @@ for sat_tle in sats_tle:
 
 update_calculations(calc_passes, cd_passes)
 '''
-print(utc_time_now)
+
 sat_inf = json_to_py(cd_coordinates)
-visualization_orbit_for_satellites(sat_inf, utc_time_now, 3, step, obs_lat, obs_lon)
+visualization_orbit_for_satellites(sat_inf, utc_time_now, 3, step, obs_lon, obs_lat, obs_elev)
+#надо придумать более оптимальную систему хранения данных о пролетах, реализовать поиск ближайшего пролета
+#навести порядок в визуализации и в проекте в целом
+#добавить проверку на выход за пределы времени

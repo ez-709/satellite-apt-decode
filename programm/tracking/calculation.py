@@ -2,6 +2,8 @@ import numpy as np
 from skyfield.api import load, EarthSatellite, wgs84, utc
 from datetime import datetime, timedelta
 
+from .utils import calculate_delta_time_utc
+
 def calculate_samples_from_hours(end_time_hours, step = 120): 
     '''
     функция рассчитывает количество семлов от заданого числа часов
@@ -19,7 +21,7 @@ def calculate_now_position(sat_tle):
     latitudes = subpoint.latitude.degrees
     longitudes = subpoint.longitude.degrees
     altitude = subpoint.elevation.km
-    return latitudes, longitudes, altitude
+    return longitudes, latitudes, altitude
 
 def calculate_orbit(sat_tle, end_time_hours, samples):
     '''
@@ -58,17 +60,10 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
 
 
 def calculate_passes(sat_tle, end_time_hours, obs_latitudes, obs_longitudes, obs_altitude, altitude_degrees=10.0):
-    '''
-    функция принимает на вход словарь sat_tle,
-    где значения - это строки tle (имя, первая строка tle, вторая строка tle), 
-    на сколько часов составить прогноз end_ttime_hours, частота дескритищации samples, координаты
-    и высота наблюдателя над уровнем моря, высота возвышеия спутника над заданнной точкой
-    возвращает фукнция словарь, с ключами в виде имени спутника, временых точек.
-    '''
     ts = load.timescale()
     now = datetime.now(tz=utc)
     start_time = ts.utc(now)
-    end_time = ts.utc(now + timedelta(hours = end_time_hours)) 
+    end_time = ts.utc(now + timedelta(hours=end_time_hours)) 
     sat = EarthSatellite(sat_tle['first tle line'], sat_tle["second tle line"], sat_tle["name"])
 
     observer = wgs84.latlon(obs_latitudes, obs_longitudes, obs_altitude)
@@ -76,23 +71,48 @@ def calculate_passes(sat_tle, end_time_hours, obs_latitudes, obs_longitudes, obs
     times, events = sat.find_events(observer, start_time, end_time, altitude_degrees)
 
     points = []
-
+    current_passe = {}
+    
     for i in range(len(times)):
-        if int(events[i]) == 0:
-            event = 'rise'
-        elif int(events[i]) == 1:
-            latitudes, longitudes, altitude = calculate_now_position(sat_tle)
-            event = f'culmination with {str(altitude)[:7]} altitude'
-        else:
-            event = 'set'
-        points.append({times[i].utc_iso().replace('T', ' ').replace('Z', ' UTC') : event})
+        time = times[i].utc_iso().replace('T', ' ').replace('Z', ' UTC')
+        event_type = int(events[i])
         
+        if event_type == 0:  
+            current_passe = {'rise': time}
+        elif event_type == 1: 
+            latitudes, longitudes, altitude = calculate_now_position(sat_tle)
+            if 'rise' in current_passe:
+                current_passe['culmination'] = f'{time} with {str(altitude)[:7]} altitude'
+            else:
+                current_passe = {'culmination': f'{time} with {str(altitude)[:7]} altitude'}
+        elif event_type == 2:  
+            if 'culmination' in current_passe or 'rise' in current_passe:
+                current_passe['set'] = time
+                if 'rise' in current_passe and 'set' in current_passe:
+                    current_passe['duration (sec)'] = calculate_delta_time_utc(current_passe['rise'], current_passe['set'])
+                points.append(current_passe)
+                current_passe = {} 
+            else:
+                current_passe = {'set': time}
+
     sat_passe = {
         'name': sat_tle['name'],
-        'points' : points
+        'points': points
     }
     return sat_passe
 
-def calculate_radius(obs_elevation, sat_altitude):
-    r_eath = 6371
-    return np.sqrt((r_eath + sat_altitude)**2 - (r_eath + obs_elevation)**2)
+
+def calculate_radius_and_coordinates_of_circle(obs_lons, obs_lats, obs_elevation, sat_altitude, samples=360):
+    r_earth = 6371
+    
+    radius = np.sqrt((r_earth + sat_altitude)**2 - (r_earth + obs_elevation)**2)
+    
+    angular_radius = np.degrees(radius / r_earth)
+    
+    angles = np.linspace(0, 2 * np.pi, samples, endpoint=False)
+    
+    circle_lats = obs_lats + angular_radius * np.sin(angles)
+    circle_lons = obs_lons + angular_radius * np.cos(angles) / np.cos(np.radians(obs_lats))
+    
+    return radius, circle_lons, circle_lats
+

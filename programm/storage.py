@@ -99,13 +99,12 @@ def write_or_update_tles(new_tles, cd_tle):
 def update_calculations(new_calcs, cd_calc):
     '''
     на вход функция принимает список словарей с именем спутника и прочими атрибутами
-    Результатом работы функции является обновленный coordinates.json, где хранятся орбиты спутников,
-    привязанные ко времени
+    Результатом работы функции является обновленный coordinates.json или passes.json
     '''
-    coor_json = []
+    json_f = []
 
-    for new_coor in new_calcs:
-        coor_json.append(new_coor)
+    for calc in new_calcs:
+        json_f.append(calc)
     
     with open(cd_calc, 'w') as f:
-        json.dump(coor_json, f, indent = 4)
+        json.dump(json_f, f, indent = 4)
