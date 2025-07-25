@@ -102,17 +102,17 @@ def calculate_passes(sat_tle, end_time_hours, obs_latitudes, obs_longitudes, obs
     return sat_passe
 
 
-def calculate_radius_and_coordinates_of_circle(obs_lons, obs_lats, obs_elevation, sat_altitude, samples=360):
+def calculate_radius_and_coordinates_of_circle(sat_lons, sat_lats, sat_altitude, samples=360):
     r_earth = 6371
     
-    radius = np.sqrt((r_earth + sat_altitude)**2 - (r_earth + obs_elevation)**2)
+    radius = np.sqrt((r_earth + sat_altitude)**2 - r_earth**2) * 0.7
     
-    angular_radius = np.degrees(radius / r_earth)
+    angular_radius = np.degrees(radius / r_earth) 
     
     angles = np.linspace(0, 2 * np.pi, samples, endpoint=False)
     
-    circle_lats = obs_lats + angular_radius * np.sin(angles)
-    circle_lons = obs_lons + angular_radius * np.cos(angles) / np.cos(np.radians(obs_lats))
+    circle_lats = sat_lats + angular_radius * np.sin(angles)
+    circle_lons = sat_lons + angular_radius * np.cos(angles) / np.cos(np.radians(sat_lats))
     
     return radius, circle_lons, circle_lats
 

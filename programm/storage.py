@@ -1,7 +1,4 @@
 import json
-import os
-
-from tracking.parsing import get_not_deb_tle
 
 def json_to_py(cd_json):
     '''Читает json с путем  'cd_json' и возвращает список словарей'''
@@ -11,7 +8,7 @@ def json_to_py(cd_json):
 
 def find_satellites(cd_sat, name=None, norad_id = None, frequency=None, min_record_time=None, signal_type=None, group=None):
     '''
-    Фильтрует спутники по заданным параметрам
+    Ищет спутники по заданным параметрам
     Возвращает список словарей с подходящими спутниками
     '''
     sat_data = json_to_py(cd_sat)
@@ -34,6 +31,22 @@ def find_satellites(cd_sat, name=None, norad_id = None, frequency=None, min_reco
     
     if group is not None:
         res = [sat for sat in res if sat['group'] == group]
+
+    names = []
+    for name in res:
+        names.append(name['name'])
+    
+    return names
+
+def filter(names, sats):
+    '''
+    names - список имен спутника
+    sats - список словарей, где есть ключи в виде имени спутниика
+    '''
+    res = []
+    for sat in sats:
+        if sat['name'] in names:
+            res.append(sat)
     
     return res
 
@@ -108,3 +121,4 @@ def update_calculations(new_calcs, cd_calc):
     
     with open(cd_calc, 'w') as f:
         json.dump(json_f, f, indent = 4)
+

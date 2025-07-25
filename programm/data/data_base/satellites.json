@@ -1,57 +1,57 @@
 [
   {
     "name": "NOAA 15",
-    "norad id": 25338,
-    "frequency": 137,
-    "min_record_time": 4,
+    "norad_id": 25338,
+    "frequency": 137.6200,
+    "min_record_time": 10,
     "signal_type": "APT",
     "group": "NOAA"
   },
   {
     "name": "NOAA 18",
-    "norad id": 28654,
-    "frequency": 137,
-    "min_record_time": 4,
+    "norad_id": 28654,
+    "frequency": 137.9125,
+    "min_record_time": 10,
     "signal_type": "APT",
     "group": "NOAA"
   },
   {
     "name": "NOAA 19",
-    "norad id": 33591,
-    "frequency": 137,
-    "min_record_time": 4,
+    "norad_id": 33591,
+    "frequency": 137.1000,
+    "min_record_time": 10,
     "signal_type": "APT",
     "group": "NOAA"
   },
   {
     "name": "NOAA 20 (JPSS-1)",
-    "norad id": 43013,
-    "frequency": 1700.0, 
-    "min_record_time": 4,
-    "signal_type": "HRPT", 
+    "norad_id": 43013,
+    "frequency": 1698.4750,
+    "min_record_time": 10,
+    "signal_type": "HRPT",
     "group": "NOAA"
   },
   {
     "name": "NOAA 21 (JPSS-2)",
-    "norad id": 54234,
-    "frequency": 1700.0,  
-    "min_record_time": 4,
-    "signal_type": "HRPT", 
+    "norad_id": 54234,
+    "frequency": 1698.2250,
+    "min_record_time": 10,
+    "signal_type": "HRPT",
     "group": "NOAA"
   },
   {
     "name": "METEOR-M 2",
-    "norad id": 40069,
-    "frequency": 137,
-    "min_record_time": 6,
+    "norad_id": 40069,
+    "frequency": 137.9000,
+    "min_record_time": 12,
     "signal_type": "LRPT",
     "group": "Meteor"
   },
   {
     "name": "METEOR-M2 2",
-    "norad id": 44387,
-    "frequency": 137,
-    "min_record_time": 6,
+    "norad_id": 44387,
+    "frequency": 137.1000,
+    "min_record_time": 12,
     "signal_type": "LRPT",
     "group": "Meteor"
   }

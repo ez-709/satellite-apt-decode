@@ -21,6 +21,18 @@ def int_to_utc(time):
     time = str(time)
     return f"{time[0:4]}-{time[4:6]}-{time[6:8]} {time[8:10]}:{time[10:12]}:{time[12:14]} UTC"
 
+def filter(names, sats):
+    '''
+    names - список имен спутника
+    sats - список словарей, где есть ключи в виде имени спутниика
+    '''
+    res = []
+    for sat in sats:
+        if sat['name'] in names:
+            res.append(sat)
+    
+    return res
+
 def calculate_delta_time_utc(time_1, time_2):
     '''
     фукнция считает 
@@ -71,16 +83,16 @@ def binary_search_for_utc(time, times_utc):
 
     return most_closest_index
 
-def find_next_passe(time_now, passes):
+def find_next_passe(time_now, passes, names):
+    passes = filter(names, passes)
     time_now = utc_to_int(time_now)
-
-    most_closest_time_rise = 1e100
+    most_closest_time_set = 1e100
     for sat in passes:
         for time in sat['points']:
-            time_rise = utc_to_int(time['rise'])
-            if time_rise > time_now and time_rise < most_closest_time_rise:
-                most_closest_time_rise = time_rise
-                most_closest_time_set = time['set']
+            time_set = utc_to_int(time['set'])
+            if time_set > time_now and time_set < most_closest_time_set:
+                most_closest_time_set = time_set
+                most_closest_time_rise = time['rise']
                 duration = time['duration (sec)']
                 most_closest_sat_name_passe = sat['name']
-    return most_closest_sat_name_passe, int_to_utc(most_closest_time_rise), most_closest_time_set, duration
+    return most_closest_sat_name_passe, most_closest_time_rise, int_to_utc(most_closest_time_set),  duration

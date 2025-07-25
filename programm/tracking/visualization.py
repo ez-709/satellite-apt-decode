@@ -11,14 +11,15 @@ from .utils import binary_search_for_utc, utc_to_int, find_next_passe
 from storage import json_to_py
 
 
-def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, elevation_obs, print_time = True, print_altitude = True):
+def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, elevation_obs, names, print_time = True, print_altitude = True, visible = True):
     #для работы с бд
     cd = os.getcwd()
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
     tles = json_to_py(cd_tle)
     passes = json_to_py(cd_passes)
-    colors = ['g', 'r', 'c', 'm', 'y', 'k', 'b', 'w']
+    colors = ["#D40A0A", "#F1B501", "#007034", "#2800BA", '#A23B72', "#00DCBF", "#000000", "#803A0F", "#8C8C8C", "#691D3F", '#D68FD6']
+
 
     year, month, day = map(int, time_now.split()[0].split('-'))
     hour, minute, second = map(int, time_now.split()[1].split(':'))
@@ -27,19 +28,25 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
     plt.figure(figsize=(12, 12))
     ax = plt.axes(projection=ccrs.PlateCarree())
     #параметры карты
-    ax.add_feature(cfeature.COASTLINE, linewidth=0.5)
     ax.add_feature(Nightshade(date, alpha=0.3))
-    ax.stock_img() 
+    ax.add_feature(cfeature.LAND)
+    ax.add_feature(cfeature.OCEAN)
+    ax.add_feature(cfeature.COASTLINE, linewidth=0.5)
+    ax.add_feature(cfeature.BORDERS, linestyle=':', linewidth=0.5)
+    ax.add_feature(cfeature.LAKES, alpha=0.5)
+    ax.add_feature(cfeature.RIVERS, linewidth=0.5)
+    #ax.stock_img() 
     ax.gridlines(draw_labels=True, linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
 
     #отрисовка вспомогательных элементов
-    ax.plot(lons_obs, lats_obs, 'bo', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
+    ax.plot(lons_obs, lats_obs,  'o', color = 'black', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
+    ax.plot([], [], transform=ccrs.PlateCarree(),label = 'Circles show where satellite is visible')
 
     if print_time == True:
         ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(), label= time_now)
     
     #поиск ближайшего пролета
-    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now, passes)
+    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now, passes, names)
 
     #отрисовка спутников
     for i in range(len(sats)):
@@ -64,40 +71,49 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
             sat_lons = [now_longitudes] + sat_lons[right+1: right + end_hour * step]
             sat_lats = [now_latitudes] + sat_lats[right+1: right + end_hour * step]
 
-        if print_altitude == True:
-            ax.plot(now_longitudes, now_latitudes, f'{colors[i]}*', markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}: altitude is {str(now_altitude)[0:7]} km')
+        #отрисовка зоны где сейчас наблюдается спутник
+        if visible == True:
+            radius, circle_lons, circle_lats = calculate_radius_and_coordinates_of_circle(now_longitudes, now_latitudes, now_altitude)
+            ax.plot(circle_lons, circle_lats, '-', color = colors[i], linewidth=0.8, transform=ccrs.PlateCarree())
+
+        #отображение, что следующий пролет у данного спутника  
+        if most_closest_sat_name_passe == sat_name:
+            if print_altitude == True:
+                ax.plot(now_longitudes, now_latitudes, '*', color = colors[i], markersize=5, transform=ccrs.PlateCarree(), label=f'Next passe of {sat_name}: altitude is {str(now_altitude)[0:3]} km')
+            else:
+                ax.plot(now_longitudes, now_latitudes, '*', color = colors[i], markersize=5, transform=ccrs.PlateCarree(), label=f'Next passe of {sat_name}')
+            
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'rise in {most_closest_time_rise}')
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'set in {most_closest_time_set}')
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'duration {duration} sec.')
+
         else:
-            ax.plot(now_longitudes, now_latitudes, f'{colors[i]}*', markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}')
+            if print_altitude == True:
+                ax.plot(now_longitudes, now_latitudes, '*', color = colors[i], markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}: altitude is {str(now_altitude)[0:3]} km')
+            else:
+                ax.plot(now_longitudes, now_latitudes, '*', color = colors[i], markersize=5, transform=ccrs.PlateCarree(), label=f'{sat_name}')
         
         #решение проблемы отрисовки горизонтальных линий
         sector_lons = []
         sector_lats = []
         for x in range(0, len(sat_lons)):
             if np.abs(sat_lons[x] - sat_lons[x-1]) > 180:
-                ax.plot(sector_lons, sector_lats, f'{colors[i]}-', linewidth=0.8, transform=ccrs.PlateCarree())
+                ax.plot(sector_lons, sector_lats,  '-', color = colors[i], linewidth=1, transform=ccrs.PlateCarree())
                 sector_lons = []
                 sector_lats = []
                 
             else:
                 sector_lons.append(sat_lons[x])
                 sector_lats.append(sat_lats[x])
-
-        # отрисовка зоны видимости        
-        if most_closest_sat_name_passe == sat_name:
-            radius, circle_lons, circle_lats = calculate_radius_and_coordinates_of_circle(lons_obs, lats_obs, elevation_obs, now_altitude)
-
-            ax.plot(circle_lons, circle_lats, f'{colors[i]}-', markersize=1, transform=ccrs.PlateCarree(), label = 'Instantaneous Visibility Zone' )
-            ax.plot([], [], f'{colors[i]}*', markersize=0, transform=ccrs.PlateCarree(), label= f'rise in {most_closest_time_rise}')
-            ax.plot([], [], f'{colors[i]}*', markersize=0, transform=ccrs.PlateCarree(), label= f'set in {most_closest_time_set}')
-            ax.plot([], [], f'{colors[i]}*', markersize=0, transform=ccrs.PlateCarree(), label= f'durationn is {duration} sec')
+    
 
     plt.legend(
         loc='lower left',          # Якорь легенды в нижнем левом углу
         bbox_to_anchor=(0, 0),     # Фиксированное положение (x=0, y=0)
         fontsize='small',          # Уменьшенный шрифт
-        markerscale=0.8,           # Уменьшение размера маркеров
-        framealpha=0.4             # Полупрозрачный фон
+        markerscale=0.6,           # Уменьшение размера маркеров
+        framealpha=0.6             # Полупрозрачный фон
     )
-    plt.title(f'Orbit of satellites for next {end_hour} hours', pad=5)
+    plt.title(f'Satellites orbits for next {end_hour} hours', pad=5)
     
     plt.show()
