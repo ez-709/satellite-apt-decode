@@ -1,5 +1,5 @@
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def utc_to_int(time, sec = True):
     '''
@@ -95,4 +95,20 @@ def find_next_passe(time_now, passes, names):
                 most_closest_time_rise = time['rise']
                 duration = time['duration (sec)']
                 most_closest_sat_name_passe = sat['name']
+                
     return most_closest_sat_name_passe, most_closest_time_rise, int_to_utc(most_closest_time_set),  duration
+
+def check_end_time_hours_correct(time_now_utc, end_time_hour, sats_coordinates):
+    time_now_utc = time_now_utc[:19]
+    utc_date = datetime.strptime(time_now_utc, '%Y-%m-%d %H:%M:%S')
+    new_date = utc_date + timedelta(hours = end_time_hour)
+    new_date_string = new_date.strftime('%Y-%m-%d %H:%M:%S UTC')
+    new_date_int = utc_to_int(new_date_string)
+
+    time = sats_coordinates[0]["times in utc"]
+    latest_time = utc_to_int(time[len(time) - 1])
+    
+    if new_date_int > latest_time:
+        return "Расчет расчитан на меньшее количество часов"
+    else:
+        return True

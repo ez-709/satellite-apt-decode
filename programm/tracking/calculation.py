@@ -59,7 +59,7 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
     return sat_coordinates
 
 
-def calculate_passes(sat_tle, end_time_hours, obs_latitudes, obs_longitudes, obs_altitude, altitude_degrees=10.0):
+def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10.0):
     ts = load.timescale()
     now = datetime.now(tz=utc)
     start_time = ts.utc(now)

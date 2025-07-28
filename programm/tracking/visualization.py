@@ -11,7 +11,7 @@ from .utils import binary_search_for_utc, utc_to_int, find_next_passe
 from storage import json_to_py
 
 
-def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, elevation_obs, names, print_time = True, print_altitude = True, visible = True):
+def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, elevation_obs, names, filter_of = None, print_time = True, print_altitude = True, visible = True):
     #для работы с бд
     cd = os.getcwd()
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
@@ -39,12 +39,11 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
     ax.gridlines(draw_labels=True, linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
 
     #отрисовка вспомогательных элементов
-    ax.plot(lons_obs, lats_obs,  'o', color = 'black', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
-    ax.plot([], [], transform=ccrs.PlateCarree(),label = 'Circles show where satellite is visible')
-
     if print_time == True:
         ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(), label= time_now)
+    ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(),label = 'Circles show where satellite is visible')
     
+    ax.plot(lons_obs, lats_obs,  'o', color = 'black', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
     #поиск ближайшего пролета
     most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now, passes, names)
 
@@ -114,6 +113,9 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
         markerscale=0.6,           # Уменьшение размера маркеров
         framealpha=0.6             # Полупрозрачный фон
     )
-    plt.title(f'Satellites orbits for next {end_hour} hours', pad=5)
+    if filter_of is not None:
+        plt.title(f'Satellites orbits for next {end_hour} hours filtered by {", ".join(str(el) for el in filter_of)}', pad=5)
+    else:
+        plt.title(f'Satellites orbits for next {end_hour} hours', pad=5)
     
     plt.show()
