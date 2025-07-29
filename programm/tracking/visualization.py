@@ -46,6 +46,7 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
     ax.plot(lons_obs, lats_obs,  'o', color = 'black', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
     #поиск ближайшего пролета
     most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now, passes, names)
+    minutes_duration, seconds_duration = [int(i) for i in duration.split(':')]
 
     #отрисовка спутников
     for i in range(len(sats)):
@@ -84,7 +85,7 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
             
             ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'rise in {most_closest_time_rise}')
             ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'set in {most_closest_time_set}')
-            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'duration {duration} sec.')
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'duration {minutes_duration} min. {seconds_duration} sec.')
 
         else:
             if print_altitude == True:

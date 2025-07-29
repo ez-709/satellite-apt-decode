@@ -33,6 +33,18 @@ def filter(names, sats):
     
     return res
 
+def minutes_and_seconds_to_seconds(time):
+    '''
+    time - 'minutes:seconds'
+    '''
+    minutes, seconds = [int(i) for i in time.split(':')]
+    return minutes * 60 + seconds
+
+def seconds_to_minutes_and_seconds(seconds):
+    minutes = seconds // 60
+    seconds = seconds % 60
+    return str(minutes) + ':' + str(seconds)
+
 def calculate_delta_time_utc(time_1, time_2):
     '''
     фукнция считает 
@@ -83,6 +95,29 @@ def binary_search_for_utc(time, times_utc):
 
     return most_closest_index
 
+def find_next_passes_for_satellites(time_now, passes, names):
+    passes = filter(names, passes)
+    time_now = utc_to_int(time_now)
+    next_passes = []
+    
+    for i in range(len(passes)):
+        for time in passes[i]['points']:
+            time_rise = utc_to_int(time['rise'])
+            time_culmination = utc_to_int(time['culmination'])
+            time_set = utc_to_int(time['set'])
+            
+            if time_set > time_now:  
+                if time_rise > time_now:
+                    next_passes.append(f"{passes[i]['name']}: rise at {time['rise']}, culmination at {time['culmination']}, set at {time['set']}")
+                elif time_culmination > time_now:
+                    next_passes.append(f"{passes[i]['name']}: now in the sky, culmination at {time['culmination']}, set at {time['set']}")
+                else:
+                    next_passes.append(f"{passes[i]['name']}: now in the sky, culmination was at {time['culmination']}, set at {time['set']}")
+                break
+    
+    return next_passes
+
+#интегрировать с функцие посика ближайших пролетов для всех спутников
 def find_next_passe(time_now, passes, names):
     passes = filter(names, passes)
     time_now = utc_to_int(time_now)
@@ -112,3 +147,9 @@ def check_end_time_hours_correct(time_now_utc, end_time_hour, sats_coordinates):
         return "Расчет расчитан на меньшее количество часов"
     else:
         return True
+    
+def find_next_time_for_updating_calculations(last_time_utc_of_calculations, passes):
+    for sat in passes:
+        for times in sat['points']:
+            if utc_to_int(times['rise']) < utc_to_int(last_time_utc_of_calculations):
+                continue

@@ -2,7 +2,7 @@ import numpy as np
 from skyfield.api import load, EarthSatellite, wgs84, utc
 from datetime import datetime, timedelta
 
-from .utils import calculate_delta_time_utc
+from .utils import calculate_delta_time_utc, seconds_to_minutes_and_seconds
 
 def calculate_samples_from_hours(end_time_hours, step = 120): 
     '''
@@ -59,7 +59,7 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
     return sat_coordinates
 
 
-def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10.0):
+def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10):
     ts = load.timescale()
     now = datetime.now(tz=utc)
     start_time = ts.utc(now)
@@ -81,15 +81,19 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
             current_passe = {'rise': time}
         elif event_type == 1: 
             latitudes, longitudes, altitude = calculate_now_position(sat_tle)
+            difference = sat - observer
+            topocentric = difference.at(times[i])
+            alt, az, distance = topocentric.altaz()
+            angle_above_horizon = alt.degrees
             if 'rise' in current_passe:
                 current_passe['culmination'] = f'{time} with {str(altitude)[:7]} altitude'
             else:
-                current_passe = {'culmination': f'{time} with {str(altitude)[:7]} altitude'}
+                current_passe = {'culmination': f'{time} with {str(altitude)[:7]} altitude and {angle_above_horizon} degrees above horizon'}
         elif event_type == 2:  
             if 'culmination' in current_passe or 'rise' in current_passe:
                 current_passe['set'] = time
                 if 'rise' in current_passe and 'set' in current_passe:
-                    current_passe['duration (sec)'] = calculate_delta_time_utc(current_passe['rise'], current_passe['set'])
+                    current_passe['duration (sec)'] = seconds_to_minutes_and_seconds(calculate_delta_time_utc(current_passe['rise'], current_passe['set']))
                 points.append(current_passe)
                 current_passe = {} 
             else:
@@ -102,17 +106,17 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
     return sat_passe
 
 
-def calculate_radius_and_coordinates_of_circle(sat_lons, sat_lats, sat_altitude, samples=360):
+def calculate_radius_and_coordinates_of_circle(sat_lons, sat_lats, sat_altitude, samples=360, elev_angle_deg = 10):
     r_earth = 6371
-    
-    radius = np.sqrt((r_earth + sat_altitude)**2 - r_earth**2) * 0.7
-    
-    angular_radius = np.degrees(radius / r_earth) 
-    
+    h = sat_altitude
+    alpha = np.radians(elev_angle_deg)
+    theta = np.arcsin((r_earth * np.cos(alpha)) / (r_earth + h))
+    beta = np.pi/2 - alpha - theta
+    radius = r_earth * beta
+    angular_radius = np.degrees(radius / r_earth)
     angles = np.linspace(0, 2 * np.pi, samples, endpoint=False)
     
     circle_lats = sat_lats + angular_radius * np.sin(angles)
     circle_lons = sat_lons + angular_radius * np.cos(angles) / np.cos(np.radians(sat_lats))
-    
     return radius, circle_lons, circle_lats
 
