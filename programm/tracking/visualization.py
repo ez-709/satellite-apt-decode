@@ -7,7 +7,7 @@ import cartopy.feature as cfeature
 from cartopy.feature.nightshade import Nightshade
 
 from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
-from .utils import binary_search_for_utc, utc_to_int, find_next_passe
+from .utils import binary_search, find_next_passe
 from storage import json_to_py
 
 
@@ -60,9 +60,9 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
             if tle['name'] == sat_name:
                 break
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
+        '''
         
-        
-        right = binary_search_for_utc(time_now, time_utc)
+        right = binary_search(time_now, time_utc)
         #провера на коректный срез крайней точки
         if utc_to_int(time_now) < utc_to_int(time_utc[right]):
             sat_lons = sat_lons[right: right + end_hour * step]
@@ -70,7 +70,7 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
         else:
             sat_lons = [now_longitudes] + sat_lons[right+1: right + end_hour * step]
             sat_lats = [now_latitudes] + sat_lats[right+1: right + end_hour * step]
-
+'''
         #отрисовка зоны где сейчас наблюдается спутник
         if visible == True:
             radius, circle_lons, circle_lats = calculate_radius_and_coordinates_of_circle(now_longitudes, now_latitudes, now_altitude)

@@ -13,7 +13,6 @@ def background(obs_lon, obs_lat, obs_alt, end_time_hours):
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
     cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-    ts = load.timescale()
     last_time_utc_of_calculations = datetime.now(tz=utc)
 
     samples, step  = calculate_samples_from_hours(end_time_hours)
@@ -24,10 +23,9 @@ def background(obs_lon, obs_lat, obs_alt, end_time_hours):
     '''
     for url in urls:
         tles.append(get_not_deb_tle(url, active_names(cd_sat)))
-    '''
     for tle_group in tles:
         write_or_update_tles(tle_group, cd_tle)
-
+    '''
     calc_sats = []
     for sat_tle in sats_tle:
         calc_sats.append(calculate_orbit(sat_tle, end_time_hours, samples))
