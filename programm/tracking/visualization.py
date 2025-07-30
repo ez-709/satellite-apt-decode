@@ -1,17 +1,19 @@
-import datetime
+
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+from datetime import datetime
+from skyfield.api import load
 from cartopy.feature.nightshade import Nightshade
 
 from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
-from .utils import binary_search, find_next_passe
+from .utils import binary_search, find_next_passe, unix_to_utc
 from storage import json_to_py
 
 
-def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs, lats_obs, elevation_obs, names, filter_of = None, print_time = True, print_altitude = True, visible = True):
+def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons_obs, lats_obs, elevation_obs, names, filter_of = None, print_time = True, print_altitude = True, visible = True):
     #для работы с бд
     cd = os.getcwd()
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
@@ -20,15 +22,13 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
     passes = json_to_py(cd_passes)
     colors = ["#D40A0A", "#F1B501", "#007034", "#2800BA", '#A23B72', "#00DCBF", "#000000", "#803A0F", "#8C8C8C", "#691D3F", '#D68FD6']
 
-
-    year, month, day = map(int, time_now.split()[0].split('-'))
-    hour, minute, second = map(int, time_now.split()[1].split(':'))
-    date = datetime.datetime(year, month, day, hour, minute, second) #cartopy работает только с datetime
+    ts = load.timescale()
+    time_now_utc = ts.now().utc_datetime()
     
     plt.figure(figsize=(12, 12))
     ax = plt.axes(projection=ccrs.PlateCarree())
     #параметры карты
-    ax.add_feature(Nightshade(date, alpha=0.3))
+    ax.add_feature(Nightshade(time_now_utc, alpha=0.3))
     ax.add_feature(cfeature.LAND)
     ax.add_feature(cfeature.OCEAN)
     ax.add_feature(cfeature.COASTLINE, linewidth=0.5)
@@ -40,12 +40,12 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
 
     #отрисовка вспомогательных элементов
     if print_time == True:
-        ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(), label= time_now)
+        ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(), label= unix_to_utc(time_now_unix))
     ax.plot([], [], 'gx', markersize=0, transform=ccrs.PlateCarree(),label = 'Circles show where satellite is visible')
     
     ax.plot(lons_obs, lats_obs,  'o', color = 'black', markersize=3, transform=ccrs.PlateCarree(), label='Antenna location')
     #поиск ближайшего пролета
-    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now, passes, names)
+    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now_unix, passes, names)
     minutes_duration, seconds_duration = [int(i) for i in duration.split(':')]
 
     #отрисовка спутников
@@ -54,23 +54,22 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
         sat_lons = sats[i]['longitudes']
         sat_lats = sats[i]['latitudes']
         sat_altitude = sats[i]['altitude']
-        time_utc = sats[i]['times in utc']
+        time_unix = sats[i]['time unix']
         
         for tle in tles:
             if tle['name'] == sat_name:
                 break
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
-        '''
         
-        right = binary_search(time_now, time_utc)
+        right = binary_search(time_now_unix, time_unix)
         #провера на коректный срез крайней точки
-        if utc_to_int(time_now) < utc_to_int(time_utc[right]):
+        if time_now_unix < time_unix[right]:
             sat_lons = sat_lons[right: right + end_hour * step]
             sat_lats = sat_lats[right: right + end_hour * step]
         else:
             sat_lons = [now_longitudes] + sat_lons[right+1: right + end_hour * step]
             sat_lats = [now_latitudes] + sat_lats[right+1: right + end_hour * step]
-'''
+
         #отрисовка зоны где сейчас наблюдается спутник
         if visible == True:
             radius, circle_lons, circle_lats = calculate_radius_and_coordinates_of_circle(now_longitudes, now_latitudes, now_altitude)
@@ -83,8 +82,8 @@ def visualization_orbit_for_satellites(sats, time_now, end_hour, step, lons_obs,
             else:
                 ax.plot(now_longitudes, now_latitudes, '*', color = colors[i], markersize=5, transform=ccrs.PlateCarree(), label=f'Next passe of {sat_name}')
             
-            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'rise in {most_closest_time_rise}')
-            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'set in {most_closest_time_set}')
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'rise in {unix_to_utc(most_closest_time_rise)}')
+            ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'set in {unix_to_utc(most_closest_time_set)}')
             ax.plot([], [],  '*', color = colors[i], markersize=0, transform=ccrs.PlateCarree(), label= f'duration {minutes_duration} min. {seconds_duration} sec.')
 
         else:

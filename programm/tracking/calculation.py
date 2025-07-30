@@ -52,7 +52,7 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
         'longitudes': longitudes,
         'latitudes': latitudes,
         'altitude': altitude,
-        'unix time': times_unix
+        'time unix': times_unix
     }
     return sat_coordinates
 
@@ -93,7 +93,7 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
             if 'culmination' in current_passe or 'rise' in current_passe:
                 current_passe['set'] = time_unix
                 if 'rise' in current_passe and 'set' in current_passe:
-                    current_passe['duration (sec)'] = seconds_to_minutes_and_seconds(current_passe['rise'] - current_passe['set'])
+                    current_passe['duration (sec)'] = seconds_to_minutes_and_seconds(current_passe['set'] - current_passe['rise'])
                 points.append(current_passe)
                 current_passe = {} 
             else:
