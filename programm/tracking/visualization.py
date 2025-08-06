@@ -13,7 +13,7 @@ from .utils import binary_search, find_next_passe, unix_to_utc
 from storage import json_to_py
 
 
-def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons_obs, lats_obs, elevation_obs, names, filter_of = None, print_time = True, print_altitude = True, visible = True):
+def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons_obs, lats_obs, names, print_time = True, print_altitude = True, visible = True):
     #для работы с бд
     cd = os.getcwd()
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
@@ -109,12 +109,15 @@ def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons
     plt.legend(
         loc='lower left',          # Якорь легенды в нижнем левом углу
         bbox_to_anchor=(0, 0),     # Фиксированное положение (x=0, y=0)
-        fontsize='small',          # Уменьшенный шрифт
+        fontsize='x-small',          # Уменьшенный шрифт
         markerscale=0.6,           # Уменьшение размера маркеров
         framealpha=0.6             # Полупрозрачный фон
     )
-    if filter_of is not None:
+    if len(sats) > 1:
         plt.title(f'Satellites orbits for next {end_hour} hours filtered by {", ".join(str(el) for el in filter_of)}', pad=5)
+    elif len(sats) == 1:
+        name = sats[0]['name']
+        plt.title(f'{name} orbits for next {end_hour} hours', pad=5)
     else:
         plt.title(f'Satellites orbits for next {end_hour} hours', pad=5)
     

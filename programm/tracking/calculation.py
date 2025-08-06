@@ -1,8 +1,10 @@
 import numpy as np
+import os
 from skyfield.api import load, EarthSatellite, wgs84, utc
 from datetime import datetime, timedelta
 
-from .utils import julian_time_to_unix, seconds_to_minutes_and_seconds
+from .utils import julian_time_to_unix, seconds_to_minutes_and_seconds, minutes_and_seconds_to_seconds
+from storage import json_to_py
 
 def calculate_samples_from_hours(end_time_hours, step = 120): 
     '''
@@ -58,11 +60,19 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
 
 
 def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10):
+    cd = os.getcwd() 
+    cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
+    sats = json_to_py(cd_sat)
+
     ts = load.timescale()
     now = datetime.now(tz=utc)
     start_time = ts.utc(now)
     end_time = ts.utc(now + timedelta(hours=end_time_hours)) 
     sat = EarthSatellite(sat_tle['first tle line'], sat_tle["second tle line"], sat_tle["name"])
+    name = sat_tle['name']
+    for s in sats:
+        if s['name'] == name:
+            min_record_time = s['min record time']
 
     observer = wgs84.latlon(obs_latitudes, obs_longitudes, obs_altitude)
 
@@ -71,7 +81,6 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
 
     points = []
     current_passe = {}
-    
     for i in range(len(times)):
         event_type = int(events[i])
         time_unix = times_unix[i]
@@ -93,7 +102,21 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
             if 'culmination' in current_passe or 'rise' in current_passe:
                 current_passe['set'] = time_unix
                 if 'rise' in current_passe and 'set' in current_passe:
-                    current_passe['duration (sec)'] = seconds_to_minutes_and_seconds(current_passe['set'] - current_passe['rise'])
+                    duration = current_passe['set'] - current_passe['rise']
+                    if duration < minutes_and_seconds_to_seconds(min_record_time):
+                        continue
+                    elif duration < 1.5 * minutes_and_seconds_to_seconds(min_record_time) and duration > minutes_and_seconds_to_seconds(min_record_time):
+                        current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
+                        current_passe['mark of passe is'] = 1
+                    
+                    elif duration < 2 * minutes_and_seconds_to_seconds(min_record_time) and duration > 1.5 * minutes_and_seconds_to_seconds(min_record_time):
+                        current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
+                        current_passe['mark of passe is'] = 2
+
+                    elif duration > 2 * minutes_and_seconds_to_seconds(min_record_time):
+                        current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
+                        current_passe['mark of passe is'] = 3
+
                 points.append(current_passe)
                 current_passe = {} 
             else:

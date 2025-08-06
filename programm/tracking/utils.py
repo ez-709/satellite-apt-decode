@@ -110,7 +110,7 @@ def find_next_passe(time_now_unix, passes, names):
             if time_set > time_now_unix and time_set < most_closest_time_set:
                 most_closest_time_set = time_set
                 most_closest_time_rise = time["rise"]
-                duration = time["duration (sec)"]
+                duration = time["duration (min:sec)"]
                 most_closest_sat_name_passe = sat["name"]
                 
     return most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration
@@ -124,9 +124,17 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
         return "Расчет рассчитан на меньшее количество часов"
     else:
         return True
-    
-def find_next_time_for_updating_calculations(last_time_utc_of_calculations, passes):
+
+ 
+def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
+    next_time_unix = last_time_unix_of_calculations + 24 * 60 * 60
+    events = []
     for sat in passes:
-        for times in sat['points']:
-            if times['rise'] < last_time_utc_of_calculations:
+        for point in sat['points']:
+            if point['set'] < next_time_unix:
                 continue
+            else:
+                events.append()
+
+
+    return next_time_unix
