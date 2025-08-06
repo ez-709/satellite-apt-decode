@@ -13,7 +13,7 @@ from .utils import binary_search, find_next_passe, unix_to_utc
 from storage import json_to_py
 
 
-def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons_obs, lats_obs, names, print_time = True, print_altitude = True, visible = True):
+def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons_obs, lats_obs, names, filter_of = True, print_time = True, print_altitude = True, visible = True):
     #для работы с бд
     cd = os.getcwd()
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
@@ -113,7 +113,7 @@ def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons
         markerscale=0.6,           # Уменьшение размера маркеров
         framealpha=0.6             # Полупрозрачный фон
     )
-    if len(sats) > 1:
+    if filter_of == True and len(sats) > 1:
         plt.title(f'Satellites orbits for next {end_hour} hours filtered by {", ".join(str(el) for el in filter_of)}', pad=5)
     elif len(sats) == 1:
         name = sats[0]['name']

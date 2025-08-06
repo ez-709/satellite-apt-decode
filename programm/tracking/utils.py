@@ -101,7 +101,11 @@ def find_next_passes_for_satellites(time_now, passes, names):
     
     return next_passes
 
-def find_next_passe(time_now_unix, passes, names):
+def find_next_passe(time_now_unix, passes, names, rankimg = True):
+    '''
+    чтобы находить ближайший пролет нужно отключить ранжирование
+    иначе при наличии двух пролетов одновременно, выведится тот, что будет дольше в небе
+    '''
     passes = filter(names, passes)
     most_closest_time_set = 1e100
     for sat in passes:

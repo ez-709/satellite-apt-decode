@@ -24,15 +24,17 @@ samples, step  = calculate_samples_from_hours(end_time_hours)
 sats_tle = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
 
-last_time_utc_of_calculations = background(obs_lon, obs_lat,  obs_alt, end_time_hours)
+#last_time_utc_of_calculations = background(obs_lon, obs_lat,  obs_alt, end_time_hours)
 
 if check_end_time_hours_correct(unix_time_now, 3, sats_coor) == True:
     sat_inf = json_to_py(cd_coordinates)
-    names, filter_of = find_satellites(cd_sat, name= 'NOAA 19')
+    names, filter_of = find_satellites(cd_sat)
     sat_inf = filter(names, sat_inf)
     visualization_orbit_for_satellites(sat_inf, unix_time_now, 3, step, obs_lon, obs_lat, names, filter_of)
 
 #ПРОВЕРИТЬ ВЕЗДЕ ЛИ РАБОТАЕТ ФИЛЬТР
 #добавить условие на наличие пролета в данный момент, и добавить приоритет по пролетам,
 #если их два одновременно
+
+
 
