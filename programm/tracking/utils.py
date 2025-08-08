@@ -131,14 +131,22 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
 
  
 def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
-    next_time_unix = last_time_unix_of_calculations + 24 * 60 * 60
+    next_time_unix = last_time_unix_of_calculations + 1 * 60 * 60
+    min_gap = 60
     events = []
     for sat in passes:
         for point in sat['points']:
             if point['set'] < next_time_unix:
                 continue
-            else:
-                events.append()
+            events.append((point['rise'], point['set']))
 
+    events.sort()
 
-    return next_time_unix
+    if next_time_unix + min_gap <= events[0][0]:
+        return next_time_unix
+
+    for i in range(len(events) - 1):
+        if next_time_unix > events[i][1] and next_time_unix + min_gap <= events[i+1][0]:
+            return next_time_unix + 10
+
+    return next_time_unix + 10
