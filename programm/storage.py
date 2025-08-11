@@ -12,7 +12,7 @@ def find_satellites(cd_sat, name=None, norad_id=None, frequency=None, min_record
     Ищет спутники по заданным параметрам.
     Возвращает список имён подходящих спутников и список применённых фильтров.
     '''
-    sat_data = json_to_py(cd_sat)  # Предполагается, что эта функция корректно парсит данные
+    sat_data = json_to_py(cd_sat)  
     res = sat_data
     filter_of = []
 
@@ -21,7 +21,7 @@ def find_satellites(cd_sat, name=None, norad_id=None, frequency=None, min_record
         filter_of.append(f'name is {name}')
 
     if norad_id is not None:
-        res = [sat for sat in res if sat['norad id'] == norad_id]  # 'norad_id' → 'norad id'
+        res = [sat for sat in res if sat['norad id'] == norad_id] 
         filter_of.append(f'norad id is {norad_id}')
 
     if frequency is not None:
@@ -29,19 +29,18 @@ def find_satellites(cd_sat, name=None, norad_id=None, frequency=None, min_record
         filter_of.append(f'frequency ≈ {frequency} MHz')
 
     if min_record_time is not None:
-        res = [sat for sat in res if sat['min record time'] == min_record_time]  # 'min_record_time' → 'min record time'
+        res = [sat for sat in res if sat['min record time'] == min_record_time] 
         filter_of.append(f'min record time is {min_record_time} minutes')
 
     if signal_type is not None:
-        res = [sat for sat in res if sat['signal type'] == signal_type]  # 'signal_type' → 'signal type'
+        res = [sat for sat in res if sat['signal type'] == signal_type]
         filter_of.append(f'signal type is {signal_type}')
 
     if group is not None:
         res = [sat for sat in res if sat['group'] == group]
         filter_of.append(f'group is {group}')
 
-    names = [sat['name'] for sat in res]  # Упрощённое извлечение имён
-
+    names = [sat['name'] for sat in res]
     return names, filter_of
 
 
@@ -117,7 +116,7 @@ def update_calculations(new_calcs, cd_calc):
     with open(cd_calc, 'w') as f:
         json.dump(json_f, f, indent = 4)
 
-def read_config(cd_config, observer_longitude=True, observer_latitude=True, observer_altitude=True, end_time_hours=True):
+def read_config(cd_config, observer_longitude=True, observer_latitude=True, observer_altitude=True, end_time_hours=True, telegram_bot_token=True):
     '''
     функция читает конфиг и возвращает список с нужными параметрами упорядоченными так же как и сам конфиг
     '''
@@ -135,5 +134,8 @@ def read_config(cd_config, observer_longitude=True, observer_latitude=True, obse
     
     if end_time_hours == True:
         out.append(config.get('calculations for next (hours)'))
+    
+    if telegram_bot_token == True:
+        out.append(config.get('telegram bot token'))
     
     return out

@@ -1,5 +1,6 @@
 import numpy as np
 from datetime import datetime, timezone, timedelta
+import time
 
 def  julian_time_to_unix(time_julian):
     return [time.utc_datetime().timestamp() for time in time_julian]
@@ -15,7 +16,7 @@ def unix_to_utc(time_unix, time_zone=3):
     utc_time = f"{datetime_part} {tz_sign}{tz_hours} UTC"
     return utc_time
 
-def filter(names, sats):
+def filter_by_names(names, sats):
     '''
     names - список имен спутника
     sats - список словарей, где есть ключи в виде имени спутниика
@@ -79,34 +80,37 @@ def binary_search(target_time, times_unix):
 
     return most_closest_index
 
-def find_next_passes_for_satellites(time_now, passes, names):
-    passes = filter(names, passes)
-    time_now = time_now.timestamp()
+def find_next_passes_for_satellites(passes, names):
+    passes = filter_by_names(names, passes)
+    time_now = time.time()
     next_passes = []
     
     for i in range(len(passes)):
-        for time in passes[i]['points']:
-            time_rise = time['rise']
-            time_culmination = time['culmination']
-            time_set = time['set']
+        for time_point in passes[i]['points']:
+            time_rise = time_point['rise']
+            time_culmination = float(str(time_point['culmination']).split()[0])
+            time_set = time_point['set']
             
             if time_set > time_now:  
                 if time_rise > time_now:
-                    next_passes.append(f"{passes[i]['name']}: rise at {unix_to_utc(time['rise'])}, culmination at {unix_to_utc(time['culmination'])}, set at {unix_to_utc(time['set'])}")
+                    next_passes.append(f"{passes[i]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
                 elif time_culmination > time_now:
-                    next_passes.append(f"{passes[i]['name']}: now in the sky, culmination at {unix_to_utc(time['culmination'])}, set at {unix_to_utc(time['set'])}")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
                 else:
-                    next_passes.append(f"{passes[i]['name']}: now in the sky, culmination was at {unix_to_utc(time['culmination'])}, set at {unix_to_utc(time['set'])}")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
                 break
     
     return next_passes
+
+def find_next_passes_for_one_satellite(passes, name):
+    return
 
 def find_next_passe(time_now_unix, passes, names, rankimg = True):
     '''
     чтобы находить ближайший пролет нужно отключить ранжирование
     иначе при наличии двух пролетов одновременно, выведится тот, что будет дольше в небе
     '''
-    passes = filter(names, passes)
+    passes = filter_by_names(names, passes)
     most_closest_time_set = 1e100
     for sat in passes:
         for time in sat['points']:
@@ -131,22 +135,46 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
 
  
 def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
-    next_time_unix = last_time_unix_of_calculations + 1 * 60 * 60
-    min_gap = 60
+    next_time_unix = last_time_unix_of_calculations + 0.2 * 60 * 60
+    min_gap = 30
     events = []
+
     for sat in passes:
         for point in sat['points']:
-            if point['set'] < next_time_unix:
-                continue
             events.append((point['rise'], point['set']))
 
-    events.sort()
+    events.sort(key=lambda x: x[0])
 
+    # 1. Проверка: мы сейчас в пролёте?
+    for rise, set_ in events:
+        if rise <= next_time_unix <= set_:
+            print(f"[DEBUG] Ветка 1: внутри пролёта ({rise}→{set_}), перенос на {set_ + 5 - next_time_unix} сек")
+            return set_ + 5  # сразу после пролёта
+
+    # 2. Проверка: есть ли место до первого пролёта
     if next_time_unix + min_gap <= events[0][0]:
+        print(f"[DEBUG] Ветка 2: окно до первого пролёта, перенос не нужен")
         return next_time_unix
 
+    # 3. Поиск окна между пролётами
     for i in range(len(events) - 1):
-        if next_time_unix > events[i][1] and next_time_unix + min_gap <= events[i+1][0]:
-            return next_time_unix + 10
+        # Если мы уже между пролётами и есть окно
+        if events[i][1] <= next_time_unix <= events[i+1][0] - min_gap:
+            print(f"[DEBUG] Ветка 3: уже между пролётами ({events[i][1]}→{events[i+1][0]}), перенос не нужен")
+            return next_time_unix
+        # Если надо подождать до конца текущего пролёта
+        if events[i][1] > next_time_unix and events[i][1] + min_gap <= events[i+1][0]:
+            print(f"[DEBUG] Ветка 4: ждём до конца пролёта ({events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек")
+            return events[i][1] + 5
 
-    return next_time_unix + 10
+    # 4. Если пролёты закончились — можно делать расчёт в planned time
+    if next_time_unix >= events[-1][1]:
+        print(f"[DEBUG] Ветка 5: после всех пролётов, перенос не нужен")
+        return next_time_unix
+
+    # Теоретически сюда мы не дойдём, но оставим для надёжности
+    print(f"[DEBUG] Ветка 6: резервная, перенос на {events[-1][1] + 5 - next_time_unix} сек")
+    return events[-1][1] + 5
+
+
+        

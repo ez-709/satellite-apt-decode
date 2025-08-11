@@ -27,4 +27,5 @@ def get_not_deb_tle(url, active_names):
 
         return tles
     else:
-        return f"Ошибка загрузки данных. Код ошибки: {data.status_code}"
+        print(f"Ошибка загрузки данных. Код ошибки: {data.status_code}")
+        return None
