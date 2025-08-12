@@ -59,7 +59,8 @@ async def back(callback: CallbackQuery):
     await callback.message.answer('Главное меню', reply_markup=kb.menu)
     await callback.answer()
 
-@router.callback_query(F.data.in_(["satellites_base", "about", 'otbits', 'passes', 'photos']))
+# Роутер
+@router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
 async def menu(callback: CallbackQuery):
     if callback.data == 'satellites_base':
         satellites = json_to_py(cd_sat) 
@@ -85,6 +86,10 @@ async def menu(callback: CallbackQuery):
     elif callback.data == 'passes':
         await callback.message.delete()
         await callback.message.answer('Выберите какие пролеты вас интерисуют', reply_markup=kb.filter)
+
+    elif callback.data == 'orbits':
+        await callback.message.delete()
+        await callback.message.answer('Выберите какие орбиты вас интерисуют', reply_markup=kb.orbits)
 
     await callback.answer()
 

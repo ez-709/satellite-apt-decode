@@ -86,7 +86,7 @@ def find_next_passes_for_satellites(passes, names):
     next_passes = []
     
     for i in range(len(passes)):
-        for time_point in passes[0]['points']:
+        for time_point in passes[i]['points']:
             time_rise = time_point['rise']
             time_culmination = float(str(time_point['culmination']).split()[0])
             time_set = time_point['set']
@@ -94,13 +94,13 @@ def find_next_passes_for_satellites(passes, names):
             
             if time_set > time_now:  
                 if time_rise > time_now:
-                    next_passes.append(f"{passes[0]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
+                    next_passes.append(f"{passes[i]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
                 elif time_culmination > time_now:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[0]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 else:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[0]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 break
 
     next_passes.sort(key=lambda x: x.split('в ')[1].split('\n')[0])

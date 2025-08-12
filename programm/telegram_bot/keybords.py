@@ -82,3 +82,12 @@ names = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='METEOR-M2 2', callback_data='METEOR-M2 2')],
     [InlineKeyboardButton(text='Назад', callback_data='back_to_filter')]
 ])
+
+orbits = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Все спутники (3 часа)", callback_data="orbits_all_3h")],
+        [InlineKeyboardButton(text="Орбита конкретного спутника", callback_data="orbits_specific")],
+        [InlineKeyboardButton(text="Орбиты по типу спутников", callback_data="orbits_by_type")], 
+        [InlineKeyboardButton(text='Назад', callback_data='back')]
+    ]
+)

@@ -20,12 +20,18 @@ cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
 cd_config = os.path.join(cd, 'programm', 'config.json')
 
-obs_lon, obs_lat,  obs_alt, end_time_hours, token = read_config(cd_config)
-samples, step  = calculate_samples_from_hours(end_time_hours)
+obs_lon, obs_lat, obs_alt, end_time_hours, token = read_config(cd_config)
+samples, step = calculate_samples_from_hours(end_time_hours)
 sats_tle = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
-
 '''
+telegram_bot = threading.Thread(
+    target=run_telegram_bot,
+    args=(token,),           
+    daemon=True
+)
+telegram_bot.start() 
+
 background_thread = threading.Thread(
     target=background, 
     args=(obs_lon, obs_lat, obs_alt, end_time_hours),
@@ -33,12 +39,14 @@ background_thread = threading.Thread(
 )
 background_thread.start()
 '''
-'''
-if check_end_time_hours_correct(unix_time_now, 3, sats_coor) == True:
+
+if check_end_time_hours_correct(unix_time_now, 3, sats_coor):
     sat_inf = json_to_py(cd_coordinates)
     names, filter_of = find_satellites(cd_sat)
     sat_inf = filter_by_names(names, sat_inf)
-    visualization_orbit_for_satellites(sat_inf, unix_time_now, 3, step, obs_lon, obs_lat, names, filter_of)
-'''
-
-run_telegram_bot(token)
+    tles = json_to_py(cd_tle)
+    passes = json_to_py(cd_passes)
+    visualization_orbit_for_satellites(sat_inf, unix_time_now, 2, step, obs_lon, obs_lat, names, tles, passes, filter_of)
+else:
+    print('sosi')
+    
