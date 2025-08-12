@@ -32,12 +32,13 @@ background_thread = threading.Thread(
     daemon=True
 )
 background_thread.start()
-
-
+'''
+'''
 if check_end_time_hours_correct(unix_time_now, 3, sats_coor) == True:
     sat_inf = json_to_py(cd_coordinates)
     names, filter_of = find_satellites(cd_sat)
     sat_inf = filter_by_names(names, sat_inf)
     visualization_orbit_for_satellites(sat_inf, unix_time_now, 3, step, obs_lon, obs_lat, names, filter_of)
 '''
+
 run_telegram_bot(token)

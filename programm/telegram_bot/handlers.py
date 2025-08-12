@@ -5,7 +5,8 @@ from aiogram.filters import Command, CommandStart
 
 import telegram_bot.keybords as kb 
 from storage import json_to_py, find_satellites
-from tracking.utils import find_next_passes_for_satellites, filter_by_names
+from tracking.utils import (find_next_passes_for_satellites, find_next_passes_for_one_satellite,  
+                            filter_by_names)
 
 cd = os.getcwd() 
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
@@ -21,20 +22,42 @@ router = Router()
 async def cmd_start(message: Message):
     await message.answer('Меню', reply_markup=kb.menu)
 
+##КНОПКИ НАЗАД
+@router.callback_query(F.data == 'back_to_filter')
+async def back_to_filter(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выберите какие пролеты вас интересуют', reply_markup=kb.filter)
+    await callback.answer()
+
+@router.callback_query(F.data == 'back_to_group')
+async def back_to_group(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выберите группу спутников', reply_markup=kb.group)
+    await callback.answer()
+
+@router.callback_query(F.data == 'back_to_frequency')
+async def back_to_frequency(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выберите частоту', reply_markup=kb.frequency)
+    await callback.answer()
+
+@router.callback_query(F.data == 'back_to_signal')
+async def back_to_signal(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выберите тип сигнала', reply_markup=kb.type_signal)
+    await callback.answer()
+
+@router.callback_query(F.data == 'back_to_satellite')
+async def back_to_satellite(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выберите спутник', reply_markup=kb.names)
+    await callback.answer()
+
 @router.callback_query(F.data == 'back')
 async def back(callback: CallbackQuery):
     await callback.message.delete()
-    await callback.message.answer('Меню:', reply_markup=kb.menu)
-    
-    await callback.answer() 
-
-@router.callback_query(F.data == 'back_to_filter')
-async def back(callback: CallbackQuery):
-    await callback.message.delete()
-    await callback.message.answer('Выберите какие пролеты вас интерисуют', reply_markup=kb.filter)
-    
-    await callback.answer() 
-
+    await callback.message.answer('Главное меню', reply_markup=kb.menu)
+    await callback.answer()
 
 @router.callback_query(F.data.in_(["satellites_base", "about", 'otbits', 'passes', 'photos']))
 async def menu(callback: CallbackQuery):
@@ -66,7 +89,6 @@ async def menu(callback: CallbackQuery):
     await callback.answer()
 
 
-
 @router.callback_query(F.data.in_(['filter_names', 'filter_frequency', 'filter_signal_type', 'filter_group', 'satellite_passes']))
 async def handle_filters(callback: CallbackQuery):
     if callback.data == 'filter_names':
@@ -78,7 +100,7 @@ async def handle_filters(callback: CallbackQuery):
             text += f"{passe}\n\n"
         
         await callback.message.delete()
-        await callback.message.answer(text, reply_markup=kb.back)
+        await callback.message.answer(text, reply_markup=kb.back_to_filter)
         
     elif callback.data == 'filter_frequency':
         await callback.message.delete()
@@ -97,3 +119,68 @@ async def handle_filters(callback: CallbackQuery):
         await callback.message.answer("Введите название спутника для поиска пролетов:", reply_markup=kb.names)
         
     await callback.answer()
+
+@router.callback_query(F.data.in_({'freq_137', 'freq_1700'}))
+async def passes_freq(callback: CallbackQuery):
+    if callback.data == 'freq_137':
+        frequency = 137
+    elif callback.data == 'freq_1700':
+        frequency = 1698
+    
+    names, filter_of = find_satellites(cd_sat, frequency=frequency)
+    next_passes = find_next_passes_for_satellites(json_to_py(cd_passes), names)
+    text = f"Ближайшие пролеты спутников, отсортированные по {filter_of[0]}:\n\n"
+    for passe in next_passes:
+        text += f"{passe}\n\n"
+    
+    await callback.message.delete()
+    await callback.message.answer(text, reply_markup=kb.back_to_frequency)
+
+@router.callback_query(F.data.in_({'signal_APT', 'signal_HRPT', 'signal_LRPT'}))
+async def passes_signal(callback: CallbackQuery):
+    if callback.data == 'signal_APT':
+        signal_type = 'APT'
+    elif callback.data == 'signal_HRPT':
+        signal_type = 'HRPT'
+    elif callback.data == 'signal_LRPT':
+        signal_type = 'LRPT'
+    
+    names, filter_of = find_satellites(cd_sat, signal_type=signal_type)
+    next_passes = find_next_passes_for_satellites(json_to_py(cd_passes), names)
+    text = f"Ближайшие пролеты спутников, отсортированные по {filter_of[0]}:\n\n"
+    for passe in next_passes:
+        text += f"{passe}\n\n"
+    
+    await callback.message.delete()
+    await callback.message.answer(text, reply_markup=kb.back_to_signal)
+
+@router.callback_query(F.data.in_({'group_NOAA', 'group_Meteor'}))
+async def passes_group(callback: CallbackQuery):
+    if callback.data == 'group_NOAA':
+        group_name = 'NOAA'
+    elif callback.data == 'group_Meteor':
+        group_name = 'Meteor'
+    
+    names, filter_of = find_satellites(cd_sat, group=group_name)
+    next_passes = find_next_passes_for_satellites(json_to_py(cd_passes), names)
+    text = f"Ближайшие пролеты спутников, отсортированные по {filter_of[0]}:\n\n"
+    for passe in next_passes:
+        text += f"{passe}\n\n"
+    
+    await callback.message.delete()
+    await callback.message.answer(text, reply_markup=kb.back_to_group)
+
+@router.callback_query(F.data.in_({
+    'NOAA 15', 'NOAA 18', 'NOAA 19', 
+    'NOAA 20 (JPSS-1)', 'NOAA 21 (JPSS-2)', 
+    'METEOR-M 2', 'METEOR-M2 2'
+}))
+async def passes_satellite(callback: CallbackQuery):
+    satellite_name = callback.data  
+    next_passes = find_next_passes_for_one_satellite(satellite_name, json_to_py(cd_passes))
+    text = f"Ближайшие пролеты {satellite_name}:\n\n"
+    for passe in next_passes:
+        text += f"{passe}\n\n"
+    
+    await callback.message.delete()
+    await callback.message.answer(text, reply_markup=kb.back_to_satellite)

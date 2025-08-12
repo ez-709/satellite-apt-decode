@@ -23,13 +23,11 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     
     tles = []
     urls = create_urls_to_htpp(cd_sat)
-    '''
     for url in urls:
         new_tles = get_not_deb_tle(url, active_names(cd_sat))
         tles.append(new_tles)
     for tle_group in tles:
         write_or_update_tles(tle_group, cd_tle)
-    '''
     calc_sats = []
     for sat_tle in sats_tle:
         calc_sats.append(calculate_orbit(sat_tle, end_time_hours, samples))

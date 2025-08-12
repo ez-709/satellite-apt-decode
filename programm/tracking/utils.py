@@ -2,6 +2,7 @@ import numpy as np
 from datetime import datetime, timezone, timedelta
 import time
 
+
 def  julian_time_to_unix(time_julian):
     return [time.utc_datetime().timestamp() for time in time_julian]
 
@@ -79,31 +80,56 @@ def binary_search(target_time, times_unix):
             most_closest_index = i
 
     return most_closest_index
-
 def find_next_passes_for_satellites(passes, names):
     passes = filter_by_names(names, passes)
     time_now = time.time()
     next_passes = []
     
     for i in range(len(passes)):
-        for time_point in passes[i]['points']:
+        for time_point in passes[0]['points']:
             time_rise = time_point['rise']
             time_culmination = float(str(time_point['culmination']).split()[0])
             time_set = time_point['set']
+            duration = time_point['duration (min:sec)']
             
             if time_set > time_now:  
                 if time_rise > time_now:
-                    next_passes.append(f"{passes[i]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
+                    next_passes.append(f"{passes[0]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
                 elif time_culmination > time_now:
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
+                    time_left = time_set - time_now
+                    next_passes.append(f"{passes[0]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 else:
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}")
+                    time_left = time_set - time_now
+                    next_passes.append(f"{passes[0]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 break
-    
+
+    next_passes.sort(key=lambda x: x.split('в ')[1].split('\n')[0])
+
     return next_passes
 
-def find_next_passes_for_one_satellite(passes, name):
-    return
+def find_next_passes_for_one_satellite(name, passes):
+    filtered_passes = filter_by_names([name], passes)
+    
+    time_now = time.time()
+    next_passes = []
+
+    for time_point in filtered_passes[0].get('points', []):
+        time_rise = time_point['rise']
+        time_culmination = float(str(time_point['culmination']).split()[0])
+        time_set = time_point['set']
+        duration = time_point['duration (min:sec)']
+        
+        if time_set > time_now:  
+            if time_rise > time_now:
+                next_passes.append(f"{name}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
+            elif time_culmination > time_now:
+                time_left = time_set - time_now
+                next_passes.append(f"{name}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+            else:
+                time_left = time_set - time_now
+                next_passes.append(f"{name}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+            
+    return next_passes[:4]
 
 def find_next_passe(time_now_unix, passes, names, rankimg = True):
     '''
@@ -145,35 +171,28 @@ def find_next_time_for_updating_calculations(last_time_unix_of_calculations, pas
 
     events.sort(key=lambda x: x[0])
 
-    # 1. Проверка: мы сейчас в пролёте?
     for rise, set_ in events:
         if rise <= next_time_unix <= set_:
-            print(f"[DEBUG] Ветка 1: внутри пролёта ({rise}→{set_}), перенос на {set_ + 5 - next_time_unix} сек")
-            return set_ + 5  # сразу после пролёта
+            print(f"Ветка 1: внутри пролёта ({rise}→{set_}), перенос на {set_ + 5 - next_time_unix} сек")
+            return set_ + 5 
 
-    # 2. Проверка: есть ли место до первого пролёта
     if next_time_unix + min_gap <= events[0][0]:
-        print(f"[DEBUG] Ветка 2: окно до первого пролёта, перенос не нужен")
+        print(f"Ветка 2: окно до первого пролёта, перенос не нужен")
         return next_time_unix
 
-    # 3. Поиск окна между пролётами
     for i in range(len(events) - 1):
-        # Если мы уже между пролётами и есть окно
         if events[i][1] <= next_time_unix <= events[i+1][0] - min_gap:
-            print(f"[DEBUG] Ветка 3: уже между пролётами ({events[i][1]}→{events[i+1][0]}), перенос не нужен")
+            print(f"Ветка 3: уже между пролётами ({events[i][1]}→{events[i+1][0]}), перенос не нужен")
             return next_time_unix
-        # Если надо подождать до конца текущего пролёта
         if events[i][1] > next_time_unix and events[i][1] + min_gap <= events[i+1][0]:
-            print(f"[DEBUG] Ветка 4: ждём до конца пролёта ({events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек")
+            print(f"Ветка 4: ждём до конца пролёта ({events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек")
             return events[i][1] + 5
 
-    # 4. Если пролёты закончились — можно делать расчёт в planned time
     if next_time_unix >= events[-1][1]:
-        print(f"[DEBUG] Ветка 5: после всех пролётов, перенос не нужен")
+        print(f"Ветка 5: после всех пролётов, перенос не нужен")
         return next_time_unix
 
-    # Теоретически сюда мы не дойдём, но оставим для надёжности
-    print(f"[DEBUG] Ветка 6: резервная, перенос на {events[-1][1] + 5 - next_time_unix} сек")
+    print(f"Ветка 6: резервная, перенос на {events[-1][1] + 5 - next_time_unix} сек")
     return events[-1][1] + 5
 
 

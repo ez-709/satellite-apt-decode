@@ -19,6 +19,30 @@ back = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Назад', callback_data='back')] 
 ])
 
+back_to_filter = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_filter')] 
+])
+
+back_to_group = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_group')] 
+])
+
+back_to_names = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names')] 
+])
+
+back_to_frequency = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_frequency')] 
+])
+
+back_to_signal = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal')] 
+])
+
+back_to_satellite = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_satellite')] 
+])
+
 filter = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Ближайшие пролеты каждого спутника', callback_data='filter_names')],
     [InlineKeyboardButton(text='По частоте', callback_data='filter_frequency'),
@@ -47,10 +71,7 @@ group = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Назад', callback_data='back_to_filter')]
 ])
 
-back_to_filter = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_filter')] 
-])
-
+#в случае добавления нового спутника, нужно изменить клавиатуру
 names = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='NOAA 15', callback_data='NOAA 15')],
     [InlineKeyboardButton(text='NOAA 18', callback_data='NOAA 18')],

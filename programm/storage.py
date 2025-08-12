@@ -18,27 +18,27 @@ def find_satellites(cd_sat, name=None, norad_id=None, frequency=None, min_record
 
     if name is not None:
         res = [sat for sat in res if sat['name'] == name]
-        filter_of.append(f'name is {name}')
+        filter_of.append(f"имени '{name}'")
 
     if norad_id is not None:
         res = [sat for sat in res if sat['norad id'] == norad_id] 
-        filter_of.append(f'norad id is {norad_id}')
+        filter_of.append(f"идентификатору NORAD {norad_id}")
 
     if frequency is not None:
         res = [sat for sat in res if np.floor(sat['frequency']) == np.floor(frequency)]
-        filter_of.append(f'frequency ≈ {frequency} MHz')
+        filter_of.append(f"частоте равной {frequency} МГц")
 
     if min_record_time is not None:
         res = [sat for sat in res if sat['min record time'] == min_record_time] 
-        filter_of.append(f'min record time is {min_record_time} minutes')
+        filter_of.append(f"минимальному времени записи {min_record_time} минут")
 
     if signal_type is not None:
         res = [sat for sat in res if sat['signal type'] == signal_type]
-        filter_of.append(f'signal type is {signal_type}')
+        filter_of.append(f"типу сигнала '{signal_type}'")
 
     if group is not None:
         res = [sat for sat in res if sat['group'] == group]
-        filter_of.append(f'group is {group}')
+        filter_of.append(f"группе '{group}'")
 
     names = [sat['name'] for sat in res]
     return names, filter_of
