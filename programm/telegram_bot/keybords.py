@@ -85,7 +85,7 @@ names = InlineKeyboardMarkup(inline_keyboard=[
 
 orbits = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="Все спутники (3 часа)", callback_data="orbits_all_3h")],
+        [InlineKeyboardButton(text="Все спутники (2 часа)", callback_data="orbits_all_2h")],
         [InlineKeyboardButton(text="Орбита конкретного спутника", callback_data="orbits_specific")],
         [InlineKeyboardButton(text="Орбиты по типу спутников", callback_data="orbits_by_type")], 
         [InlineKeyboardButton(text='Назад', callback_data='back')]

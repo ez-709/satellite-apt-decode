@@ -1,12 +1,14 @@
 import os
-from aiogram import Bot, Dispatcher, F, Router
-from aiogram.types import Message, KeyboardButton, ReplyKeyboardMarkup, CallbackQuery
-from aiogram.filters import Command, CommandStart
+import time
+from aiogram import F, Router
+from aiogram.types import Message, CallbackQuery, BufferedInputFile
+from aiogram.filters import Command
 
 import telegram_bot.keybords as kb 
 from storage import json_to_py, find_satellites
 from tracking.utils import (find_next_passes_for_satellites, find_next_passes_for_one_satellite,  
                             filter_by_names)
+from tracking.visualization import orbits_and_legend
 
 cd = os.getcwd() 
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
@@ -59,7 +61,7 @@ async def back(callback: CallbackQuery):
     await callback.message.answer('Главное меню', reply_markup=kb.menu)
     await callback.answer()
 
-# Роутер
+
 @router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
 async def menu(callback: CallbackQuery):
     if callback.data == 'satellites_base':
@@ -189,3 +191,39 @@ async def passes_satellite(callback: CallbackQuery):
     
     await callback.message.delete()
     await callback.message.answer(text, reply_markup=kb.back_to_satellite)
+
+@router.callback_query(F.data.in_({"orbits_all_2h", "orbits_specific", "orbits_by_type"}))
+async def orbits_handler(
+    callback: CallbackQuery,
+    sats_coors: list,       
+    step: int,
+    obs_lon: float,
+    obs_lat: float,
+    sats_tle: dict,
+    passes: dict
+):
+    unix_time_now = time.time()
+    await callback.message.delete()
+
+    if callback.data == 'orbits_all_2h':
+        names, filter_of = find_satellites(cd_sat)
+        buffer, text = orbits_and_legend(
+            sats_coors=sats_coors,    
+            time_now_unix=unix_time_now,
+            end_hour=2,
+            step=step,
+            lons_obs=obs_lon,
+            lats_obs=obs_lat,
+            names=names,
+            tles=sats_tle,
+            passes=passes,
+            filter_of=filter_of
+        )
+        await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=kb.back)
+
+    elif callback.data == 'orbits_specific':
+        await callback.message.answer("Выберите спутник:", reply_markup=kb.names)
+    elif callback.data == 'orbits_by_type':
+        await callback.message.answer("Выберите тип орбиты:", reply_markup=kb.group)
+
+    await callback.answer()
