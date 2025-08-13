@@ -97,6 +97,8 @@ def return_legend(time_now_unix,tles, passes, names):
     most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now_unix, passes, names)
     rise_str = unix_to_utc(most_closest_time_rise)
     set_str = unix_to_utc(most_closest_time_set)
+
+    tles = filter_by_names(names, tles)
     
     minutes_duration, seconds_duration = [int(i) for i in duration.split(':')]
 
@@ -114,7 +116,9 @@ def return_legend(time_now_unix,tles, passes, names):
     for tle in tles:
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
         name = tle['name']
-        text += f'{name} на высоте {str(now_altitude)[0:3]} км\n'
+        text += f'{name} на высоте {str(now_altitude)[0:3]} км\n\n'
+
+    text += 'Круги вокруг спутников - это зоны, где спутники сейчас над горизонтом.'
 
     return text
 
