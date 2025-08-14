@@ -71,14 +71,79 @@ orbits = with_back_button([
     [InlineKeyboardButton(text="Орбита конкретного спутника", callback_data="orbits_one_satellite")]
 ], 'back')
 
+NOAA_15_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_15')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+NOAA_18_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_18')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+NOAA_19_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_19')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+NOAA_20_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_20')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+NOAA_21_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_21')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+METEOR_M_2_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_METEOR_M_2')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+METEOR_M2_2_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_METEOR_M2_2')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
+])
+
+freq_137_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_freq_137')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_frequency_orbits')] 
+])
+
+freq_1700_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_freq_1700')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_frequency_orbits')] 
+])
+
+group_NOAA_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_group_NOAA')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_group_orbits')] 
+])
+
+group_Meteor_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_group_Meteor')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_group_orbits')] 
+])
+
+signal_APT_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_APT')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
+])
+
+signal_HRPT_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_HRPT')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
+])
+
+signal_LRPT_orbits = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_LRPT')],
+    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
+])
+
 all_orbit = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_all')],
     [InlineKeyboardButton(text='Назад', callback_data='back_to_orbits')] 
-])
-
-freq_orbit = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_freq')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_orbits_freq')] 
 ])
 
 freq_orbit_back = InlineKeyboardMarkup(inline_keyboard=[

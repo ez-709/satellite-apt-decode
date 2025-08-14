@@ -28,7 +28,7 @@ back_handlers = {
     'back_to_names_passes': ('Выберите спутник', kb.names_passes),
     'back_to_orbits': ('Выберите какие орбиты вас интересуют', kb.orbits),
     'back_to_group_orbits': ('Выберите группу спутников', kb.group_orbits),
-    'back_to_orbits_freq': ('Выберите частоту', kb.frequency_orbits),
+    'back_to_frequency_orbits': ('Выберите частоту', kb.frequency_orbits),
     'back_to_signal_orbits': ('Выберите тип сигнала', kb.type_signal_orbits),
     'back_to_names_orbits': ('Выберите спутник', kb.names_orbits),
     'back_to_orbits_filter': ('Орбиты спутников, отсортированные по:', kb.filter_orbits)
@@ -120,8 +120,8 @@ freq_config = {
         'freq_1700_passes': (1698, kb.back_to_frequency_passes),
     },
     'orbits': {
-        'freq_137_orbits': (137, kb.freq_orbit_back), 
-        'freq_1700_orbits': (1698, kb.freq_orbit_back),  
+        'freq_137_orbits': (137, kb.freq_137_orbits), 
+        'freq_1700_orbits': (1698, kb.freq_1700_orbits),  
     }
 }
 
@@ -164,11 +164,12 @@ signal_config = {
         'signal_LRPT_passes': ('LRPT', kb.back_to_signal_passes),
     },
     'orbits': {
-        'signal_APT_orbits': ('APT', kb.signal_orbit_back),
-        'signal_HRPT_orbits': ('HRPT', kb.signal_orbit_back),
-        'signal_LRPT_orbits': ('LRPT', kb.signal_orbit_back),  
+        'signal_APT_orbits': ('APT', kb.signal_APT_orbits),
+        'signal_HRPT_orbits': ('HRPT', kb.signal_HRPT_orbits),
+        'signal_LRPT_orbits': ('LRPT', kb.signal_LRPT_orbits),  
     }
 }
+
 @router.callback_query(F.data.in_(list(signal_config['passes'].keys()) + list(signal_config['orbits'].keys())))
 async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
                         obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
@@ -207,8 +208,8 @@ group_config = {
         'group_Meteor_passes': ('Meteor', kb.back_to_group_passes),
     },
     'orbits': {
-        'group_NOAA_orbits': ('NOAA', kb.group_orbit_back),
-        'group_Meteor_orbits': ('Meteor', kb.group_orbit_back), 
+        'group_NOAA_orbits': ('NOAA', kb.group_NOAA_orbits),
+        'group_Meteor_orbits': ('Meteor', kb.group_Meteor_orbits), 
     }
 }
 
@@ -255,13 +256,13 @@ satellite_config = {
         'METEOR-M2 2_passes': ('METEOR-M2 2', kb.back_to_names_passes),
     },
     'orbits': {
-        'NOAA 15_orbits': ('NOAA 15', kb.back_to_names_orbits),
-        'NOAA 18_orbits': ('NOAA 18', kb.back_to_names_orbits),
-        'NOAA 19_orbits': ('NOAA 19', kb.back_to_names_orbits),
-        'NOAA 20 (JPSS-1)_orbits': ('NOAA 20 (JPSS-1)', kb.back_to_names_orbits),
-        'NOAA 21 (JPSS-2)_orbits': ('NOAA 21 (JPSS-2)', kb.back_to_names_orbits),
-        'METEOR-M 2_orbits': ('METEOR-M 2', kb.back_to_names_orbits),
-        'METEOR-M2 2_orbits': ('METEOR-M2 2', kb.back_to_names_orbits),
+        'NOAA 15_orbits': ('NOAA 15', kb.NOAA_15_orbits),
+        'NOAA 18_orbits': ('NOAA 18', kb.NOAA_18_orbits),
+        'NOAA 19_orbits': ('NOAA 19', kb.NOAA_19_orbits),
+        'NOAA 20 (JPSS-1)_orbits': ('NOAA 20 (JPSS-1)', kb.NOAA_20_orbits),
+        'NOAA 21 (JPSS-2)_orbits': ('NOAA 21 (JPSS-2)', kb.NOAA_21_orbits),
+        'METEOR-M 2_orbits': ('METEOR-M 2', kb.METEOR_M_2_orbits),
+        'METEOR-M2 2_orbits': ('METEOR-M2 2', kb.METEOR_M2_2_orbits),
     }
 }
 
@@ -324,4 +325,78 @@ async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step:
     elif callback.data == "orbits_one_satellite":
         await callback.message.answer("Выберите спутник:", reply_markup=kb.names_orbits)
     
+    await callback.answer()
+
+@router.callback_query(F.data.startswith('update_'))
+async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+    
+    update_type = callback.data
+    
+    unix_time_now = time.time()
+
+    if update_type == 'update_orbit_all':
+        names, filter_of = find_satellites(cd_sat)
+        keyboard = kb.all_orbit
+    elif update_type == 'update_freq_137':
+        names, filter_of = find_satellites(cd_sat, frequency=137)
+        keyboard = kb.freq_137_orbits
+    elif update_type == 'update_freq_1700':
+        names, filter_of = find_satellites(cd_sat, frequency=1698)
+        keyboard = kb.freq_1700_orbits
+    elif update_type == 'update_signal_APT':
+        names, filter_of = find_satellites(cd_sat, signal_type='APT')
+        keyboard = kb.signal_APT_orbits
+    elif update_type == 'update_signal_HRPT':
+        names, filter_of = find_satellites(cd_sat, signal_type='HRPT')
+        keyboard = kb.signal_HRPT_orbits
+    elif update_type == 'update_signal_LRPT':
+        names, filter_of = find_satellites(cd_sat, signal_type='LRPT')
+        keyboard = kb.signal_LRPT_orbits
+    elif update_type == 'update_group_NOAA':
+        names, filter_of = find_satellites(cd_sat, group='NOAA')
+        keyboard = kb.group_NOAA_orbits
+    elif update_type == 'update_group_Meteor':
+        names, filter_of = find_satellites(cd_sat, group='Meteor')
+        keyboard = kb.group_Meteor_orbits
+    elif update_type == 'update_satellite_NOAA_15':
+        names, filter_of = find_satellites(cd_sat, name='NOAA 15')
+        keyboard = kb.NOAA_15_orbits
+    elif update_type == 'update_satellite_NOAA_18':
+        names, filter_of = find_satellites(cd_sat, name='NOAA 18')
+        keyboard = kb.NOAA_18_orbits
+    elif update_type == 'update_satellite_NOAA_19':
+        names, filter_of = find_satellites(cd_sat, name='NOAA 19')
+        keyboard = kb.NOAA_19_orbits
+    elif update_type == 'update_satellite_NOAA_20':
+        names, filter_of = find_satellites(cd_sat, name='NOAA 20 (JPSS-1)')
+        keyboard = kb.NOAA_20_orbits
+    elif update_type == 'update_satellite_NOAA_21':
+        names, filter_of = find_satellites(cd_sat, name='NOAA 21 (JPSS-2)')
+        keyboard = kb.NOAA_21_orbits
+    elif update_type == 'update_satellite_METEOR_M_2':
+        names, filter_of = find_satellites(cd_sat, name='METEOR-M 2')
+        keyboard = kb.METEOR_M_2_orbits
+    elif update_type == 'update_satellite_METEOR_M2_2':
+        names, filter_of = find_satellites(cd_sat, name='METEOR-M2 2')
+        keyboard = kb.METEOR_M2_2_orbits
+    else:
+        names, filter_of = find_satellites(cd_sat)
+        keyboard = kb.all_orbit
+    
+    buffer, text = orbits_and_legend(
+        sats_coors=sats_coors,    
+        time_now_unix=unix_time_now,
+        end_hour=2,
+        step=step,
+        lons_obs=obs_lon,
+        lats_obs=obs_lat,
+        names=names,
+        tles=sats_tle,
+        passes=passes,
+        filter_of=filter_of
+    )
+    
+    await callback.message.delete()
+    await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     await callback.answer()

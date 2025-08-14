@@ -2,10 +2,8 @@ from skyfield.api import load
 import os
 import threading
 
-from storage import json_to_py, find_satellites, read_config
+from storage import json_to_py, read_config
 from tracking.calculation import calculate_samples_from_hours
-from tracking.visualization import orbits_and_legend
-from tracking.utils import filter_by_names, check_end_time_hours_correct
 from background import background
 from telegram_bot.bot import run_telegram_bot
 
@@ -26,12 +24,11 @@ tles = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
 passes = json_to_py(cd_passes)
 
-run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 
-
-
 background_thread = threading.Thread(
     target=background, 
     args=(obs_lon, obs_lat, obs_alt, end_time_hours),
     daemon=True
 )
 background_thread.start()
+
+run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 
