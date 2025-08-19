@@ -17,6 +17,7 @@ cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.js
 cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
 cd_config = os.path.join(cd, 'programm', 'config.json')
+cd_decode = os.path.join(cd, 'programm', 'data_decode')
 
 obs_lon, obs_lat, obs_alt, end_time_hours, token = read_config(cd_config)
 samples, step = calculate_samples_from_hours(end_time_hours)
@@ -30,5 +31,4 @@ background_thread = threading.Thread(
     daemon=True
 )
 background_thread.start()
-
 run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 

@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import os
 
 def json_to_py(cd_json):
     '''Читает json с путем  'cd_json' и возвращает список словарей'''
@@ -139,3 +140,23 @@ def read_config(cd_config, observer_longitude=True, observer_latitude=True, obse
         out.append(config.get('telegram bot token'))
     
     return out
+
+
+
+def create_decode_folders_by_names(cd_decode, names):
+    for name in names:
+        full_path = os.path.join(cd_decode, name + '_decode')
+        os.makedirs(full_path, exist_ok=True)
+        waw_folder = os.path.join(full_path, 'waw')
+        os.makedirs(waw_folder, exist_ok=True)
+        img_folder = os.path.join(full_path, 'img')
+        os.makedirs(img_folder, exist_ok=True)
+
+def make_path_to_decode_sat(cd_decode, name, waw = False, img = False):
+    if waw == True:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'waw')
+    if img == True:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'img')
+    else:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name)
+    return path 

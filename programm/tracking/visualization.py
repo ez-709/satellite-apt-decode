@@ -1,11 +1,11 @@
 import io
-import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from datetime import datetime
 from skyfield.api import load
 from cartopy.feature.nightshade import Nightshade
+from aiogram.types import BufferedInputFile
 
 from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
 from .utils import binary_search, find_next_passe, unix_to_utc, filter_by_names
@@ -111,14 +111,14 @@ def return_legend(time_now_unix,tles, passes, names):
         f"Длительность: {minutes_duration} мин {seconds_duration} сек\n\n"
     )
 
-    text += f'Текущая высота спутников:\n'
+    text += f'Текущая высота спутников:\n\n'
 
     for tle in tles:
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
         name = tle['name']
-        text += f'{name} на высоте {str(now_altitude)[0:3]} км\n\n'
+        text += f'{name} на высоте {str(now_altitude)[0:3]} км\n'
 
-    text += 'Круги вокруг спутников - это зоны, где спутники сейчас над горизонтом.'
+    text += '\nКруги вокруг спутников - это зоны, где спутники сейчас над горизонтом.'
 
     return text
 
@@ -141,7 +141,6 @@ def visualization_orbit_for_satellites(sats, time_now_unix, end_hour, step, lons
     plt.close()
     buffer.seek(0)
     
-    from aiogram.types import BufferedInputFile
     return BufferedInputFile(buffer.getvalue(), filename="orbits.png")
 
 def orbits_and_legend(sats_coors, time_now_unix, end_hour, step, lons_obs, lats_obs, names, tles, passes, filter_of):
