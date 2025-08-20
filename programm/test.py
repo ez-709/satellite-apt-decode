@@ -1,40 +1,51 @@
-from skyfield.api import load, utc
 import os
+import scipy.io.wavfile as wav
+import scipy.signal
 import numpy as np
-from datetime import datetime, timezone, timedelta
+import matplotlib.pyplot as plt
 
-from storage import json_to_py, find_satellites, read_config
-from tracking.utils import check_end_time_hours_correct
-from tracking.calculation import calculate_samples_from_hours
-from tracking.visualization import visualization_orbit_for_satellites
-from tracking.utils import filter
-from background import background
+waw_path = r'D:\my-files\satellite-apt-decode\programm\data\data_decode\NOAA 15_decode\waw\noaa-15-example.wav'
 
-#.utc_iso().replace('T', ' ').replace('Z', ' UTC')
+def normalize(signal, plow=5, phigh=95):
+    low, high = np.percentile(signal, (plow, phigh))
+    data = np.round(255 * (signal - low) / (high - low))
+    return np.clip(data, 0, 255).astype(np.uint8)
 
-cd = os.getcwd() 
-cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.json')
-cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
-cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_config = os.path.join(cd, 'programm', 'config.json')
+def make_lines(signal):
+    syncA = np.array([0, 0, 255, 255, 0, 0, 255, 255,
+                      0, 0, 255, 255, 0, 0, 255, 255,
+                      0, 0, 255, 255, 0, 0, 255, 255,
+                      0, 0, 255, 255, 0, 0, 0, 0, 0,
+                      0, 0, 0]) - 128
+    peaks = [(0, 0)]
+    mindistance = 2000
+    signalshifted = signal.astype(np.int16) - 128
+    for i in range(len(signal)-len(syncA)):
+        corr = np.dot(syncA, signalshifted[i : i+len(syncA)])
+        if i - peaks[-1][0] > mindistance:
+            peaks.append((i, corr))
+        elif corr > peaks[-1][1]:
+            peaks[-1] = (i, corr)
+    matrix = []
+    for i in range(len(peaks) - 1):
+        row = signal[peaks[i][0] : peaks[i][0] + 2080]
+        if len(row) == 2080:
+            matrix.append(row)
+    return np.array(matrix)
 
-ts = load.timescale()
-utc_time_now = ts.now().utc_iso().replace('T', ' ').replace('Z', ' UTC')
+def decoder_apt(waw_path):
+    fs, data = wav.read(waw_path)
+    if data.ndim > 1:
+        data = data[:, 0]
+    coef = 20800 / fs
+    samples = int(coef * len(data))
+    data_resampled = scipy.signal.resample(data, samples)
+    analytic_signal = np.abs(scipy.signal.hilbert(data_resampled))
+    normalized_signal = normalize(analytic_signal)
+    matrix = make_lines(normalized_signal)
+    plt.imshow(matrix, cmap='gray', aspect='auto')
+    plt.axis('off')
+    plt.tight_layout()
+    plt.show()
 
-from datetime import datetime, timezone, timedelta
-
-def unix_to_utc(time_unix, time_zone=12):
-    time_str = str(datetime.fromtimestamp(time_unix, tz=timezone(timedelta(hours=time_zone))))
-    datetime_part = time_str[:19]
-    tz_part = time_str[26:29]
-    
-    tz_sign = tz_part[0]   
-    tz_hours = tz_part[1:].lstrip('0') 
-
-    utc_time = f"{datetime_part} {tz_sign}{tz_hours} UTC"
-    return utc_time
-
-print(unix_to_utc(1753848886.287127))
-
+decoder_apt(waw_path)

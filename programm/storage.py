@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import os
 
 def json_to_py(cd_json):
     '''Читает json с путем  'cd_json' и возвращает список словарей'''
@@ -12,36 +13,35 @@ def find_satellites(cd_sat, name=None, norad_id=None, frequency=None, min_record
     Ищет спутники по заданным параметрам.
     Возвращает список имён подходящих спутников и список применённых фильтров.
     '''
-    sat_data = json_to_py(cd_sat)  # Предполагается, что эта функция корректно парсит данные
+    sat_data = json_to_py(cd_sat)  
     res = sat_data
     filter_of = []
 
     if name is not None:
         res = [sat for sat in res if sat['name'] == name]
-        filter_of.append(f'name is {name}')
+        filter_of.append(f"имени '{name}'")
 
     if norad_id is not None:
-        res = [sat for sat in res if sat['norad id'] == norad_id]  # 'norad_id' → 'norad id'
-        filter_of.append(f'norad id is {norad_id}')
+        res = [sat for sat in res if sat['norad id'] == norad_id] 
+        filter_of.append(f"идентификатору NORAD {norad_id}")
 
     if frequency is not None:
         res = [sat for sat in res if np.floor(sat['frequency']) == np.floor(frequency)]
-        filter_of.append(f'frequency ≈ {frequency} MHz')
+        filter_of.append(f"частоте равной {frequency} МГц")
 
     if min_record_time is not None:
-        res = [sat for sat in res if sat['min record time'] == min_record_time]  # 'min_record_time' → 'min record time'
-        filter_of.append(f'min record time is {min_record_time} minutes')
+        res = [sat for sat in res if sat['min record time'] == min_record_time] 
+        filter_of.append(f"минимальному времени записи {min_record_time} минут")
 
     if signal_type is not None:
-        res = [sat for sat in res if sat['signal type'] == signal_type]  # 'signal_type' → 'signal type'
-        filter_of.append(f'signal type is {signal_type}')
+        res = [sat for sat in res if sat['signal type'] == signal_type]
+        filter_of.append(f"типу сигнала '{signal_type}'")
 
     if group is not None:
         res = [sat for sat in res if sat['group'] == group]
-        filter_of.append(f'group is {group}')
+        filter_of.append(f"группе '{group}'")
 
-    names = [sat['name'] for sat in res]  # Упрощённое извлечение имён
-
+    names = [sat['name'] for sat in res]
     return names, filter_of
 
 
@@ -117,7 +117,7 @@ def update_calculations(new_calcs, cd_calc):
     with open(cd_calc, 'w') as f:
         json.dump(json_f, f, indent = 4)
 
-def read_config(cd_config, observer_longitude=True, observer_latitude=True, observer_altitude=True, end_time_hours=True):
+def read_config(cd_config, observer_longitude=True, observer_latitude=True, observer_altitude=True, end_time_hours=True, telegram_bot_token=True):
     '''
     функция читает конфиг и возвращает список с нужными параметрами упорядоченными так же как и сам конфиг
     '''
@@ -136,4 +136,27 @@ def read_config(cd_config, observer_longitude=True, observer_latitude=True, obse
     if end_time_hours == True:
         out.append(config.get('calculations for next (hours)'))
     
+    if telegram_bot_token == True:
+        out.append(config.get('telegram bot token'))
+    
     return out
+
+
+
+def create_decode_folders_by_names(cd_decode, names):
+    for name in names:
+        full_path = os.path.join(cd_decode, name + '_decode')
+        os.makedirs(full_path, exist_ok=True)
+        waw_folder = os.path.join(full_path, 'waw')
+        os.makedirs(waw_folder, exist_ok=True)
+        img_folder = os.path.join(full_path, 'img')
+        os.makedirs(img_folder, exist_ok=True)
+
+def make_path_to_decode_sat(cd_decode, name, waw = False, img = False):
+    if waw == True:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'waw')
+    if img == True:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'img')
+    else:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name)
+    return path 
