@@ -1,0 +1,576 @@
+[
+    {
+        "name": "NOAA 15",
+        "points": [
+            {
+                "rise": 1755575479.675484,
+                "culmination": "1755575717.614286 with 810.417 altitude",
+                "set": 1755575953.768387,
+                "duration (min:sec)": "7:54",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755581423.398345,
+                "culmination": "1755581739.789226 with 810.417 altitude",
+                "set": 1755582053.320979,
+                "duration (min:sec)": "10:30",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755587458.570599,
+                "culmination": "1755587682.071096 with 810.417 altitude",
+                "set": 1755587904.807889,
+                "duration (min:sec)": "7:26",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755610862.302034,
+                "culmination": "1755611058.31453 with 810.417 altitude",
+                "set": 1755611254.490412,
+                "duration (min:sec)": "6:32",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755616677.312457,
+                "culmination": "1755616989.928746 with 810.417 altitude",
+                "set": 1755617303.31578,
+                "duration (min:sec)": "10:26",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755622732.617533,
+                "culmination": "1755622999.166519 with 810.417 altitude",
+                "set": 1755623266.937829,
+                "duration (min:sec)": "8:54",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755660366.122278,
+                "culmination": "1755660525.126606 with 810.417 altitude",
+                "set": 1755660683.404323,
+                "duration (min:sec)": "5:17",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755666254.573219,
+                "culmination": "1755666569.998545 with 810.417 altitude",
+                "set": 1755666882.329058,
+                "duration (min:sec)": "10:28",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755672269.055583,
+                "culmination": "1755672532.253593 with 810.417 altitude",
+                "set": 1755672794.319079,
+                "duration (min:sec)": "8:45",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755695791.789954,
+                "culmination": "1755695916.214023 with 810.418 altitude",
+                "set": 1755696040.51699,
+                "duration (min:sec)": "4:9",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755701531.007587,
+                "culmination": "1755701828.535887 with 810.418 altitude",
+                "set": 1755702126.621456,
+                "duration (min:sec)": "9:56",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755707519.165089,
+                "culmination": "1755707816.665467 with 810.418 altitude",
+                "set": 1755708115.578229,
+                "duration (min:sec)": "9:56",
+                "mark of passe is": 3
+            }
+        ]
+    },
+    {
+        "name": "NOAA 18",
+        "points": [
+            {
+                "rise": 1755548028.117,
+                "culmination": "1755548338.22934 with 854.599 altitude",
+                "set": 1755548652.103316,
+                "duration (min:sec)": "10:24",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755592004.405528,
+                "culmination": "1755592330.372418 with 854.599 altitude",
+                "set": 1755592653.434315,
+                "duration (min:sec)": "10:49",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755598056.699918,
+                "culmination": "1755598361.460968 with 854.599 altitude",
+                "set": 1755598664.800461,
+                "duration (min:sec)": "10:8",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755621848.083686,
+                "culmination": "1755621968.57046 with 854.599 altitude",
+                "set": 1755622089.230558,
+                "duration (min:sec)": "4:1",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755627620.437168,
+                "culmination": "1755627924.327654 with 854.598 altitude",
+                "set": 1755628230.936251,
+                "duration (min:sec)": "10:10",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755633637.586507,
+                "culmination": "1755633957.476986 with 854.598 altitude",
+                "set": 1755634281.488063,
+                "duration (min:sec)": "10:44",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755677633.545376,
+                "culmination": "1755677950.077998 with 854.598 altitude",
+                "set": 1755678263.947066,
+                "duration (min:sec)": "10:30",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755683676.058366,
+                "culmination": "1755683991.699221 with 854.598 altitude",
+                "set": 1755684305.553845,
+                "duration (min:sec)": "10:29",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755689799.316,
+                "culmination": "1755689955.470374 with 854.598 altitude",
+                "set": 1755690111.523842,
+                "duration (min:sec)": "5:12",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755713264.028034,
+                "culmination": "1755713555.710741 with 854.598 altitude",
+                "set": 1755713849.458655,
+                "duration (min:sec)": "9:45",
+                "mark of passe is": 3
+            }
+        ]
+    },
+    {
+        "name": "NOAA 19",
+        "points": [
+            {
+                "rise": 1755587462.790894,
+                "culmination": "1755587764.986197 with 859.521 altitude",
+                "set": 1755588064.113643,
+                "duration (min:sec)": "10:1",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755593497.339051,
+                "culmination": "1755593814.850425 with 859.521 altitude",
+                "set": 1755594129.445943,
+                "duration (min:sec)": "10:32",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755599610.214605,
+                "culmination": "1755599785.948635 with 859.521 altitude",
+                "set": 1755599961.08826,
+                "duration (min:sec)": "5:51",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755623105.707241,
+                "culmination": "1755623388.47867 with 859.521 altitude",
+                "set": 1755623671.283091,
+                "duration (min:sec)": "9:26",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755629075.870111,
+                "culmination": "1755629405.600046 with 859.521 altitude",
+                "set": 1755629736.293163,
+                "duration (min:sec)": "11:0",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755635330.56976,
+                "culmination": "1755635506.066736 with 859.521 altitude",
+                "set": 1755635682.232588,
+                "duration (min:sec)": "5:52",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755673109.601336,
+                "culmination": "1755673395.91135 with 859.521 altitude",
+                "set": 1755673679.307439,
+                "duration (min:sec)": "9:30",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755679132.139742,
+                "culmination": "1755679456.30817 with 859.521 altitude",
+                "set": 1755679777.371164,
+                "duration (min:sec)": "10:45",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755685232.164792,
+                "culmination": "1755685436.794259 with 859.521 altitude",
+                "set": 1755685640.88754,
+                "duration (min:sec)": "6:49",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755708768.928497,
+                "culmination": "1755709035.202772 with 859.521 altitude",
+                "set": 1755709301.358158,
+                "duration (min:sec)": "8:52",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755714710.65845,
+                "culmination": "1755715042.478416 with 859.521 altitude",
+                "set": 1755715374.988099,
+                "duration (min:sec)": "11:4",
+                "mark of passe is": 3
+            }
+        ]
+    },
+    {
+        "name": "NOAA 20 (JPSS-1)",
+        "points": [
+            {
+                "rise": 1755554948.133016,
+                "culmination": "1755555197.254055 with 832.246 altitude",
+                "set": 1755555444.989344,
+                "duration (min:sec)": "8:17",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755560923.690828,
+                "culmination": "1755561249.12652 with 832.246 altitude",
+                "set": 1755561572.337239,
+                "duration (min:sec)": "10:49",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755566986.016867,
+                "culmination": "1755567220.456473 with 832.247 altitude",
+                "set": 1755567454.216219,
+                "duration (min:sec)": "7:48",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755590498.285473,
+                "culmination": "1755590716.068641 with 832.247 altitude",
+                "set": 1755590934.218936,
+                "duration (min:sec)": "7:16",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755596359.411558,
+                "culmination": "1755596680.55357 with 832.247 altitude",
+                "set": 1755597003.811684,
+                "duration (min:sec)": "10:44",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755602460.617974,
+                "culmination": "1755602724.896524 with 832.247 altitude",
+                "set": 1755602990.898944,
+                "duration (min:sec)": "8:50",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755640251.933169,
+                "culmination": "1755640452.357066 with 832.247 altitude",
+                "set": 1755640651.988734,
+                "duration (min:sec)": "6:40",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755646194.586713,
+                "culmination": "1755646520.429283 with 832.247 altitude",
+                "set": 1755646844.189064,
+                "duration (min:sec)": "10:50",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755652242.943486,
+                "culmination": "1755652506.133609 with 832.247 altitude",
+                "set": 1755652768.794788,
+                "duration (min:sec)": "8:46",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755675828.552913,
+                "culmination": "1755676005.624654 with 832.247 altitude",
+                "set": 1755676182.903918,
+                "duration (min:sec)": "5:54",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755681642.955735,
+                "culmination": "1755681956.191453 with 832.247 altitude",
+                "set": 1755682271.126296,
+                "duration (min:sec)": "10:28",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755687693.683768,
+                "culmination": "1755687984.79102 with 832.247 altitude",
+                "set": 1755688277.984964,
+                "duration (min:sec)": "9:44",
+                "mark of passe is": 3
+            }
+        ]
+    },
+    {
+        "name": "NOAA 21 (JPSS-2)",
+        "points": [
+            {
+                "rise": 1755557985.656955,
+                "culmination": "1755558300.363114 with 828.010 altitude",
+                "set": 1755558612.646634,
+                "duration (min:sec)": "10:27",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755564011.735112,
+                "culmination": "1755564310.481188 with 828.010 altitude",
+                "set": 1755564607.759198,
+                "duration (min:sec)": "9:56",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755593465.435744,
+                "culmination": "1755593754.606736 with 828.010 altitude",
+                "set": 1755594045.303933,
+                "duration (min:sec)": "9:40",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755599441.79166,
+                "culmination": "1755599758.336192 with 828.010 altitude",
+                "set": 1755600077.478657,
+                "duration (min:sec)": "10:36",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755643265.668099,
+                "culmination": "1755643564.136406 with 828.010 altitude",
+                "set": 1755643860.430072,
+                "duration (min:sec)": "9:55",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755649276.375388,
+                "culmination": "1755649589.313462 with 828.009 altitude",
+                "set": 1755649900.825713,
+                "duration (min:sec)": "10:24",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755655369.555777,
+                "culmination": "1755655536.914112 with 828.009 altitude",
+                "set": 1755655704.306325,
+                "duration (min:sec)": "5:35",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755678769.778239,
+                "culmination": "1755679037.545968 with 828.009 altitude",
+                "set": 1755679306.363902,
+                "duration (min:sec)": "8:57",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755684703.364884,
+                "culmination": "1755685026.216402 with 828.009 altitude",
+                "set": 1755685351.957383,
+                "duration (min:sec)": "10:49",
+                "mark of passe is": 3
+            },
+            {
+                "rise": 1755690911.826884,
+                "culmination": "1755691098.167495 with 828.009 altitude",
+                "set": 1755691285.405425,
+                "duration (min:sec)": "6:14",
+                "mark of passe is": 2
+            }
+        ]
+    },
+    {
+        "name": "METEOR-M 2",
+        "points": [
+            {
+                "rise": 1755565045.36986,
+                "culmination": "1755565273.417386 with 841.271 altitude",
+                "set": 1755565500.099479,
+                "duration (min:sec)": "7:35",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755571002.320611,
+                "culmination": "1755571326.971998 with 841.271 altitude",
+                "set": 1755571648.735491,
+                "duration (min:sec)": "10:46",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755577053.819431,
+                "culmination": "1755577298.758718 with 841.271 altitude",
+                "set": 1755577542.811789,
+                "duration (min:sec)": "8:9",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755600576.065854,
+                "culmination": "1755600766.361543 with 841.271 altitude",
+                "set": 1755600956.897142,
+                "duration (min:sec)": "6:21",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755606400.198335,
+                "culmination": "1755606716.28276 with 841.271 altitude",
+                "set": 1755607034.042614,
+                "duration (min:sec)": "10:34",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755612462.813731,
+                "culmination": "1755612745.010913 with 841.271 altitude",
+                "set": 1755613028.901347,
+                "duration (min:sec)": "9:26",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755656169.841679,
+                "culmination": "1755656492.181029 with 841.270 altitude",
+                "set": 1755656811.39354,
+                "duration (min:sec)": "10:42",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755662206.198718,
+                "culmination": "1755662479.911376 with 841.270 altitude",
+                "set": 1755662752.174514,
+                "duration (min:sec)": "9:6",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755691585.982873,
+                "culmination": "1755691889.691385 with 841.270 altitude",
+                "set": 1755692194.37555,
+                "duration (min:sec)": "10:8",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755697597.110438,
+                "culmination": "1755697901.564831 with 841.270 altitude",
+                "set": 1755698207.782563,
+                "duration (min:sec)": "10:11",
+                "mark of passe is": 2
+            }
+        ]
+    },
+    {
+        "name": "METEOR-M2 2",
+        "points": [
+            {
+                "rise": 1755566219.518752,
+                "culmination": "1755566503.536282 with 833.511 altitude",
+                "set": 1755566785.511618,
+                "duration (min:sec)": "9:26",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755572202.259908,
+                "culmination": "1755572514.430655 with 833.511 altitude",
+                "set": 1755572824.718048,
+                "duration (min:sec)": "10:22",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755578267.092311,
+                "culmination": "1755578447.79296 with 833.511 altitude",
+                "set": 1755578628.373755,
+                "duration (min:sec)": "6:1",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755601618.587739,
+                "culmination": "1755601871.341307 with 833.511 altitude",
+                "set": 1755602124.675519,
+                "duration (min:sec)": "8:26",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755607514.55946,
+                "culmination": "1755607834.033889 with 833.511 altitude",
+                "set": 1755608155.58467,
+                "duration (min:sec)": "10:41",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755613671.880559,
+                "culmination": "1755613877.669063 with 833.512 altitude",
+                "set": 1755614084.638368,
+                "duration (min:sec)": "6:53",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755651238.118158,
+                "culmination": "1755651483.444849 with 833.512 altitude",
+                "set": 1755651726.962217,
+                "duration (min:sec)": "8:9",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755657193.289518,
+                "culmination": "1755657513.66537 with 833.512 altitude",
+                "set": 1755657832.012507,
+                "duration (min:sec)": "10:39",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755663236.124937,
+                "culmination": "1755663464.762361 with 833.512 altitude",
+                "set": 1755663692.701659,
+                "duration (min:sec)": "7:37",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755686671.677563,
+                "culmination": "1755686885.582257 with 833.512 altitude",
+                "set": 1755687099.649935,
+                "duration (min:sec)": "7:8",
+                "mark of passe is": 1
+            },
+            {
+                "rise": 1755692513.670459,
+                "culmination": "1755692830.312877 with 833.512 altitude",
+                "set": 1755693149.147116,
+                "duration (min:sec)": "10:35",
+                "mark of passe is": 2
+            },
+            {
+                "rise": 1755698595.034214,
+                "culmination": "1755698854.167148 with 833.512 altitude",
+                "set": 1755699114.94799,
+                "duration (min:sec)": "8:40",
+                "mark of passe is": 1
+            }
+        ]
+    }
+]

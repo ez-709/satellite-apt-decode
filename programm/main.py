@@ -31,4 +31,5 @@ background_thread = threading.Thread(
     daemon=True
 )
 background_thread.start()
-run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 
+
+#run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 

@@ -80,6 +80,7 @@ def binary_search(target_time, times_unix):
             most_closest_index = i
 
     return most_closest_index
+    
 def find_next_passes_for_satellites(passes, names):
     passes = filter_by_names(names, passes)
     time_now = time.time()
@@ -131,23 +132,18 @@ def find_next_passes_for_one_satellite(name, passes):
             
     return next_passes[:4]
 
-def find_next_passe(time_now_unix, passes, names, rankimg = True):
-    '''
-    чтобы находить ближайший пролет нужно отключить ранжирование
-    иначе при наличии двух пролетов одновременно, выведится тот, что будет дольше в небе
-    '''
+def find_next_passe(time_now_unix, passes, names):
     passes = filter_by_names(names, passes)
-    most_closest_time_set = 1e100
     for sat in passes:
         for time in sat['points']:
             time_set = time['set']
-            if time_set > time_now_unix and time_set < most_closest_time_set:
+            if time_set > time_now_unix:
                 most_closest_time_set = time_set
                 most_closest_time_rise = time["rise"]
                 duration = time["duration (min:sec)"]
                 most_closest_sat_name_passe = sat["name"]
                 
-    return most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration
+                return most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration
 
 def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates):
     end_time_unix = time_now_unix + end_time_hour * 3600
