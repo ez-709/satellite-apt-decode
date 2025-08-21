@@ -139,6 +139,8 @@ async def freq_handler(callback: CallbackQuery, sats_coors: list = None, step: i
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else: 
+        await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -152,7 +154,6 @@ async def freq_handler(callback: CallbackQuery, sats_coors: list = None, step: i
             passes=passes,
             filter_of=filter_of
         )
-        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -184,6 +185,8 @@ async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step:
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else:
+        await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -197,7 +200,6 @@ async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step:
             passes=passes,
             filter_of=filter_of
         )
-        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -227,6 +229,8 @@ async def group_handler(callback: CallbackQuery, sats_coors: list = None, step: 
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else:
+        await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -240,7 +244,7 @@ async def group_handler(callback: CallbackQuery, sats_coors: list = None, step: 
             passes=passes,
             filter_of=filter_of
         )
-        await callback.message.delete()
+
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -292,6 +296,7 @@ async def satellite_handler(callback: CallbackQuery, sats_coors: list = None, st
             passes=passes,
             filter_of=filter_of
         )
+        await callback.answer("Идет загрузка, подождите...")
         await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
@@ -300,9 +305,10 @@ async def satellite_handler(callback: CallbackQuery, sats_coors: list = None, st
 @router.callback_query(F.data.in_({"orbits_all_2h", "orbits_by_filter", "orbits_one_satellite"}))
 async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
                         obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
-    await callback.message.delete()
     
     if callback.data == 'orbits_all_2h':
+        await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         names, filter_of = find_satellites(cd_sat)
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
@@ -320,9 +326,11 @@ async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step:
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=kb.all_orbit)
     
     elif callback.data == 'orbits_by_filter':
+        await callback.message.delete()
         await callback.message.answer("Орбиты спутников, отсортированные по:", reply_markup=kb.filter_orbits)
     
     elif callback.data == "orbits_one_satellite":
+        await callback.message.delete()
         await callback.message.answer("Выберите спутник:", reply_markup=kb.names_orbits)
     
     await callback.answer()
@@ -330,6 +338,9 @@ async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step:
 @router.callback_query(F.data.startswith('update_'))
 async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
                               obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+
+    await callback.answer("Идет загрузка, подождите...")
+    await callback.message.delete()
     
     update_type = callback.data
     
@@ -396,7 +407,6 @@ async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None,
         passes=passes,
         filter_of=filter_of
     )
-    
-    await callback.message.delete()
+
     await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     await callback.answer()

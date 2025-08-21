@@ -157,7 +157,7 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
 
  
 def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
-    next_time_unix = last_time_unix_of_calculations + 0.2 * 60 * 60
+    next_time_unix = last_time_unix_of_calculations + 24 * 60 * 60
     min_gap = 30
     events = []
 
