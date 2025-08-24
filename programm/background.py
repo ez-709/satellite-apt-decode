@@ -2,6 +2,7 @@ from skyfield.api import load, utc
 from datetime import datetime
 import os
 import time
+import traceback
 
 from storage import json_to_py, active_names, create_urls_to_htpp
 from storage import write_or_update_tles, update_calculations
@@ -19,7 +20,7 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     last_time_unix_of_calculations = dt.timestamp()
 
     samples, step  = calculate_samples_from_hours(end_time_hours)
-    sats_tle = json_to_py(cd_tle)
+    
     
     tles = []
     urls = create_urls_to_htpp(cd_sat)
@@ -29,6 +30,7 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     for tle_group in tles:
         write_or_update_tles(tle_group, cd_tle)
     calc_sats = []
+    sats_tle = json_to_py(cd_tle)
     for sat_tle in sats_tle:
         calc_sats.append(calculate_orbit(sat_tle, end_time_hours, samples))
 
@@ -60,5 +62,7 @@ def background(obs_lon, obs_lat, obs_alt, end_time_hours):
 
             time.sleep(5)     
         except Exception as e:
+            error_message = traceback.format_exc()
             print(f"Ошибка в background: {e}")
+            print(f"Полный стек вызовов:\n{error_message}")
             time.sleep(60)

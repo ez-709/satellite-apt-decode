@@ -1,51 +1,20 @@
-import os
-import scipy.io.wavfile as wav
-import scipy.signal
-import numpy as np
-import matplotlib.pyplot as plt
+from rtlsdr import RtlSdr
 
-waw_path = r'D:\my-files\satellite-apt-decode\programm\data\data_decode\NOAA 15_decode\waw\noaa-15-example.wav'
+# Создание объекта SDR
+sdr = RtlSdr()
 
-def normalize(signal, plow=5, phigh=95):
-    low, high = np.percentile(signal, (plow, phigh))
-    data = np.round(255 * (signal - low) / (high - low))
-    return np.clip(data, 0, 255).astype(np.uint8)
+# Настройка параметров (используй поддерживаемые значения)
+sdr.sample_rate = 2.4e6  # 2.4 MHz - максимальная частота дискретизации
+sdr.center_freq = 137.5e6  # Например, частота NOAA спутников
+sdr.gain = 'auto'
 
-def make_lines(signal):
-    syncA = np.array([0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 0, 0, 0,
-                      0, 0, 0]) - 128
-    peaks = [(0, 0)]
-    mindistance = 2000
-    signalshifted = signal.astype(np.int16) - 128
-    for i in range(len(signal)-len(syncA)):
-        corr = np.dot(syncA, signalshifted[i : i+len(syncA)])
-        if i - peaks[-1][0] > mindistance:
-            peaks.append((i, corr))
-        elif corr > peaks[-1][1]:
-            peaks[-1] = (i, corr)
-    matrix = []
-    for i in range(len(peaks) - 1):
-        row = signal[peaks[i][0] : peaks[i][0] + 2080]
-        if len(row) == 2080:
-            matrix.append(row)
-    return np.array(matrix)
+print(f"Sample rate: {sdr.sample_rate} Hz")
+print(f"Center frequency: {sdr.center_freq} Hz")
+print(f"Gain: {sdr.gain}")
 
-def decoder_apt(waw_path):
-    fs, data = wav.read(waw_path)
-    if data.ndim > 1:
-        data = data[:, 0]
-    coef = 20800 / fs
-    samples = int(coef * len(data))
-    data_resampled = scipy.signal.resample(data, samples)
-    analytic_signal = np.abs(scipy.signal.hilbert(data_resampled))
-    normalized_signal = normalize(analytic_signal)
-    matrix = make_lines(normalized_signal)
-    plt.imshow(matrix, cmap='gray', aspect='auto')
-    plt.axis('off')
-    plt.tight_layout()
-    plt.show()
+# Чтение данных
+samples = sdr.read_samples(256*1024)
+print(f"Read {len(samples)} samples")
 
-decoder_apt(waw_path)
+# Закрытие устройства
+sdr.close()

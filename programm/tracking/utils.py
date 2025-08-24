@@ -89,7 +89,8 @@ def find_next_passes_for_satellites(passes, names):
     for i in range(len(passes)):
         for time_point in passes[i]['points']:
             time_rise = time_point['rise']
-            time_culmination = float(str(time_point['culmination']).split()[0])
+            if 'culmination' in time_point:
+                time_culmination = float(str(time_point['culmination']).split()[0])
             time_set = time_point['set']
             duration = time_point['duration (min:sec)']
             
@@ -125,26 +126,13 @@ def find_next_passes_for_one_satellite(name, passes):
                 next_passes.append(f"{name}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
             elif time_culmination > time_now:
                 time_left = time_set - time_now
-                next_passes.append(f"{name}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                next_passes.append(f"{name}:\n сейчас над головой\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
             else:
                 time_left = time_set - time_now
-                next_passes.append(f"{name}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                next_passes.append(f"{name}:\n сейчас над головой\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
             
     return next_passes[:4]
-
-def find_next_passe(time_now_unix, passes, names):
-    passes = filter_by_names(names, passes)
-    for sat in passes:
-        for time in sat['points']:
-            time_set = time['set']
-            if time_set > time_now_unix:
-                most_closest_time_set = time_set
-                most_closest_time_rise = time["rise"]
-                duration = time["duration (min:sec)"]
-                most_closest_sat_name_passe = sat["name"]
-                
-                return most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration
-
+    
 def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates):
     end_time_unix = time_now_unix + end_time_hour * 3600
     times = sats_coordinates[0]["time unix"] 

@@ -8,7 +8,7 @@ from cartopy.feature.nightshade import Nightshade
 from aiogram.types import BufferedInputFile
 
 from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
-from .utils import binary_search, find_next_passe, unix_to_utc, filter_by_names
+from .utils import binary_search, find_next_passes_for_satellites, unix_to_utc, filter_by_names
 
 def setup_map(time_now_utc):
     plt.figure(figsize=(12, 12))
@@ -93,26 +93,17 @@ def plot_tittle(sats, end_hour, filter_of):
     else:
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов', pad=5)
 
-def return_legend(time_now_unix,tles, passes, names):
-    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now_unix, passes, names)
-    rise_str = unix_to_utc(most_closest_time_rise)
-    set_str = unix_to_utc(most_closest_time_set)
-
-    tles = filter_by_names(names, tles)
+def return_legend(time_now_unix, tles, passes, names):
+    next_passes = find_next_passes_for_satellites(passes, names)
     
-    minutes_duration, seconds_duration = [int(i) for i in duration.split(':')]
-
     text = f'Данные орбиты рассчитаны для времени: {unix_to_utc(time_now_unix)}\n\n'
     
-    text += (
-        f"Следующий пролёт у {most_closest_sat_name_passe}\n"
-        f"Восход: {rise_str}\n"
-        f"Заход: {set_str}\n"
-        f"Длительность: {minutes_duration} мин {seconds_duration} сек\n\n"
-    )
-
+    if next_passes:
+        text += next_passes[0] + "\n\n"
+    
     text += f'Текущая высота спутников:\n\n'
 
+    tles = filter_by_names(names, tles)
     for tle in tles:
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
         name = tle['name']
