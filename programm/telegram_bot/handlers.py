@@ -12,7 +12,7 @@ from tracking.visualization import orbits_and_legend
 cd = os.getcwd()
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_logs = os.path.join(cd, 'programm', 'data', 'data_base', 'logs.txt')
+cd_logs = os.path.join(cd, 'programm', 'data', 'logs', 'logs_tech.txt')
 
 router = Router()
 

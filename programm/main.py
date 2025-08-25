@@ -5,7 +5,7 @@ import time
 
 from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv
 from tracking.calculation import calculate_samples_from_hours
-from background import background
+from background import background_calculations, background_update_tles
 from telegram_bot.bot import run_telegram_bot
 
 ts = load.timescale()
@@ -29,10 +29,17 @@ sats_coor = json_to_py(cd_coordinates)
 passes = json_to_py(cd_passes)
 
 background_thread = threading.Thread(
-    target=background, 
+    target=background_calculations, 
     args=(obs_lon, obs_lat, obs_alt, end_time_hours),
     daemon=True
 )
 background_thread.start()
+
+background_tles_thread = threading.Thread(
+    target=background_update_tles, 
+    args=(),
+    daemon=True
+)
+background_tles_thread.start()
 
 run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 

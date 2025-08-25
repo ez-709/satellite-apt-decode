@@ -1,7 +1,6 @@
-import numpy as np
+import os
 from datetime import datetime, timezone, timedelta
 import time
-
 
 def  julian_time_to_unix(time_julian):
     return [time.utc_datetime().timestamp() for time in time_julian]
@@ -142,42 +141,57 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
         return "Расчет рассчитан на меньшее количество часов"
     else:
         return True
-
- 
 def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
+    from storage import write_logs
+    
     next_time_unix = last_time_unix_of_calculations + 1 * 60 * 60
     min_gap = 30
     events = []
-
+    cd = os.getcwd()
+    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+    
     for sat in passes:
         for point in sat['points']:
             events.append((point['rise'], point['set']))
 
     events.sort(key=lambda x: x[0])
 
+    result = None
+
     for rise, set_ in events:
         if rise <= next_time_unix <= set_:
-            print(f"Ветка 1: внутри пролёта ({rise}→{set_}), перенос на {set_ + 5 - next_time_unix} сек")
-            return set_ + 5 
+            log_message = f"Ветка 1: внутри пролёта ({rise}→{set_}), перенос на {set_ + 5 - next_time_unix} сек\n"
+            write_logs(cd_logs_back, log_message, update=True)
+            result = set_ + 5
+            return result
 
-    if next_time_unix + min_gap <= events[0][0]:
-        print(f"Ветка 2: окно до первого пролёта, перенос не нужен")
-        return next_time_unix
+    if result is None:
+        if next_time_unix + min_gap <= events[0][0]:
+            log_message = "Ветка 2: окно до первого пролёта, перенос не нужен\n"
+            write_logs(cd_logs_back, log_message, update=True)
+            result = next_time_unix
+            return result
+        else:
+            for i in range(len(events) - 1):
+                if events[i][1] <= next_time_unix <= events[i+1][0] - min_gap:
+                    log_message = f"Ветка 3: уже между пролётами ({events[i][1]}→{events[i+1][0]}), перенос не нужен\n"
+                    write_logs(cd_logs_back, log_message, update=True)
+                    result = next_time_unix
+                    return result
 
-    for i in range(len(events) - 1):
-        if events[i][1] <= next_time_unix <= events[i+1][0] - min_gap:
-            print(f"Ветка 3: уже между пролётами ({events[i][1]}→{events[i+1][0]}), перенос не нужен")
-            return next_time_unix
-        if events[i][1] > next_time_unix and events[i][1] + min_gap <= events[i+1][0]:
-            print(f"Ветка 4: ждём до конца пролёта ({events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек")
-            return events[i][1] + 5
+                if events[i][1] > next_time_unix and events[i][1] + min_gap <= events[i+1][0]:
+                    log_message = f"Ветка 4: ждём до конца пролёта ({events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек\n"
+                    write_logs(cd_logs_back, log_message, update=True)
+                    result = events[i][1] + 5
+                    return result
 
-    if next_time_unix >= events[-1][1]:
-        print(f"Ветка 5: после всех пролётов, перенос не нужен")
-        return next_time_unix
-
-    print(f"Ветка 6: резервная, перенос на {events[-1][1] + 5 - next_time_unix} сек")
-    return events[-1][1] + 5
-
-
-        
+            if next_time_unix >= events[-1][1]:
+                log_message = "Ветка 5: после всех пролётов, перенос не нужен\n"
+                write_logs(cd_logs_back, log_message, update=True)
+                result = next_time_unix
+                return result
+            else:
+                log_message = f"Ветка 6: резервная, перенос на {events[-1][1] + 5 - next_time_unix} сек\n"
+                write_logs(cd_logs_back, log_message, update=True)
+                result = events[-1][1] + 5
+                return result

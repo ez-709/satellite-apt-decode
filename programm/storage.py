@@ -120,14 +120,13 @@ def update_calculations(new_calcs, cd_calc):
     with open(cd_calc, 'w') as f:
         json.dump(json_f, f, indent = 4)
 
-def write_logs(cd_logs, last_time, next_time):
-    last_time_utc = unix_to_utc(last_time)
-    next_time_utc = unix_to_utc(next_time)
-    logs = (f'В последний раз вычисления обновлялись в {last_time_utc}\n'
-            f'Следующее обновление вычислений будет в {next_time_utc}')
-    
-    with open(cd_logs, 'w', encoding='utf-8') as f:
-        f.write(logs)
+def write_logs(cd_logs, text, update=True):
+    if update == True:
+        with open(cd_logs, 'a', encoding='utf-8') as f:
+            f.write(text)
+    else:
+        with open(cd_logs, 'w', encoding='utf-8') as f:
+            f.write(text)
     
 
 def read_config(cd_config, observer_longitude=True, observer_latitude=True, 
