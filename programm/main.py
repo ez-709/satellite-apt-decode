@@ -3,7 +3,7 @@ import os
 import threading
 import time
 
-from storage import json_to_py, read_config
+from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv
 from tracking.calculation import calculate_samples_from_hours
 from background import background
 from telegram_bot.bot import run_telegram_bot
@@ -20,7 +20,9 @@ cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
 cd_config = os.path.join(cd, 'programm', 'config.json')
 cd_decode = os.path.join(cd, 'programm', 'data_decode')
 
-obs_lon, obs_lat, obs_alt, end_time_hours, token = read_config(cd_config)
+obs_lon, obs_lat, obs_alt, end_time_hours, token, venv_name = read_config(cd_config)
+cd_venv = os.path.join(cd, venv_name)
+add_rtl_sdr_libs_to_venv(cd, cd_venv)
 samples, step = calculate_samples_from_hours(end_time_hours)
 tles = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)

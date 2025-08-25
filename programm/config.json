@@ -4,5 +4,6 @@
   "observer altitude": 150.0,
   "time zone utc": 3,
   "calculations for next (hours)": 48,
-  "telegram bot token": 
+  "telegram bot token": ,
+  "venv name":".venv"
 }

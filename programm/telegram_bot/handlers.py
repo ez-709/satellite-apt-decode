@@ -12,6 +12,7 @@ from tracking.visualization import orbits_and_legend
 cd = os.getcwd()
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+cd_logs = os.path.join(cd, 'programm', 'data', 'data_base', 'logs.txt')
 
 router = Router()
 
@@ -41,7 +42,7 @@ async def back_handler(callback: CallbackQuery):
     await callback.message.answer(text, reply_markup=keyboard)
     await callback.answer()
 
-@router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
+@router.callback_query(F.data.in_(["satellites_base", "about", 'tech_data', 'orbits', 'passes', 'photos']))
 async def menu_handler(callback: CallbackQuery):
     if callback.data == 'satellites_base':
         satellites = json_to_py(cd_sat)
@@ -57,10 +58,18 @@ async def menu_handler(callback: CallbackQuery):
         parse_mode = "Markdown"
         
     elif callback.data == 'about':
-        text = 'Проект автоматически рассчитывает орбиты спутников, визуализирует их на карте, обрабатывает и декодирует изображения, принимаемыми со спутников.'
+        text = ('Проект автоматически рассчитывает орбиты спутников, визуализирует их на карте, '
+        'обрабатывает и декодирует изображения, принимаемыми со спутников.')
         keyboard = kb.back
         parse_mode = None
-        
+    
+    elif callback.data == 'tech_data':
+        with open(cd_logs, 'r', encoding='utf-8') as f:
+            text = f.read()
+            f.close()
+        keyboard = kb.back
+        parse_mode = None
+                
     elif callback.data == 'passes':
         text = 'Выберите какие пролеты вас интересуют'
         keyboard = kb.filter_passes
@@ -72,7 +81,7 @@ async def menu_handler(callback: CallbackQuery):
         parse_mode = None
         
     elif callback.data == 'photos':
-        text = 'Фотографии спутников (в разработке)'
+        text = 'Фотографии спутников в разработке'
         keyboard = kb.back
         parse_mode = None
     

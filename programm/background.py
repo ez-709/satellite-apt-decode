@@ -4,8 +4,8 @@ import os
 import time
 import traceback
 
-from storage import json_to_py, active_names, create_urls_to_htpp
-from storage import write_or_update_tles, update_calculations
+from storage import (json_to_py, active_names, create_urls_to_htpp, write_or_update_tles, 
+                     update_calculations, write_logs)
 from tracking.parsing import get_not_deb_tle
 from tracking.calculation import calculate_orbit, calculate_samples_from_hours, calculate_passes
 from tracking.utils import find_next_time_for_updating_calculations
@@ -46,6 +46,7 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
 def background(obs_lon, obs_lat, obs_alt, end_time_hours):
     cd = os.getcwd() 
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+    cd_logs = os.path.join(cd, 'programm', 'data', 'data_base', 'logs.txt')
     passes = json_to_py(cd_passes)
     next_time = time.time()   
     while True:
@@ -55,6 +56,7 @@ def background(obs_lon, obs_lat, obs_alt, end_time_hours):
             if time_now >= next_time:
                 last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours)
                 next_time = find_next_time_for_updating_calculations(last_time_unix, passes)
+                write_logs(cd_logs, last_time_unix, next_time)
                 print(f'Обновлены вычисления в {datetime.fromtimestamp(time_now)}')
                 print(f"Следующий расчет: {datetime.fromtimestamp(next_time)}")
                 print(f"Разница: {next_time - time_now} секунд")

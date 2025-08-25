@@ -15,7 +15,8 @@ menu = InlineKeyboardMarkup(inline_keyboard=[
      InlineKeyboardButton(text='Фотографии со спутников', callback_data='photos')],
     [InlineKeyboardButton(text='База спутников', callback_data='satellites_base'),
      InlineKeyboardButton(text='Пролеты спутников', callback_data='passes')],
-    [InlineKeyboardButton(text='О проекте', callback_data='about')]
+    [InlineKeyboardButton(text='О проекте', callback_data='about'), 
+     InlineKeyboardButton(text='Технические данные', callback_data='tech_data')]
 ])
 
 back = back_button('back')
