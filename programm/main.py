@@ -3,7 +3,7 @@ import os
 import threading
 import time
 
-from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv
+from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv, clear_all_logs
 from tracking.calculation import calculate_samples_from_hours
 from background import background_calculations, background_update_tles
 from telegram_bot.bot import run_telegram_bot
@@ -19,6 +19,11 @@ cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
 cd_config = os.path.join(cd, 'programm', 'config.json')
 cd_decode = os.path.join(cd, 'programm', 'data_decode')
+cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
+cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+
+clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
 
 obs_lon, obs_lat, obs_alt, end_time_hours, token, venv_name = read_config(cd_config)
 cd_venv = os.path.join(cd, venv_name)
@@ -42,4 +47,4 @@ background_tles_thread = threading.Thread(
 )
 background_tles_thread.start()
 
-run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes) 
+run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes)

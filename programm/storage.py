@@ -128,7 +128,17 @@ def write_logs(cd_logs, text, update=True):
         with open(cd_logs, 'w', encoding='utf-8') as f:
             f.write(text)
     
-
+def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech):
+    with open(cd_logs_back, 'w') as f:
+        pass 
+    
+    with open(cd_logs_htpp, 'w') as f:
+        pass
+        
+    with open(cd_logs_tech, 'w') as f:
+        pass
+            
+    
 def read_config(cd_config, observer_longitude=True, observer_latitude=True, 
                 observer_altitude=True, end_time_hours=True, telegram_bot_token=True,
                 venv_name = True):
@@ -187,3 +197,5 @@ def add_rtl_sdr_libs_to_venv(cd, cd_venv):
     else:
         shutil.copy(cd_librtlsdr, cd_venv)
         shutil.copy(cd_libusb, cd_venv)
+
+

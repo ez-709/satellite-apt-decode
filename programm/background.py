@@ -19,38 +19,39 @@ def background_update_tles():
     
     tles = []
     urls = create_urls_to_htpp(cd_sat)
-    
-    for i, url in enumerate(urls):
-        try:
-            if i > 0:
-                time.sleep(random.uniform(1, 3))
-            
-            new_tles = get_not_deb_tle(url, active_names(cd_sat))
-            if new_tles == 429:
-                write_logs(cd_logs_htpp, f'429 - слишком много запросов для {url}')
-                time.sleep(1800)
+    while True:
+        for i, url in enumerate(urls):
+            try:
+                if i > 0:
+                    time.sleep(random.uniform(1, 3))
                 
-            elif new_tles == 403:
-                write_logs(cd_logs_htpp, f'403 - доступ запрещен для {url}')
-                break  
-                
-            elif isinstance(new_tles, int) and new_tles >= 400:
-                write_logs(cd_logs_htpp, f'HTTP ошибка {new_tles} для {url}')
+                new_tles = get_not_deb_tle(url, active_names(cd_sat))
+                if new_tles == 429:
+                    write_logs(cd_logs_htpp, f'429 - слишком много запросов для {url} в {unix_to_utc(time.time())}')
+                    time.sleep(60*60)
+                    
+                elif new_tles == 403:
+                    write_logs(cd_logs_htpp, f'403 - доступ запрещен для {url} в {unix_to_utc(time.time())}')
+                    break  
+                    
+                elif isinstance(new_tles, int) and new_tles >= 400:
+                    write_logs(cd_logs_htpp, f'HTTP ошибка {new_tles} для {url} в {unix_to_utc(time.time())}')
+                    continue
+                    
+                elif new_tles:
+                    tles.append(new_tles)
+                    write_logs(cd_logs_htpp, f"Успешно получено {len(new_tles)} TLE из {url} в {unix_to_utc(time.time())}")
+                    
+            except Exception as e:
+                write_logs(cd_logs_htpp, f"Неожиданная ошибка для {url}: {e} в {unix_to_utc(time.time())}")
+                time.sleep(600) 
                 continue
-                
-            elif new_tles:
-                tles.append(new_tles)
-                write_logs(cd_logs_htpp, f"Успешно получено {len(new_tles)} TLE из {url}")
-                
-        except Exception as e:
-            write_logs(cd_logs_htpp, f"Неожиданная ошибка для {url}: {e}")
-            time.sleep(600) 
-            continue
 
-    if tles:
-        for tle_group in tles:
-            write_or_update_tles(tle_group, cd_tle)
-        write_logs(cd_logs_htpp, f"Обновлено TLE для {sum(len(t) for t in tles)} спутников")
+        if tles:
+            for tle_group in tles:
+                write_or_update_tles(tle_group, cd_tle)
+            write_logs(cd_logs_htpp, f"Обновлено TLE для {sum(len(t) for t in tles)} спутников в {unix_to_utc(time.time())}")
+        time.sleep(60 * 60 * random.uniform(24, 48))
 
 def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     cd = os.getcwd() 
@@ -94,11 +95,14 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
                 next_time_utc = unix_to_utc(next_time)
                 text = f'В последний раз вычисления обновлялись в {last_time_utc}\n'
                 text += f'Следующее обновление вычислений будет в {next_time_utc}'
+                text += f' в {unix_to_utc(time.time())}\n\n'
                 write_logs(cd_logs_calc, text, update=False)
                 print('Вычисления обновлены')
 
-            time.sleep(600)     
+            time.sleep(30)     
         except Exception as e:
             error_info = traceback.format_exc()
-            write_logs(cd_logs_back, f"Ошибка в background: {e}\nДетали:\n{error_info}\n\n")
+            text = f"Ошибка в background: {e}\nДетали:\n{error_info}\n\n"
+            text += f' в {unix_to_utc(time.time())}\n\n'
+            write_logs(cd_logs_back, text)
             time.sleep(60)
