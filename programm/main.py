@@ -2,6 +2,7 @@ from skyfield.api import load
 import os
 import threading
 import time
+import traceback
 
 from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv, clear_all_logs
 from tracking.calculation import calculate_samples_from_hours
@@ -47,4 +48,21 @@ background_tles_thread = threading.Thread(
 )
 background_tles_thread.start()
 
-run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes)
+while True:
+    try:
+        run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes)
+    except Exception as e:
+        error_time = time.asctime(time.localtime(time.time()))
+        tb = traceback.extract_tb(e.__traceback__)[-1]
+        file_name = tb.filename.split('\\')[-1]
+        line_number = tb.lineno
+        error_message = f'{error_time} - Ошибка в работе бота ({file_name}, строка {line_number}): {str(e)}\n'
+        
+        try:
+            with open(cd_logs_back, 'a', encoding='utf-8') as f:
+                f.write(error_message)
+        except:
+            pass
+        
+        time.sleep(5)
+        continue

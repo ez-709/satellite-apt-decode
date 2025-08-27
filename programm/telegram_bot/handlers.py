@@ -12,7 +12,9 @@ from tracking.visualization import orbits_and_legend
 cd = os.getcwd()
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_logs = os.path.join(cd, 'programm', 'data', 'logs', 'logs_tech.txt')
+cd_logs_tech = os.path.join(cd, 'programm', 'data', 'logs', 'logs_tech.txt')
+cd_logs_back = os.path.join(cd, 'programm', 'data', 'logs', 'logs_back.txt')
+cd_logs_htpp = os.path.join(cd, 'programm', 'data', 'logs', 'logs_htpp.txt')
 
 router = Router()
 
@@ -64,9 +66,14 @@ async def menu_handler(callback: CallbackQuery):
         parse_mode = None
     
     elif callback.data == 'tech_data':
-        with open(cd_logs, 'r', encoding='utf-8') as f:
-            text = f.read()
-            f.close()
+        with open(cd_logs_tech, 'r', encoding='utf-8') as f:
+            text = f.read() + '\n\n'
+        with open(cd_logs_back, 'r', encoding='utf-8') as f:  # ← ИЗМЕНЕНО: 'w' на 'r'
+            text += 'Логи фонового процесса: \n'
+            text += f.read()
+        with open(cd_logs_htpp, 'r', encoding='utf-8') as f:
+            text += '\n\nЛоги http сервера: \n'
+            text += f.read()
         keyboard = kb.back
         parse_mode = None
                 
