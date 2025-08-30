@@ -91,14 +91,14 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
             if time_now >= next_time:
                 time_start = time.time()
                 last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours)
-                time_end = time.time()
-                write_logs(cd_logs_back, f'вычисления заняли {round(time_start-time_end)} секунд \n')
                 next_time = find_next_time_for_updating_calculations(last_time_unix, passes)
                 last_time_utc = unix_to_utc(last_time_unix)
                 next_time_utc = unix_to_utc(next_time)
                 text = f'В последний раз вычисления обновлялись в {last_time_utc}\n'
                 text += f'Следующее обновление вычислений будет в {next_time_utc}'
                 write_logs(cd_logs_calc, text, update=False)
+                time_end = time.time()
+                write_logs(cd_logs_back, f'вычисления заняли {round(time_start-time_end)} секунд \n')
                 print('Вычисления обновлены')
 
             time.sleep(30)     

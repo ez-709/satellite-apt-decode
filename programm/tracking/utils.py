@@ -98,10 +98,10 @@ def find_next_passes_for_satellites(passes, names):
                     next_passes.append(f"{passes[i]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
                 elif time_culmination > time_now:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас над головой\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 else:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас на орбите\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append(f"{passes[i]['name']}:\n сейчас над головой\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
                 break
 
     next_passes.sort(key=lambda x: x.split('в ')[1].split('\n')[0])
