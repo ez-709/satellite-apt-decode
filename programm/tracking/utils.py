@@ -161,7 +161,7 @@ def find_next_time_for_updating_calculations(last_time_unix_of_calculations, pas
 
     for rise, set_ in events:
         if rise <= next_time_unix <= set_:
-            log_message = f"Ветка 1: внутри пролёта (начало: {rise}, конец: {set_}), перенос на {set_ + 5 - next_time_unix} сек\n"
+            log_message = f"Ветка 1: внутри пролёта (начало: {unix_to_utc(rise)}, конец: {unix_to_utc(set_)}), перенос на {set_ + 5 - next_time_unix} сек\n"
             write_logs(cd_logs_back, log_message, update=True)
             result = set_ + 5
             return result
@@ -175,13 +175,13 @@ def find_next_time_for_updating_calculations(last_time_unix_of_calculations, pas
         else:
             for i in range(len(events) - 1):
                 if events[i][1] <= next_time_unix <= events[i+1][0] - min_gap:
-                    log_message = f"Ветка 3: уже между пролётами (конец {events[i][1]} - начало {events[i+1][0]}), перенос не нужен\n"
+                    log_message = f"Ветка 3: уже между пролётами (конец {unix_to_utc(events[i][1])} - начало {unix_to_utc(events[i+1][0])}), перенос не нужен\n"
                     write_logs(cd_logs_back, log_message, update=True)
                     result = next_time_unix
                     return result
 
                 if events[i][1] > next_time_unix and events[i][1] + min_gap <= events[i+1][0]:
-                    log_message = f"Ветка 4: ждём до конца пролёта (конец: {events[i][1]}), перенос на {events[i][1] + 5 - next_time_unix} сек\n"
+                    log_message = f"Ветка 4: ждём до конца пролёта (конец: {unix_to_utc(events[i][1])}), перенос на {events[i][1] + 5 - next_time_unix} сек\n"
                     write_logs(cd_logs_back, log_message, update=True)
                     result = events[i][1] + 5
                     return result

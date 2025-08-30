@@ -34,35 +34,50 @@ tles = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
 passes = json_to_py(cd_passes)
 
-background_thread = threading.Thread(
-    target=background_calculations, 
-    args=(obs_lon, obs_lat, obs_alt, end_time_hours),
-    daemon=True
-)
-background_thread.start()
+try:
+    background_thread = threading.Thread(
+        target=background_calculations, 
+        args=(obs_lon, obs_lat, obs_alt, end_time_hours),
+        daemon=True
+    )
+    background_thread.start()
 
-background_tles_thread = threading.Thread(
-    target=background_update_tles, 
-    args=(),
-    daemon=True
-)
-background_tles_thread.start()
+    background_tles_thread = threading.Thread(
+        target=background_update_tles, 
+        args=(),
+        daemon=True
+    )
+    background_tles_thread.start()
 
-while True:
-    try:
-        run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes)
-    except Exception as e:
-        error_time = time.asctime(time.localtime(time.time()))
-        tb = traceback.extract_tb(e.__traceback__)[-1]
-        file_name = tb.filename.split('\\')[-1]
-        line_number = tb.lineno
-        error_message = f'{error_time} - Ошибка в работе бота ({file_name}, строка {line_number}): {str(e)}\n'
-        
+    while True:
         try:
-            with open(cd_logs_back, 'a', encoding='utf-8') as f:
-                f.write(error_message)
-        except:
-            pass
-        
-        time.sleep(5)
-        continue
+            run_telegram_bot(token, sats_coor, step, obs_lon, obs_lat, tles, passes)
+        except Exception as e:
+            error_time = time.asctime(time.localtime(time.time()))
+            tb = traceback.extract_tb(e.__traceback__)[-1]
+            file_name = tb.filename.split('\\')[-1]
+            line_number = tb.lineno
+            error_message = f'{error_time} - Ошибка в работе бота ({file_name}, строка {line_number}): {str(e)}\n'
+            
+            try:
+                with open(cd_logs_back, 'a', encoding='utf-8') as f:
+                    f.write(error_message)
+            except:
+                pass
+            
+            time.sleep(10)
+            continue
+
+except Exception as e:
+    error_time = time.asctime(time.localtime(time.time()))
+    tb = traceback.extract_tb(e.__traceback__)[-1]
+    file_name = tb.filename.split('\\')[-1]
+    line_number = tb.lineno
+    error_message = f'{error_time} - Ошибка в ({file_name}, строка {line_number}): {str(e)}\n'
+    
+    try:
+        with open(cd_logs_back, 'a', encoding='utf-8') as f:
+            f.write(error_message)
+    except:
+        pass
+    

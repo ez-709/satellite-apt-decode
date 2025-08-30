@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 sdr = RtlSdr()
 sdr.sample_rate = 2.048e6  
 sdr.center_freq = 100e6  
-sdr.gain = 70
+sdr.gain = 20
 
 fft_size = 512
 record_time_seconds = 5
@@ -23,6 +23,7 @@ for i in range(num_rows):
 extent = [sdr.center_freq/1e6 - sdr.sample_rate/2/1e6, 
           sdr.center_freq/1e6 + sdr.sample_rate/2/1e6, 
           record_time_seconds, 0]
+
 plt.imshow(spectrogram, aspect='auto', extent=extent)
 plt.xlabel("Frequency [MHz]")
 plt.ylabel("Time [s]")
