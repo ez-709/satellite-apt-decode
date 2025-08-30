@@ -3,52 +3,34 @@
         "name": "NOAA 15",
         "points": [
             {
-                "rise": 1756482952.922805,
-                "culmination": "1756483267.915987 with 826.520 altitude and 71.77986400323861 degrees above horizon",
-                "set": 1756483584.137286,
-                "duration (min:sec)": "10:31"
-            },
-            {
-                "rise": 1756526575.493919,
-                "culmination": "1756526836.251346 with 826.520 altitude and 25.70847169033246 degrees above horizon",
-                "set": 1756527095.536803,
-                "duration (min:sec)": "8:40"
-            },
-            {
-                "rise": 1756532535.654389,
-                "culmination": "1756532848.212662 with 826.519 altitude and 66.58285397407207 degrees above horizon",
-                "set": 1756533158.66823,
-                "duration (min:sec)": "10:23"
-            },
-            {
-                "rise": 1756567784.133729,
-                "culmination": "1756568099.033087 with 826.519 altitude and 77.22786244180837 degrees above horizon",
-                "set": 1756568414.897075,
-                "duration (min:sec)": "10:31"
-            },
-            {
-                "rise": 1756573875.325192,
-                "culmination": "1756574118.484444 with 826.519 altitude and 22.224970055582855 degrees above horizon",
-                "set": 1756574362.829568,
+                "rise": 1756573875.304311,
+                "culmination": "1756574118.453304 with 816.176 altitude and 22.22496803783318 degrees above horizon",
+                "set": 1756574362.95924,
                 "duration (min:sec)": "8:8"
             },
             {
-                "rise": 1756617364.570575,
-                "culmination": "1756617681.145563 with 826.519 altitude and 83.10757273139161 degrees above horizon",
-                "set": 1756617995.555807,
+                "rise": 1756617364.569851,
+                "culmination": "1756617681.216615 with 816.175 altitude and 83.10739673883778 degrees above horizon",
+                "set": 1756617995.562164,
                 "duration (min:sec)": "10:31"
             },
             {
-                "rise": 1756623388.653129,
-                "culmination": "1756623634.321883 with 826.519 altitude and 23.72082494602073 degrees above horizon",
-                "set": 1756623879.149442,
+                "rise": 1756623388.670308,
+                "culmination": "1756623634.125585 with 816.175 altitude and 23.72082420124711 degrees above horizon",
+                "set": 1756623879.154149,
                 "duration (min:sec)": "8:10"
             },
             {
-                "rise": 1756652630.892586,
-                "culmination": "1756652935.370516 with 826.519 altitude and 51.82714258788228 degrees above horizon",
-                "set": 1756653240.651178,
+                "rise": 1756652630.908196,
+                "culmination": "1756652935.465185 with 816.175 altitude and 51.82713304957415 degrees above horizon",
+                "set": 1756653240.65162,
                 "duration (min:sec)": "10:10"
+            },
+            {
+                "rise": 1756658649.784421,
+                "culmination": "1756658933.608993 with 816.175 altitude and 33.31050968983171 degrees above horizon",
+                "set": 1756659218.511733,
+                "duration (min:sec)": "9:29"
             }
         ]
     },
@@ -56,63 +38,39 @@
         "name": "NOAA 18",
         "points": [
             {
-                "rise": 1756489952.026343,
-                "culmination": "1756490226.214837 with 865.902 altitude and 27.28788215560235 degrees above horizon",
-                "set": 1756490501.621028,
-                "duration (min:sec)": "9:10"
-            },
-            {
-                "rise": 1756495904.303894,
-                "culmination": "1756496236.46709 with 865.902 altitude and 76.65006287597896 degrees above horizon",
-                "set": 1756496571.759497,
-                "duration (min:sec)": "11:7"
-            },
-            {
-                "rise": 1756539937.429731,
-                "culmination": "1756540219.222329 with 865.902 altitude and 27.32707545147869 degrees above horizon",
-                "set": 1756540498.09557,
-                "duration (min:sec)": "9:21"
-            },
-            {
-                "rise": 1756545953.707137,
-                "culmination": "1756546284.885465 with 865.902 altitude and 67.457810014051 degrees above horizon",
-                "set": 1756546612.744279,
-                "duration (min:sec)": "10:59"
-            },
-            {
-                "rise": 1756575603.958543,
-                "culmination": "1756575860.116599 with 865.902 altitude and 23.447099061030915 degrees above horizon",
-                "set": 1756576117.08334,
+                "rise": 1756575603.873893,
+                "culmination": "1756575859.940539 with 861.795 altitude and 23.44709885124128 degrees above horizon",
+                "set": 1756576117.088812,
                 "duration (min:sec)": "8:33"
             },
             {
-                "rise": 1756581527.387247,
-                "culmination": "1756581860.294192 with 865.902 altitude and 88.75671752161236 degrees above horizon",
-                "set": 1756582195.990702,
+                "rise": 1756581527.403662,
+                "culmination": "1756581860.186931 with 861.795 altitude and 88.7578171766083 degrees above horizon",
+                "set": 1756582195.995208,
                 "duration (min:sec)": "11:9"
             },
             {
-                "rise": 1756587700.887296,
-                "culmination": "1756587942.901152 with 865.902 altitude and 20.336066179278895 degrees above horizon",
-                "set": 1756588186.867682,
+                "rise": 1756587700.873175,
+                "culmination": "1756587942.944764 with 861.795 altitude and 20.33606531123791 degrees above horizon",
+                "set": 1756588186.748873,
                 "duration (min:sec)": "8:6"
             },
             {
-                "rise": 1756625575.752913,
-                "culmination": "1756625833.89056 with 865.902 altitude and 22.5071419650064 degrees above horizon",
-                "set": 1756626089.545298,
+                "rise": 1756625575.752994,
+                "culmination": "1756625833.728259 with 861.795 altitude and 22.507142699864946 degrees above horizon",
+                "set": 1756626089.544775,
                 "duration (min:sec)": "8:34"
             },
             {
-                "rise": 1756631576.218938,
-                "culmination": "1756631910.773229 with 865.902 altitude and 80.97490034810485 degrees above horizon",
-                "set": 1756632241.540777,
+                "rise": 1756631576.20888,
+                "culmination": "1756631910.771982 with 861.795 altitude and 80.97490299462369 degrees above horizon",
+                "set": 1756632241.531242,
                 "duration (min:sec)": "11:5"
             },
             {
-                "rise": 1756637660.035668,
-                "culmination": "1756637905.455499 with 865.902 altitude and 21.593537628478533 degrees above horizon",
-                "set": 1756638149.658238,
+                "rise": 1756637660.043473,
+                "culmination": "1756637905.304303 with 861.795 altitude and 21.59353519072885 degrees above horizon",
+                "set": 1756638149.696138,
                 "duration (min:sec)": "8:10"
             }
         ]
@@ -121,57 +79,27 @@
         "name": "NOAA 19",
         "points": [
             {
-                "rise": 1756485586.403834,
-                "culmination": "1756485829.556247 with 842.194 altitude and 21.640705317511532 degrees above horizon",
-                "set": 1756486072.527892,
-                "duration (min:sec)": "8:6"
-            },
-            {
-                "rise": 1756491496.04243,
-                "culmination": "1756491826.070251 with 842.194 altitude and 81.97021979141849 degrees above horizon",
-                "set": 1756492156.466327,
-                "duration (min:sec)": "11:0"
-            },
-            {
-                "rise": 1756497651.042961,
-                "culmination": "1756497902.952961 with 842.194 altitude and 22.007215476012526 degrees above horizon",
-                "set": 1756498155.469555,
-                "duration (min:sec)": "8:24"
-            },
-            {
-                "rise": 1756541549.763573,
-                "culmination": "1756541879.526017 with 842.195 altitude and 89.79543054386869 degrees above horizon",
-                "set": 1756542206.770108,
-                "duration (min:sec)": "10:57"
-            },
-            {
-                "rise": 1756547628.923237,
-                "culmination": "1756547881.077371 with 842.195 altitude and 23.26545898349608 degrees above horizon",
-                "set": 1756548132.197674,
-                "duration (min:sec)": "8:23"
-            },
-            {
-                "rise": 1756577138.50029,
-                "culmination": "1756577465.238329 with 842.195 altitude and 68.38893801965907 degrees above horizon",
-                "set": 1756577792.471276,
+                "rise": 1756577138.49856,
+                "culmination": "1756577465.390813 with 842.228 altitude and 68.38891711165913 degrees above horizon",
+                "set": 1756577792.466488,
                 "duration (min:sec)": "10:54"
             },
             {
-                "rise": 1756583256.177267,
-                "culmination": "1756583531.359399 with 842.195 altitude and 26.664132391140612 degrees above horizon",
-                "set": 1756583807.531106,
+                "rise": 1756583256.154736,
+                "culmination": "1756583531.463482 with 842.228 altitude and 26.664130961548473 degrees above horizon",
+                "set": 1756583807.472687,
                 "duration (min:sec)": "9:11"
             },
             {
-                "rise": 1756627187.63558,
-                "culmination": "1756627516.633394 with 842.195 altitude and 75.56961026263966 degrees above horizon",
-                "set": 1756627843.239146,
+                "rise": 1756627187.630833,
+                "culmination": "1756627516.661597 with 842.228 altitude and 75.56964616955175 degrees above horizon",
+                "set": 1756627843.218949,
                 "duration (min:sec)": "10:56"
             },
             {
-                "rise": 1756633257.936672,
-                "culmination": "1756633528.03044 with 842.195 altitude and 27.07178762264151 degrees above horizon",
-                "set": 1756633797.185367,
+                "rise": 1756633257.934942,
+                "culmination": "1756633528.107566 with 842.228 altitude and 27.07178857337323 degrees above horizon",
+                "set": 1756633797.211438,
                 "duration (min:sec)": "8:59"
             }
         ]
@@ -180,51 +108,27 @@
         "name": "NOAA 20 (JPSS-1)",
         "points": [
             {
-                "rise": 1756510943.728455,
-                "culmination": "1756511269.961166 with 829.276 altitude and 87.6703121852925 degrees above horizon",
-                "set": 1756511594.091574,
-                "duration (min:sec)": "10:50"
-            },
-            {
-                "rise": 1756517001.092462,
-                "culmination": "1756517246.082563 with 829.276 altitude and 22.448897651732086 degrees above horizon",
-                "set": 1756517490.633761,
-                "duration (min:sec)": "8:10"
-            },
-            {
-                "rise": 1756546383.164232,
-                "culmination": "1756546702.072661 with 829.276 altitude and 64.21666145703306 degrees above horizon",
-                "set": 1756547023.164382,
-                "duration (min:sec)": "10:40"
-            },
-            {
-                "rise": 1756552466.532,
-                "culmination": "1756552740.939685 with 829.276 altitude and 27.78481762824449 degrees above horizon",
-                "set": 1756553017.671437,
-                "duration (min:sec)": "9:11"
-            },
-            {
-                "rise": 1756596215.363946,
-                "culmination": "1756596540.35128 with 829.276 altitude and 70.70609172229992 degrees above horizon",
-                "set": 1756596863.007747,
+                "rise": 1756596215.361814,
+                "culmination": "1756596540.397468 with 829.402 altitude and 70.70605391072033 degrees above horizon",
+                "set": 1756596862.995396,
                 "duration (min:sec)": "10:48"
             },
             {
-                "rise": 1756602259.135268,
-                "culmination": "1756602531.075253 with 829.276 altitude and 28.18485015688918 degrees above horizon",
-                "set": 1756602802.049402,
+                "rise": 1756602259.14778,
+                "culmination": "1756602530.979499 with 829.402 altitude and 28.184854377048 degrees above horizon",
+                "set": 1756602802.056363,
                 "duration (min:sec)": "9:3"
             },
             {
-                "rise": 1756631669.176631,
-                "culmination": "1756631978.395071 with 829.276 altitude and 48.65909375001167 degrees above horizon",
-                "set": 1756632289.548644,
+                "rise": 1756631669.170556,
+                "culmination": "1756631978.486883 with 829.402 altitude and 48.65910772704126 degrees above horizon",
+                "set": 1756632289.56518,
                 "duration (min:sec)": "10:20"
             },
             {
-                "rise": 1756637703.878761,
-                "culmination": "1756638001.746789 with 829.276 altitude and 37.03255917498439 degrees above horizon",
-                "set": 1756638302.20724,
+                "rise": 1756637703.894734,
+                "culmination": "1756638001.866523 with 829.402 altitude and 37.03256861390426 degrees above horizon",
+                "set": 1756638302.141982,
                 "duration (min:sec)": "9:58"
             }
         ]
@@ -233,51 +137,27 @@
         "name": "NOAA 21 (JPSS-2)",
         "points": [
             {
-                "rise": 1756508009.84628,
-                "culmination": "1756508320.0417 with 832.549 altitude and 43.485802298203936 degrees above horizon",
-                "set": 1756508627.780043,
-                "duration (min:sec)": "10:18"
-            },
-            {
-                "rise": 1756514031.019937,
-                "culmination": "1756514335.179462 with 832.549 altitude and 42.174140973210804 degrees above horizon",
-                "set": 1756514637.784178,
-                "duration (min:sec)": "10:7"
-            },
-            {
-                "rise": 1756543497.171678,
-                "culmination": "1756543779.989456 with 832.549 altitude and 31.993649548806644 degrees above horizon",
-                "set": 1756544064.084797,
-                "duration (min:sec)": "9:27"
-            },
-            {
-                "rise": 1756549459.016549,
-                "culmination": "1756549778.471022 with 832.549 altitude and 60.418222999435216 degrees above horizon",
-                "set": 1756550100.778829,
-                "duration (min:sec)": "10:42"
-            },
-            {
-                "rise": 1756593291.387289,
-                "culmination": "1756593582.674142 with 832.549 altitude and 32.51806844584044 degrees above horizon",
-                "set": 1756593871.742258,
+                "rise": 1756593291.424706,
+                "culmination": "1756593582.713973 with 834.483 altitude and 32.51806464542952 degrees above horizon",
+                "set": 1756593871.731516,
                 "duration (min:sec)": "9:40"
             },
             {
-                "rise": 1756599296.300242,
-                "culmination": "1756599613.098966 with 832.549 altitude and 55.20740600821683 degrees above horizon",
-                "set": 1756599928.113432,
+                "rise": 1756599296.303421,
+                "culmination": "1756599613.154206 with 834.483 altitude and 55.20739778202575 degrees above horizon",
+                "set": 1756599928.114196,
                 "duration (min:sec)": "10:32"
             },
             {
-                "rise": 1756628804.060448,
-                "culmination": "1756629063.613134 with 832.549 altitude and 25.334629335327943 degrees above horizon",
-                "set": 1756629324.001744,
+                "rise": 1756628804.069541,
+                "culmination": "1756629063.622548 with 834.483 altitude and 25.33462872898884 degrees above horizon",
+                "set": 1756629324.005526,
                 "duration (min:sec)": "8:40"
             },
             {
-                "rise": 1756634723.423996,
-                "culmination": "1756635047.492204 with 832.549 altitude and 80.56740021908016 degrees above horizon",
-                "set": 1756635374.049314,
+                "rise": 1756634723.412328,
+                "culmination": "1756635047.371706 with 834.483 altitude and 80.56740773289614 degrees above horizon",
+                "set": 1756635374.067419,
                 "duration (min:sec)": "10:51"
             }
         ]
@@ -286,33 +166,15 @@
         "name": "METEOR-M 2",
         "points": [
             {
-                "rise": 1756519860.711552,
-                "culmination": "1756520180.972297 with 827.858 altitude and 62.614329896274945 degrees above horizon",
-                "set": 1756520498.53368,
-                "duration (min:sec)": "10:38"
-            },
-            {
-                "rise": 1756555281.567264,
-                "culmination": "1756555581.44361 with 827.858 altitude and 41.15427755737784 degrees above horizon",
-                "set": 1756555882.200901,
-                "duration (min:sec)": "10:1"
-            },
-            {
-                "rise": 1756561282.759296,
-                "culmination": "1756561589.90062 with 827.858 altitude and 44.15234811710175 degrees above horizon",
-                "set": 1756561899.123284,
+                "rise": 1756605032.640361,
+                "culmination": "1756605341.834097 with 827.640 altitude and 45.08112523948545 degrees above horizon",
+                "set": 1756605648.227527,
                 "duration (min:sec)": "10:16"
             },
             {
-                "rise": 1756605032.631027,
-                "culmination": "1756605341.853812 with 827.858 altitude and 45.081120839506276 degrees above horizon",
-                "set": 1756605648.221894,
-                "duration (min:sec)": "10:16"
-            },
-            {
-                "rise": 1756646431.811867,
-                "culmination": "1756646750.554334 with 827.858 altitude and 61.22154145306456 degrees above horizon",
-                "set": 1756647071.043644,
+                "rise": 1756646431.793722,
+                "culmination": "1756646750.487789 with 827.639 altitude and 61.221531717519156 degrees above horizon",
+                "set": 1756647071.065491,
                 "duration (min:sec)": "10:39"
             }
         ]
@@ -321,27 +183,15 @@
         "name": "METEOR-M2 2",
         "points": [
             {
-                "rise": 1756519141.053858,
-                "culmination": "1756519458.126731 with 815.728 altitude and 60.56939614154227 degrees above horizon",
-                "set": 1756519772.675417,
-                "duration (min:sec)": "10:32"
-            },
-            {
-                "rise": 1756560479.440861,
-                "culmination": "1756560781.575935 with 815.729 altitude and 42.828664268335544 degrees above horizon",
-                "set": 1756561086.282993,
-                "duration (min:sec)": "10:7"
-            },
-            {
-                "rise": 1756604143.512736,
-                "culmination": "1756604445.99309 with 815.729 altitude and 41.48603804361929 degrees above horizon",
-                "set": 1756604746.41025,
+                "rise": 1756604143.46691,
+                "culmination": "1756604446.025679 with 817.887 altitude and 41.48604056580357 degrees above horizon",
+                "set": 1756604746.409767,
                 "duration (min:sec)": "10:3"
             },
             {
-                "rise": 1756645454.478966,
-                "culmination": "1756645770.124488 with 815.729 altitude and 62.54210732401267 degrees above horizon",
-                "set": 1756646087.914195,
+                "rise": 1756645454.483634,
+                "culmination": "1756645770.021411 with 817.887 altitude and 62.54213585065423 degrees above horizon",
+                "set": 1756646087.898424,
                 "duration (min:sec)": "10:33"
             }
         ]
