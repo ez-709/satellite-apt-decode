@@ -197,5 +197,3 @@ def add_rtl_sdr_libs_to_venv(cd, cd_venv):
     else:
         shutil.copy(cd_librtlsdr, cd_venv)
         shutil.copy(cd_libusb, cd_venv)
-
-

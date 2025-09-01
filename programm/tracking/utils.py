@@ -146,7 +146,7 @@ def find_next_time_for_updating_calculations(last_time_unix_of_calculations, pas
     from storage import write_logs
     
     next_time_unix = last_time_unix_of_calculations + 24 * 60 * 60
-    min_gap = 30
+    min_gap = 122
     events = []
     cd = os.getcwd()
     cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
