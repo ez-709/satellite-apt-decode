@@ -426,3 +426,17 @@ async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None,
 
     await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     await callback.answer()
+
+@router.callback_query(F.data == "secret_menu")  # Или какое у вас значение callback_data
+async def secret_menu_handler(callback: CallbackQuery):
+    text = "Выберите действие:"
+    keyboard = secret_menu  # Ваша клавиатура из предыдущего сообщения
+    
+    await callback.message.edit_text(text, reply_markup=keyboard)
+    await callback.answer()
+
+# Обработка кнопок меню
+@router.callback_query(F.data.in_({
+    "tech_data", 
+    "refresh_calculations", 
+    "send_http_request", 

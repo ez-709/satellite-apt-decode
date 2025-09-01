@@ -11,47 +11,59 @@ from tracking.parsing import get_not_deb_tle
 from tracking.calculation import calculate_orbit, calculate_samples_from_hours, calculate_passes
 from tracking.utils import find_next_time_for_updating_calculations, unix_to_utc
 
-def background_update_tles():
+def background_update_tles(update=False):
     cd = os.getcwd()
     cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
     cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-    cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
-    
+    cd_logs_htpp = os.path.join(cd, 'programm', 'data', 'logs', 'logs_htpp.txt')
+
     tles = []
     urls = create_urls_to_htpp(cd_sat)
-    while True:
+
+    def process_urls():
+        nonlocal tles
         for i, url in enumerate(urls):
             try:
                 if i > 0:
                     time.sleep(random.uniform(1, 3))
-                
+
                 new_tles = get_not_deb_tle(url, active_names(cd_sat))
                 if new_tles == 429:
                     write_logs(cd_logs_htpp, f'429 - слишком много запросов для {url} в {unix_to_utc(time.time())}')
-                    time.sleep(60*60)
-                    
+                    time.sleep(60 * 60)
+
                 elif new_tles == 403:
                     write_logs(cd_logs_htpp, f'403 - доступ запрещен для {url} в {unix_to_utc(time.time())}')
-                    break  
-                    
+                    break
+
                 elif isinstance(new_tles, int) and new_tles >= 400:
                     write_logs(cd_logs_htpp, f'HTTP ошибка {new_tles} для {url} в {unix_to_utc(time.time())}')
                     continue
-                    
+
                 elif new_tles:
                     tles.append(new_tles)
                     write_logs(cd_logs_htpp, f"Успешно получено {len(new_tles)} TLE из {url} в {unix_to_utc(time.time())}")
-                    
+
             except Exception as e:
                 write_logs(cd_logs_htpp, f"Неожиданная ошибка для {url}: {e} в {unix_to_utc(time.time())}")
-                time.sleep(600) 
+                time.sleep(600)
                 continue
 
         if tles:
             for tle_group in tles:
                 write_or_update_tles(tle_group, cd_tle)
             write_logs(cd_logs_htpp, f"Обновлено TLE для {sum(len(t) for t in tles)} спутников в {unix_to_utc(time.time())}")
-        time.sleep(60 * 60 * random.uniform(24, 48))
+
+
+    if update == True:
+        process_urls()
+    else:
+        while True:
+            process_urls()
+            sleep_time = 60 * 60 * random.uniform(24, 48)
+            write_logs(cd_logs_htpp, f"Следующий htpp запрос будет в {unix_to_utc(time.time() + sleep_time)}")
+            time.sleep(sleep_time)
+            
 
 def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     cd = os.getcwd() 
