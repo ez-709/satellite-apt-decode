@@ -15,8 +15,7 @@ menu = InlineKeyboardMarkup(inline_keyboard=[
      InlineKeyboardButton(text='Фотографии со спутников', callback_data='photos')],
     [InlineKeyboardButton(text='База спутников', callback_data='satellites_base'),
      InlineKeyboardButton(text='Пролеты спутников', callback_data='passes')],
-    [InlineKeyboardButton(text='О проекте', callback_data='about'), 
-     InlineKeyboardButton(text='Технические данные', callback_data='tech_data')]
+    [InlineKeyboardButton(text='О проекте', callback_data='about')]
 ])
 
 back = back_button('back')
@@ -31,6 +30,7 @@ back_to_group_orbits = back_button('back_to_group_orbits')
 back_to_frequency_orbits = back_button('back_to_frequency_orbits')
 back_to_signal_orbits = back_button('back_to_signal_orbits')
 back_to_names_orbits = back_button('back_to_names_orbits')
+back_to_secret_menu = back_button('back_to_secret_menu')
 
 filter_passes = with_back_button([
     [InlineKeyboardButton(text='Ближайшие пролеты каждого спутника', callback_data='filter_names_passes')],

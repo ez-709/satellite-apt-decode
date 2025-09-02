@@ -5,16 +5,23 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 
 import telegram_bot.keybords as kb 
+from tracking.parsing import process_urls
 from storage import json_to_py, find_satellites
 from tracking.utils import (find_next_passes_for_satellites, find_next_passes_for_one_satellite)
 from tracking.visualization import orbits_and_legend
+from background import make_all_calculations_ones
 
-cd = os.getcwd()
+cd = os.getcwd() 
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
+cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
+cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.json')
+cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_logs_tech = os.path.join(cd, 'programm', 'data', 'logs', 'logs_tech.txt')
-cd_logs_back = os.path.join(cd, 'programm', 'data', 'logs', 'logs_back.txt')
-cd_logs_htpp = os.path.join(cd, 'programm', 'data', 'logs', 'logs_htpp.txt')
+cd_config = os.path.join(cd, 'programm', 'config.json')
+cd_decode = os.path.join(cd, 'programm', 'data_decode')
+cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
+cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 
 router = Router()
 
@@ -34,7 +41,8 @@ back_handlers = {
     'back_to_frequency_orbits': ('Выберите частоту', kb.frequency_orbits),
     'back_to_signal_orbits': ('Выберите тип сигнала', kb.type_signal_orbits),
     'back_to_names_orbits': ('Выберите спутник', kb.names_orbits),
-    'back_to_orbits_filter': ('Орбиты спутников, отсортированные по:', kb.filter_orbits)
+    'back_to_orbits_filter': ('Орбиты спутников, отсортированные по:', kb.filter_orbits),
+    'back_to_secret_menu' : ('Выберите действие:', kb.secret_menu)
 }
 
 @router.callback_query(F.data.in_(back_handlers.keys()))
@@ -44,7 +52,7 @@ async def back_handler(callback: CallbackQuery):
     await callback.message.answer(text, reply_markup=keyboard)
     await callback.answer()
 
-@router.callback_query(F.data.in_(["satellites_base", "about", 'tech_data', 'orbits', 'passes', 'photos']))
+@router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
 async def menu_handler(callback: CallbackQuery):
     if callback.data == 'satellites_base':
         satellites = json_to_py(cd_sat)
@@ -62,18 +70,6 @@ async def menu_handler(callback: CallbackQuery):
     elif callback.data == 'about':
         text = ('Проект автоматически рассчитывает орбиты спутников, визуализирует их на карте, '
         'обрабатывает и декодирует изображения, принимаемыми со спутников.')
-        keyboard = kb.back
-        parse_mode = None
-    
-    elif callback.data == 'tech_data':
-        with open(cd_logs_tech, 'r', encoding='utf-8') as f:
-            text = f.read() + '\n\n'
-        with open(cd_logs_back, 'r', encoding='utf-8') as f:  # ← ИЗМЕНЕНО: 'w' на 'r'
-            text += 'Логи фонового процесса: \n'
-            text += f.read()
-        with open(cd_logs_htpp, 'r', encoding='utf-8') as f:
-            text += '\n\nЛоги http сервера: \n'
-            text += f.read()
         keyboard = kb.back
         parse_mode = None
                 
@@ -427,16 +423,60 @@ async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None,
     await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     await callback.answer()
 
-@router.callback_query(F.data == "secret_menu")  # Или какое у вас значение callback_data
-async def secret_menu_handler(callback: CallbackQuery):
+@router.message(F.text == "нужна правда")
+async def secret_menu_handler(message: Message):
     text = "Выберите действие:"
-    keyboard = secret_menu  # Ваша клавиатура из предыдущего сообщения
+    keyboard = kb.secret_menu  
     
-    await callback.message.edit_text(text, reply_markup=keyboard)
-    await callback.answer()
+    await message.delete()
+    await message.answer(text, reply_markup=keyboard)
 
-# Обработка кнопок меню
 @router.callback_query(F.data.in_({
     "tech_data", 
     "refresh_calculations", 
     "send_http_request", 
+    "check_files"
+}))
+async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = None, obs_lat: float = None, 
+                                   obs_alt: float = None, end_time_hours: int = None):
+    action = callback.data
+    parse_mode = None
+    keyboard = kb.back_to_secret_menu
+    text = ""
+    
+    if action == "tech_data":
+        with open(cd_logs_tech, 'r', encoding='utf-8') as f:
+            text = f.read() + '\n\n'
+        with open(cd_logs_back, 'r', encoding='utf-8') as f:  
+            text += 'Логи фонового процесса: \n'
+            text += f.read()
+        with open(cd_logs_htpp, 'r', encoding='utf-8') as f:
+            text += '\n\nЛоги http сервера: \n'
+            text += f.read()
+
+        
+    elif action == "refresh_calculations":
+        await callback.answer("Идет загрузка, подождите...")
+        text = "Вычисления обновлены"
+        make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours)
+
+    elif action == "send_http_request":
+        await callback.answer("Идет загрузка, подождите...")
+        text = "HTPP запрос отправлен, проверьте логи"
+        process_urls()
+        
+    elif action == "check_files":
+        await callback.answer("Идет загрузка, подождите...")
+        sats = json_to_py(cd_sat)
+        tles = json_to_py(cd_tle)
+        coordinates = json_to_py(cd_coordinates)
+        passes = json_to_py(cd_passes)
+        text = "Результаты наличия проверки на наличие информации:\n\n"
+        text += f'Всего в проекте задействовано {len(sats)} спутников\n' 
+        text += f'В tles.json находится {len(tles)} спутников\n'
+        text += f'В coordinates.json находится {len(coordinates)} спутников\n'
+        text += f'В passes.json находится {len(passes)} спутников\n'  
+
+    await callback.message.delete()
+    await callback.message.answer(text, parse_mode=parse_mode, reply_markup=keyboard)
+    await callback.answer()
