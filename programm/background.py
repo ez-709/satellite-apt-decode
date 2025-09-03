@@ -4,6 +4,7 @@ import os
 import time
 import random
 import traceback
+import numpy as np
 
 from tracking.parsing import process_urls
 from storage import (json_to_py, active_names, create_urls_to_htpp, write_or_update_tles, 
@@ -69,7 +70,7 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
                 text += f'Следующее обновление вычислений будет в {next_time_utc}'
                 write_logs(cd_logs_calc, text, update=False)
                 time_end = time.time()
-                write_logs(cd_logs_back, f'вычисления заняли {round(time_start-time_end)} секунд \n')
+                write_logs(cd_logs_back, f'вычисления заняли {round(time_end-time_start)} секунд \n')
                 print('Вычисления обновлены')
   
         except Exception as e:
@@ -97,7 +98,7 @@ def make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours):
         text += f'Следующее обновление вычислений будет в {next_time_utc}'
         write_logs(cd_logs_calc, text, update=False)
         time_end = time.time()
-        write_logs(cd_logs_back, f'вычисления заняли {round(time_start-time_end)} секунд \n')
+        write_logs(cd_logs_back, f'вычисления заняли {round(time_end - time_start)} секунд \n')
         print('Вычисления обновлены')
   
     except Exception as e:

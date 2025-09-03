@@ -90,18 +90,35 @@ def find_next_passes_for_satellites(passes, names):
             time_rise = time_point['rise']
             if 'culmination' in time_point:
                 time_culmination = float(str(time_point['culmination']).split()[0])
+                angle = round(float(str(time_point['culmination']).split()[5]))
             time_set = time_point['set']
             duration = time_point['duration (min:sec)']
             
             if time_set > time_now:  
                 if time_rise > time_now:
-                    next_passes.append(f"{passes[i]['name']}:\n восход в {unix_to_utc(time_rise)}\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n продолжительность: {duration} (мин:сек)")
+                    next_passes.append((f"Ближайший пролет у {passes[i]['name']}:\n"
+                                        f"  восход в {unix_to_utc(time_rise)}\n"
+                                        f"  кульминация в {unix_to_utc(time_culmination)}\n"
+                                        f"  угол над горизонтом в момент кульминации: {angle} градусов\n"
+                                        f"  заход в {unix_to_utc(time_set)}\n"
+                                        f"  продолжительность: {duration} (мин:сек)\n"
+                                        ))
                 elif time_culmination > time_now:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас над головой\n кульминация в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append((f"{passes[i]['name']} сейчас над головой\n"
+                                        f"  кульминация в {unix_to_utc(time_culmination)}\n"
+                                        f"  угол над горизонтом в момент кульминации: {angle} градусов\n"
+                                        f"  заход в {unix_to_utc(time_set)}\n"
+                                        f"  осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)\n"
+                                        ))
                 else:
                     time_left = time_set - time_now
-                    next_passes.append(f"{passes[i]['name']}:\n сейчас над головой\n кульминация была в {unix_to_utc(time_culmination)}\n заход в {unix_to_utc(time_set)}\n осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)")
+                    next_passes.append((f"{passes[i]['name']} сейчас над головой\n"
+                                        f"  кульминация была в {unix_to_utc(time_culmination)}\n"
+                                        f"  угол над горизонтом в момент кульминации: {angle} градусов\n"
+                                        f"  заход в {unix_to_utc(time_set)}\n"
+                                        f"  осталось до конца: {seconds_to_minutes_and_seconds(time_left)} (мин:сек)\n"
+                                        ))
                 break
 
     next_passes.sort(key=lambda x: x.split('в ')[1].split('\n')[0])

@@ -435,7 +435,8 @@ async def secret_menu_handler(message: Message):
     "tech_data", 
     "refresh_calculations", 
     "send_http_request", 
-    "check_files"
+    "check_files", 
+    "rebot"
 }))
 async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = None, obs_lat: float = None, 
                                    obs_alt: float = None, end_time_hours: int = None):
@@ -445,6 +446,7 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
     text = ""
     
     if action == "tech_data":
+        await callback.message.delete()
         with open(cd_logs_tech, 'r', encoding='utf-8') as f:
             text = f.read() + '\n\n'
         with open(cd_logs_back, 'r', encoding='utf-8') as f:  
@@ -457,16 +459,19 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
         
     elif action == "refresh_calculations":
         await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         text = "Вычисления обновлены"
         make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours)
 
     elif action == "send_http_request":
         await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         text = "HTPP запрос отправлен, проверьте логи"
         process_urls()
         
     elif action == "check_files":
         await callback.answer("Идет загрузка, подождите...")
+        await callback.message.delete()
         sats = json_to_py(cd_sat)
         tles = json_to_py(cd_tle)
         coordinates = json_to_py(cd_coordinates)
@@ -475,8 +480,8 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
         text += f'Всего в проекте задействовано {len(sats)} спутников\n' 
         text += f'В tles.json находится {len(tles)} спутников\n'
         text += f'В coordinates.json находится {len(coordinates)} спутников\n'
-        text += f'В passes.json находится {len(passes)} спутников\n'  
-
-    await callback.message.delete()
+        text += f'В passes.json находится {len(passes)} спутников\n'
+    
+    
     await callback.message.answer(text, parse_mode=parse_mode, reply_markup=keyboard)
     await callback.answer()

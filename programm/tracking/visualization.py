@@ -2,7 +2,6 @@ import io
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from datetime import datetime
 from skyfield.api import load
 from cartopy.feature.nightshade import Nightshade
 from aiogram.types import BufferedInputFile
@@ -84,13 +83,13 @@ def plot_legend(ax):
         framealpha=0.6             # Полупрозрачный фон
     )
 
-def plot_tittle(sats, end_hour, filter_of):
-    if filter_of == True and len(sats) > 1:
+def plot_tittle(sats, end_hour, filter_of = ''):
+    if filter_of != '' and len(sats) > 1:
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов, отфильтрованы по {", ".join(str(el) for el in filter_of)}', pad=5)
     elif len(sats) == 1:
         name = sats[0]['name']
         plt.title(f'Орбита спутника {name} на ближайшие {end_hour} часов', pad=5)
-    else:
+    else: 
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов', pad=5)
 
 def return_legend(time_now_unix, tles, passes, names):
@@ -98,8 +97,12 @@ def return_legend(time_now_unix, tles, passes, names):
     
     text = f'Данные орбиты рассчитаны для времени: {unix_to_utc(time_now_unix)}\n\n'
     
-    if next_passes:
-        text += next_passes[0] + "\n\n"
+    for next_passe in next_passes:
+        if 'Ближайший' in next_passe:
+            text += next_passe
+            break
+        elif 'сейчас' in next_passe:
+            text += next_passe + '\n\n'
     
     text += f'Текущая высота спутников:\n\n'
 
