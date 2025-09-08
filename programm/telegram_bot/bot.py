@@ -19,10 +19,10 @@ def run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours,
                 dp["sats_coors"] = sats_coors
                 dp["passes"] = passes
                 
-                await time.sleep(24 * 60 * 60) 
+                await asyncio.sleep(24 * 60 * 60) 
             except Exception as e:
                 print(f"Ошибк* при обновлении данных: {e}")
-                await time.sleep(60) 
+                await asyncio.sleep(240) 
 
     async def main():
         bot = Bot(token=token)
