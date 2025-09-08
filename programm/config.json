@@ -3,6 +3,7 @@
   "observer latitude": 55.7558,
   "observer altitude": 150.0,
   "time zone utc": 3,
+  "step": 120, 
   "calculations for next (hours)": 48,
   "telegram bot token": ,
   "venv name":".venv"

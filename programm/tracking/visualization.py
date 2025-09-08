@@ -12,6 +12,7 @@ from .utils import binary_search, find_next_passes_for_satellites, unix_to_utc, 
 def setup_map(time_now_utc):
     plt.figure(figsize=(12, 12))
     ax = plt.axes(projection=ccrs.PlateCarree())
+    ax.set_global()
     ax.add_feature(Nightshade(time_now_utc, alpha=0.3))
     ax.add_feature(cfeature.LAND)
     ax.add_feature(cfeature.OCEAN)

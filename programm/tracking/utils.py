@@ -5,11 +5,10 @@ import time
 def  julian_time_to_unix(time_julian):
     return [time.utc_datetime().timestamp() for time in time_julian]
 
-def unix_to_utc(time_unix, time_zone=3):
+def unix_to_utc(time_unix, time_zone = 3):
     time_str = str(datetime.fromtimestamp(time_unix, tz=timezone(timedelta(hours=time_zone))))
     datetime_part = time_str[:19]
     tz_part = time_str[26:29]
-    
     tz_sign = tz_part[0]   
     tz_hours = tz_part[1:].lstrip('0') 
 

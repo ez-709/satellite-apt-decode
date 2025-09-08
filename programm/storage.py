@@ -140,7 +140,8 @@ def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech):
             
     
 def read_config(cd_config, observer_longitude=True, observer_latitude=True, 
-                observer_altitude=True, end_time_hours=True, telegram_bot_token=True,
+                observer_altitude=True, time_zone = True, step = True,
+                end_time_hours=True, telegram_bot_token=True,
                 venv_name = True):
     '''
     функция читает конфиг и возвращает список с нужными параметрами упорядоченными так же как и сам конфиг
@@ -156,6 +157,12 @@ def read_config(cd_config, observer_longitude=True, observer_latitude=True,
     
     if observer_altitude == True:
         out.append(config.get('observer altitude'))
+    
+    if time_zone == True:
+        out.append(config.get("time zone utc"))
+
+    if step == True:
+        out.append(config.get('step'))
     
     if end_time_hours == True:
         out.append(config.get('calculations for next (hours)'))

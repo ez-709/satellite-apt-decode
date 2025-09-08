@@ -1,1 +1,2 @@
-HTTP ошибка 503 для https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE в 2025-09-03 14:03:57 +3 UTCHTTP ошибка 503 для https://celestrak.org/NORAD/elements/gp.php?NAME=Meteor&FORMAT=TLE в 2025-09-03 14:03:59 +3 UTCСледующий htpp запрос будет в 2025-09-05 05:33:26 +3 UTC
+Успешно получено 5 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE в 2025-09-08 19:05:31 +3 UTCУспешно получено 2 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=Meteor&FORMAT=TLE в 2025-09-08 19:05:34 +3 UTCОбновлено TLE для 7 спутников в 2025-09-08 19:05:34 +3 UTCСледующий htpp запрос будет в 2025-09-10 10:35:41 +3 UTC
+

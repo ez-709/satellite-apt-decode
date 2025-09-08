@@ -4,14 +4,12 @@ import os
 import time
 import random
 import traceback
-import numpy as np
 
 from tracking.parsing import process_urls
-from storage import (json_to_py, active_names, create_urls_to_htpp, write_or_update_tles, 
-                     update_calculations, write_logs)
-from tracking.parsing import get_not_deb_tle
+from storage import json_to_py, update_calculations, write_logs
 from tracking.calculation import calculate_orbit, calculate_samples_from_hours, calculate_passes
 from tracking.utils import find_next_time_for_updating_calculations, unix_to_utc
+
 
 def background_update_tles(update=False):
     cd = os.getcwd()
@@ -22,7 +20,7 @@ def background_update_tles(update=False):
         while True:
             process_urls()
             sleep_time = 60 * 60 * random.uniform(24, 48)
-            write_logs(cd_logs_htpp, f"Следующий htpp запрос будет в {unix_to_utc(time.time() + sleep_time)}")
+            write_logs(cd_logs_htpp, f"Следующий htpp запрос будет в {unix_to_utc(time.time() + sleep_time)}\n\n")
             time.sleep(sleep_time)
             
 
