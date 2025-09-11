@@ -3,16 +3,7 @@ import scipy.io.wavfile as wav
 import scipy.signal
 import numpy as np
 import matplotlib.pyplot as plt
-
-'''
-
-#from storage import make_path_to_decode_sat
-cd = os.getcwd() 
-cd_decode = os.path.join(cd, 'programm', 'data_decode')
-cd_waw = make_path_to_decode_sat(cd_decode, 'NOAA 15', waw = True)
-'''
-
-waw_path = r'D:\my-files\satellite-apt-decode\programm\data\data_decode\NOAA 15_decode\waw\noaa-15-example.wav'
+import time
 
 def normalize(signal, plow=5, phigh=95):
     low, high = np.percentile(signal, (plow, phigh))
@@ -41,8 +32,9 @@ def make_lines(signal):
             matrix.append(row)
     return np.array(matrix)
 
-def decoder_apt(waw_path):
-    fs, data = wav.read(waw_path)
+def decoder_apt(wav_path):
+    start_time = time.time()
+    fs, data = wav.read(wav_path)
     if data.ndim > 1:
         data = data[:, 0]
     coef = 20800 / fs
@@ -55,6 +47,6 @@ def decoder_apt(waw_path):
     plt.imshow(matrix, cmap='gray', aspect='auto')
     plt.axis('off')
     plt.tight_layout()
-    plt.show()
+    plt.savefig(wav_path)
+    plt.close()
 
-decoder_apt(waw_path)

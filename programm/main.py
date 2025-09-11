@@ -4,7 +4,8 @@ import threading
 import time
 import traceback
 
-from storage import json_to_py, read_config, add_rtl_sdr_libs_to_venv, clear_all_logs
+from storage import (json_to_py, read_config, add_rtl_sdr_libs_to_venv, 
+                     clear_all_logs, create_decode_folders_by_names)
 from tracking.calculation import calculate_samples_from_hours
 from background import background_calculations, background_update_tles
 from telegram_bot.bot import run_telegram_bot
@@ -24,6 +25,11 @@ cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
 cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+
+sats = json_to_py(cd_sat)
+names = [sat['name'] for sat in sats]
+
+create_decode_folders_by_names(cd_decode, names)
 
 clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
 

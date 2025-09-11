@@ -175,18 +175,25 @@ def read_config(cd_config, observer_longitude=True, observer_latitude=True,
     
     return out
 
+def folder_name_by_sat_name(sat_name):
+    return sat_name.replace(" ", "_") + '_decode'
+
+def make_decode_results_names(sat_name, time_unix):
+    return (sat_name.replace('', '_') + str(unix_to_utc(time_unix)).replace(' ' , '_') + 'wav',
+            sat_name.replace('', '_') + str(unix_to_utc(time_unix)).replace(' ' , '_') + 'img') 
+
 def create_decode_folders_by_names(cd_decode, names):
     for name in names:
-        full_path = os.path.join(cd_decode, name + '_decode')
+        full_path = os.path.join(cd_decode, folder_name_by_sat_name(name))
         os.makedirs(full_path, exist_ok=True)
-        waw_folder = os.path.join(full_path, 'waw')
-        os.makedirs(waw_folder, exist_ok=True)
+        wav_folder = os.path.join(full_path, 'wav')
+        os.makedirs(wav_folder, exist_ok=True)
         img_folder = os.path.join(full_path, 'img')
         os.makedirs(img_folder, exist_ok=True)
 
-def make_path_to_decode_sat(cd_decode, name, waw = False, img = False):
-    if waw == True:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'waw')
+def make_path_to_decode_sat(cd_decode, name, wav = False, img = False):
+    if wav == True:
+        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'wav')
     if img == True:
         path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'img')
     else:
