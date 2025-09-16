@@ -5,23 +5,14 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 
 import telegram_bot.keybords as kb 
-from tracking.parsing import process_urls
 from storage import json_to_py, find_satellites
 from tracking.utils import (find_next_passes_for_satellites, find_next_passes_for_one_satellite)
 from tracking.visualization import orbits_and_legend
-from background import make_all_calculations_ones
+from telegram_bot.bot_cashe import get_cached_data
 
-cd = os.getcwd() 
+cd = os.getcwd()
 cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.json')
-cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_config = os.path.join(cd, 'programm', 'config.json')
-cd_decode = os.path.join(cd, 'programm', 'data_decode')
-cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
-cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 
 router = Router()
 
@@ -41,8 +32,7 @@ back_handlers = {
     'back_to_frequency_orbits': ('Выберите частоту', kb.frequency_orbits),
     'back_to_signal_orbits': ('Выберите тип сигнала', kb.type_signal_orbits),
     'back_to_names_orbits': ('Выберите спутник', kb.names_orbits),
-    'back_to_orbits_filter': ('Орбиты спутников, отсортированные по:', kb.filter_orbits),
-    'back_to_secret_menu' : ('Выберите действие:', kb.secret_menu)
+    'back_to_orbits_filter': ('Орбиты спутников, отсортированные по:', kb.filter_orbits)
 }
 
 @router.callback_query(F.data.in_(back_handlers.keys()))
@@ -68,11 +58,10 @@ async def menu_handler(callback: CallbackQuery):
         parse_mode = "Markdown"
         
     elif callback.data == 'about':
-        text = ('Проект автоматически рассчитывает орбиты спутников, визуализирует их на карте, '
-        'обрабатывает и декодирует изображения, принимаемыми со спутников.')
+        text = 'Проект автоматически рассчитывает орбиты спутников, визуализирует их на карте, обрабатывает и декодирует изображения, принимаемыми со спутников.'
         keyboard = kb.back
         parse_mode = None
-                
+        
     elif callback.data == 'passes':
         text = 'Выберите какие пролеты вас интересуют'
         keyboard = kb.filter_passes
@@ -84,7 +73,7 @@ async def menu_handler(callback: CallbackQuery):
         parse_mode = None
         
     elif callback.data == 'photos':
-        text = 'Фотографии спутников в разработке'
+        text = 'Фотографии спутников (в разработке)'
         keyboard = kb.back
         parse_mode = None
     
@@ -138,8 +127,11 @@ freq_config = {
 }
 
 @router.callback_query(F.data.in_(list(freq_config['passes'].keys()) + list(freq_config['orbits'].keys())))
-async def freq_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None, 
-                      obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+async def freq_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
+
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     frequency, keyboard = freq_config[handler_type][callback.data]
     
@@ -151,8 +143,6 @@ async def freq_handler(callback: CallbackQuery, sats_coors: list = None, step: i
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else: 
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -166,6 +156,7 @@ async def freq_handler(callback: CallbackQuery, sats_coors: list = None, step: i
             passes=passes,
             filter_of=filter_of
         )
+        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -184,8 +175,11 @@ signal_config = {
 }
 
 @router.callback_query(F.data.in_(list(signal_config['passes'].keys()) + list(signal_config['orbits'].keys())))
-async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
-                        obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+async def signal_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
+
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     signal_type, keyboard = signal_config[handler_type][callback.data]
     
@@ -197,8 +191,6 @@ async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step:
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else:
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -212,6 +204,7 @@ async def signal_handler(callback: CallbackQuery, sats_coors: list = None, step:
             passes=passes,
             filter_of=filter_of
         )
+        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -228,8 +221,11 @@ group_config = {
 }
 
 @router.callback_query(F.data.in_(list(group_config['passes'].keys()) + list(group_config['orbits'].keys())))
-async def group_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
-                       obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+async def group_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
+
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     group_name, keyboard = group_config[handler_type][callback.data]
     
@@ -241,8 +237,6 @@ async def group_handler(callback: CallbackQuery, sats_coors: list = None, step: 
         await callback.message.delete()
         await callback.message.answer(text, reply_markup=keyboard)
     else:
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
             sats_coors=sats_coors,    
@@ -256,7 +250,7 @@ async def group_handler(callback: CallbackQuery, sats_coors: list = None, step: 
             passes=passes,
             filter_of=filter_of
         )
-
+        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
@@ -283,8 +277,11 @@ satellite_config = {
 }
 
 @router.callback_query(F.data.in_(list(satellite_config['passes'].keys()) + list(satellite_config['orbits'].keys())))
-async def satellite_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
-                           obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+async def satellite_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
+
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     satellite_name, keyboard = satellite_config[handler_type][callback.data]
     
@@ -308,19 +305,19 @@ async def satellite_handler(callback: CallbackQuery, sats_coors: list = None, st
             passes=passes,
             filter_of=filter_of
         )
-        await callback.answer("Идет загрузка, подождите...")
         await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     
     await callback.answer()
 
 @router.callback_query(F.data.in_({"orbits_all_2h", "orbits_by_filter", "orbits_one_satellite"}))
-async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
-                        obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
+async def orbits_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
+    await callback.message.delete()
     
     if callback.data == 'orbits_all_2h':
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
         names, filter_of = find_satellites(cd_sat)
         unix_time_now = time.time()
         buffer, text = orbits_and_legend(
@@ -338,21 +335,18 @@ async def orbits_handler(callback: CallbackQuery, sats_coors: list = None, step:
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=kb.all_orbit)
     
     elif callback.data == 'orbits_by_filter':
-        await callback.message.delete()
         await callback.message.answer("Орбиты спутников, отсортированные по:", reply_markup=kb.filter_orbits)
     
     elif callback.data == "orbits_one_satellite":
-        await callback.message.delete()
         await callback.message.answer("Выберите спутник:", reply_markup=kb.names_orbits)
     
     await callback.answer()
 
 @router.callback_query(F.data.startswith('update_'))
-async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None, sats_tle: dict = None, passes: dict = None):
-
-    await callback.answer("Идет загрузка, подождите...")
-    await callback.message.delete()
+async def update_orbit_handler(callback: CallbackQuery, step: int = None,
+                              obs_lon: float = None, obs_lat: float = None):
+    
+    sats_coors, sats_tle, passes = get_cached_data()
     
     update_type = callback.data
     
@@ -419,69 +413,7 @@ async def update_orbit_handler(callback: CallbackQuery, sats_coors: list = None,
         passes=passes,
         filter_of=filter_of
     )
-
+    
+    await callback.message.delete()
     await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
-    await callback.answer()
-
-@router.message(F.text == "нужна правда")
-async def secret_menu_handler(message: Message):
-    text = "Выберите действие:"
-    keyboard = kb.secret_menu  
-    
-    await message.delete()
-    await message.answer(text, reply_markup=keyboard)
-
-@router.callback_query(F.data.in_({
-    "tech_data", 
-    "refresh_calculations", 
-    "send_http_request", 
-    "check_files", 
-    "rebot"
-}))
-async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = None, obs_lat: float = None, 
-                                   obs_alt: float = None, end_time_hours: int = None):
-    action = callback.data
-    parse_mode = None
-    keyboard = kb.back_to_secret_menu
-    text = ""
-    
-    if action == "tech_data":
-        await callback.message.delete()
-        with open(cd_logs_tech, 'r', encoding='utf-8') as f:
-            text = f.read() + '\n\n'
-        with open(cd_logs_back, 'r', encoding='utf-8') as f:  
-            text += 'Логи фонового процесса: \n'
-            text += f.read()
-        with open(cd_logs_htpp, 'r', encoding='utf-8') as f:
-            text += '\n\nЛоги http сервера: \n'
-            text += f.read()
-
-        
-    elif action == "refresh_calculations":
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
-        text = "Вычисления обновлены"
-        make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours)
-
-    elif action == "send_http_request":
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
-        text = "HTPP запрос отправлен, проверьте логи"
-        process_urls()
-        
-    elif action == "check_files":
-        await callback.answer("Идет загрузка, подождите...")
-        await callback.message.delete()
-        sats = json_to_py(cd_sat)
-        tles = json_to_py(cd_tle)
-        coordinates = json_to_py(cd_coordinates)
-        passes = json_to_py(cd_passes)
-        text = "Результаты наличия проверки на наличие информации:\n\n"
-        text += f'Всего в проекте задействовано {len(sats)} спутников\n' 
-        text += f'В tles.json находится {len(tles)} спутников\n'
-        text += f'В coordinates.json находится {len(coordinates)} спутников\n'
-        text += f'В passes.json находится {len(passes)} спутников\n'
-    
-    
-    await callback.message.answer(text, parse_mode=parse_mode, reply_markup=keyboard)
     await callback.answer()

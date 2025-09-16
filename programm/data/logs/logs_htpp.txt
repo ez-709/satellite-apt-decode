@@ -1,1 +1,2 @@
-Неожиданная ошибка для https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE: HTTPSConnectionPool(host='celestrak.org', port=443): Max retries exceeded with url: /NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002266987B6D0>, 'Connection to celestrak.org timed out. (connect timeout=30)')) в 2025-09-11 22:07:08 +3 UTC
+Успешно получено 5 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE в 2025-09-16 16:20:01 +3 UTCУспешно получено 2 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=Meteor&FORMAT=TLE в 2025-09-16 16:20:04 +3 UTCОбновлено TLE для 7 спутников в 2025-09-16 16:20:04 +3 UTCСледующий htpp запрос будет в 2025-09-18 14:45:45 +3 UTC
+

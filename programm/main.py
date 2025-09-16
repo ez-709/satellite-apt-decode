@@ -61,8 +61,7 @@ try:
 
     while True:
         try:
-            run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours, 
-                     cd_tle, cd_coordinates, cd_passes)
+            run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours)
         except Exception as e:
             error_time = time.asctime(time.localtime(time.time()))
             tb = traceback.extract_tb(e.__traceback__)[-1]
