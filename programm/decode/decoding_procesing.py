@@ -14,8 +14,8 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
 
     wav_name, img_name = make_decode_results_names(name_of_satellite, time.time())
 
-    cd_record_wav = os.path.join(cd_decode, name_folder, wav_name)
-    cd_record_img = os.path.join(cd_decode, name_folder, img_name)
+    cd_record_wav = os.path.join(cd_decode, name_folder, 'wav', wav_name)
+    cd_record_img = os.path.join(cd_decode, name_folder, 'img', img_name)
     sats = json_to_py(cd_sats)
     for sat in sats:
         if sat["name"] == name_of_satellite:
@@ -23,4 +23,4 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
 
     record_radio_wav(frequency, cd_record_wav, duration, gain, bandwidth)
 
-    decoder_apt(cd_record_img)
+    decoder_apt(cd_record_wav, cd_record_img)

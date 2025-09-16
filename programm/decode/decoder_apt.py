@@ -32,7 +32,7 @@ def make_lines(signal):
             matrix.append(row)
     return np.array(matrix)
 
-def decoder_apt(wav_path):
+def decoder_apt(wav_path, cd_img):
     start_time = time.time()
     fs, data = wav.read(wav_path)
     if data.ndim > 1:
@@ -47,6 +47,6 @@ def decoder_apt(wav_path):
     plt.imshow(matrix, cmap='gray', aspect='auto')
     plt.axis('off')
     plt.tight_layout()
-    plt.savefig(wav_path)
+    plt.savefig(cd_img)
     plt.close()
 

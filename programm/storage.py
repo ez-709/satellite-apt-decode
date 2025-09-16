@@ -179,8 +179,8 @@ def folder_name_by_sat_name(sat_name):
     return sat_name.replace(" ", "_") + '_decode'
 
 def make_decode_results_names(sat_name, time_unix):
-    return (sat_name.replace('', '_') + str(unix_to_utc(time_unix)).replace(' ' , '_') + 'wav',
-            sat_name.replace('', '_') + str(unix_to_utc(time_unix)).replace(' ' , '_') + 'img') 
+    return (sat_name.replace(' ', '_') + '__' + str(unix_to_utc(time_unix)).replace(' ' , '_').replace(':', '-') + '.wav',
+            sat_name.replace(' ', '_') + '__' + str(unix_to_utc(time_unix)).replace(' ' , '_').replace(':', '-')) 
 
 def create_decode_folders_by_names(cd_decode, names):
     for name in names:

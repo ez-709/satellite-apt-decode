@@ -38,8 +38,8 @@ back_handlers = {
 @router.callback_query(F.data.in_(back_handlers.keys()))
 async def back_handler(callback: CallbackQuery):
     text, keyboard = back_handlers[callback.data]
-    await callback.message.delete()
     await callback.message.answer(text, reply_markup=keyboard)
+    await callback.message.delete()
     await callback.answer()
 
 @router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
@@ -315,7 +315,6 @@ async def orbits_handler(callback: CallbackQuery, step: int = None,
                               obs_lon: float = None, obs_lat: float = None):
     
     sats_coors, sats_tle, passes = get_cached_data()
-    await callback.message.delete()
     
     if callback.data == 'orbits_all_2h':
         names, filter_of = find_satellites(cd_sat)
@@ -332,12 +331,15 @@ async def orbits_handler(callback: CallbackQuery, step: int = None,
             passes=passes,
             filter_of=filter_of
         )
+        await callback.message.delete()
         await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=kb.all_orbit)
     
     elif callback.data == 'orbits_by_filter':
+        await callback.message.delete()
         await callback.message.answer("Орбиты спутников, отсортированные по:", reply_markup=kb.filter_orbits)
     
     elif callback.data == "orbits_one_satellite":
+        await callback.message.delete()
         await callback.message.answer("Выберите спутник:", reply_markup=kb.names_orbits)
     
     await callback.answer()
