@@ -1,207 +1,208 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-def back_button(callback_data):
-    return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text='Назад', callback_data=callback_data)]
-    ])
+def back_button(text):
+    return ReplyKeyboardMarkup(keyboard=[
+        [KeyboardButton(text=text)]
+    ], resize_keyboard=True)
 
-def with_back_button(buttons, back_callback):
-    return InlineKeyboardMarkup(inline_keyboard=buttons + [
-        [InlineKeyboardButton(text='Назад', callback_data=back_callback)]
-    ])
+def with_back_button(buttons, back_text):
+    keyboard = []
+    for row in buttons:
+        keyboard_row = []
+        for button in row:
+            keyboard_row.append(KeyboardButton(text=button.text))
+        keyboard.append(keyboard_row)
+    keyboard.append([KeyboardButton(text=back_text)])
+    return ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True)
 
-menu = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Орбиты спутников', callback_data='orbits'),
-     InlineKeyboardButton(text='Фотографии со спутников', callback_data='photos')],
-    [InlineKeyboardButton(text='База спутников', callback_data='satellites_base'),
-     InlineKeyboardButton(text='Пролеты спутников', callback_data='passes')],
-    [InlineKeyboardButton(text='О проекте', callback_data='about')]
-])
+menu = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Орбиты спутников'), KeyboardButton(text='Фотографии со спутников')],
+    [KeyboardButton(text='База спутников'), KeyboardButton(text='Пролеты спутников')],
+    [KeyboardButton(text='О проекте')]
+], resize_keyboard=True)
 
-back = back_button('back')
-back_to_filter_passes = back_button('back_to_filter_passes')
-back_to_group_passes = back_button('back_to_group_passes')
-back_to_names_passes = back_button('back_to_names_passes')
-back_to_frequency_passes = back_button('back_to_frequency_passes')
-back_to_signal_passes = back_button('back_to_signal_passes')
-back_to_orbits = back_button('back_to_orbits')
-back_to_orbits_filter = back_button('back_to_orbits_filter')
-back_to_group_orbits = back_button('back_to_group_orbits')
-back_to_frequency_orbits = back_button('back_to_frequency_orbits')
-back_to_signal_orbits = back_button('back_to_signal_orbits')
-back_to_names_orbits = back_button('back_to_names_orbits')
-back_to_secret_menu = back_button('back_to_secret_menu')
+back = back_button('Назад')
+back_to_filter_passes = back_button('Назад')
+back_to_group_passes = back_button('Назад')
+back_to_names_passes = back_button('Назад')
+back_to_frequency_passes = back_button('Назад')
+back_to_signal_passes = back_button('Назад')
+back_to_orbits = back_button('Назад')
+back_to_orbits_filter = back_button('Назад')
+back_to_group_orbits = back_button('Назад')
+back_to_frequency_orbits = back_button('Назад')
+back_to_signal_orbits = back_button('Назад')
+back_to_names_orbits = back_button('Назад')
+back_to_secret_menu = back_button('Назад')
 
 filter_passes = with_back_button([
-    [InlineKeyboardButton(text='Ближайшие пролеты каждого спутника', callback_data='filter_names_passes')],
-    [InlineKeyboardButton(text='По частоте', callback_data='filter_frequency_passes'),
-     InlineKeyboardButton(text='По типу сигнала', callback_data='filter_signal_type_passes')],
-    [InlineKeyboardButton(text='По группе', callback_data='filter_group_passes'),
-     InlineKeyboardButton(text='Пролеты конкретного спутника', callback_data='satellite_passes')]
-], 'back')
+    [KeyboardButton(text='Ближайшие пролеты каждого спутника')],
+    [KeyboardButton(text='По частоте'), KeyboardButton(text='По типу сигнала')],
+    [KeyboardButton(text='По группе'), KeyboardButton(text='Пролеты конкретного спутника')]
+], 'Назад')
 
 frequency_passes = with_back_button([
-    [InlineKeyboardButton(text='137 МГц', callback_data='freq_137_passes')],
-    [InlineKeyboardButton(text='1.7 ГГц', callback_data='freq_1700_passes')]
-], 'back_to_filter_passes')
+    [KeyboardButton(text='137 МГц')],
+    [KeyboardButton(text='1.7 ГГц')]
+], 'Назад')
 
 type_signal_passes = with_back_button([
-    [InlineKeyboardButton(text='APT', callback_data='signal_APT_passes')],
-    [InlineKeyboardButton(text='HRPT', callback_data='signal_HRPT_passes')],
-    [InlineKeyboardButton(text='LRPT', callback_data='signal_LRPT_passes')]
-], 'back_to_filter_passes')
+    [KeyboardButton(text='APT')],
+    [KeyboardButton(text='HRPT')],
+    [KeyboardButton(text='LRPT')]
+], 'Назад')
 
 group_passes = with_back_button([
-    [InlineKeyboardButton(text='NOAA', callback_data='group_NOAA_passes')],
-    [InlineKeyboardButton(text='Meteor', callback_data='group_Meteor_passes')]
-], 'back_to_filter_passes')
+    [KeyboardButton(text='NOAA')],
+    [KeyboardButton(text='Meteor')]
+], 'Назад')
 
 names_passes = with_back_button([
-    [InlineKeyboardButton(text='NOAA 15', callback_data='NOAA 15_passes')],
-    [InlineKeyboardButton(text='NOAA 18', callback_data='NOAA 18_passes')],
-    [InlineKeyboardButton(text='NOAA 19', callback_data='NOAA 19_passes')],
-    [InlineKeyboardButton(text='NOAA 20 (JPSS-1)', callback_data='NOAA 20 (JPSS-1)_passes')],
-    [InlineKeyboardButton(text='NOAA 21 (JPSS-2)', callback_data='NOAA 21 (JPSS-2)_passes')],
-    [InlineKeyboardButton(text='METEOR-M 2', callback_data='METEOR-M 2_passes')],
-    [InlineKeyboardButton(text='METEOR-M2 2', callback_data='METEOR-M2 2_passes')]
-], 'back_to_filter_passes')
+    [KeyboardButton(text='NOAA 15')],
+    [KeyboardButton(text='NOAA 18')],
+    [KeyboardButton(text='NOAA 19')],
+    [KeyboardButton(text='NOAA 20 (JPSS-1)')],
+    [KeyboardButton(text='NOAA 21 (JPSS-2)')],
+    [KeyboardButton(text='METEOR-M 2')],
+    [KeyboardButton(text='METEOR-M2 2')]
+], 'Назад')
 
 orbits = with_back_button([
-    [InlineKeyboardButton(text="Все спутники (2 часа)", callback_data="orbits_all_2h")],
-    [InlineKeyboardButton(text="Орбиты спутников, отсортированные по:", callback_data="orbits_by_filter")], 
-    [InlineKeyboardButton(text="Орбита конкретного спутника", callback_data="orbits_one_satellite")]
-], 'back')
+    [KeyboardButton(text="Все спутники (2 часа)")],
+    [KeyboardButton(text="Орбиты спутников, отсортированные по:")], 
+    [KeyboardButton(text="Орбита конкретного спутника")]
+], 'Назад')
 
-NOAA_15_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_15')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+NOAA_15_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-NOAA_18_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_18')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+NOAA_18_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-NOAA_19_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_19')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+NOAA_19_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-NOAA_20_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_20')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+NOAA_20_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-NOAA_21_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_NOAA_21')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+NOAA_21_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-METEOR_M_2_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_METEOR_M_2')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+METEOR_M_2_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-METEOR_M2_2_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_satellite_METEOR_M2_2')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+METEOR_M2_2_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-freq_137_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_freq_137')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_frequency_orbits')] 
-])
+freq_137_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-freq_1700_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_freq_1700')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_frequency_orbits')] 
-])
+freq_1700_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-group_NOAA_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_group_NOAA')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_group_orbits')] 
-])
+group_NOAA_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-group_Meteor_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_group_Meteor')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_group_orbits')] 
-])
+group_Meteor_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-signal_APT_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_APT')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
-])
+signal_APT_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-signal_HRPT_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_HRPT')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
-])
+signal_HRPT_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-signal_LRPT_orbits = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_signal_LRPT')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
-])
+signal_LRPT_orbits = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-all_orbit = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_all')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_orbits')] 
-])
+all_orbit = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-freq_orbit_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_freq')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_orbits_freq')] 
-])
+freq_orbit_back = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-signal_orbit_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_signal')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_signal_orbits')] 
-])
+signal_orbit_back = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-group_orbit_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_group')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_group_orbits')] 
-])
+group_orbit_back = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
-satellite_orbit_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Обновить карту', callback_data='update_orbit_satellite')],
-    [InlineKeyboardButton(text='Назад', callback_data='back_to_names_orbits')] 
-])
+satellite_orbit_back = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить карту')],
+    [KeyboardButton(text='Назад')] 
+], resize_keyboard=True)
 
 filter_orbits = with_back_button([
-    [InlineKeyboardButton(text='По частоте', callback_data='filter_frequency_orbits')],
-    [InlineKeyboardButton(text='По типу сигнала', callback_data='filter_signal_type_orbits')],
-    [InlineKeyboardButton(text='По группе', callback_data='filter_group_orbits')]
-], 'back_to_orbits')
+    [KeyboardButton(text='По частоте')],
+    [KeyboardButton(text='По типу сигнала')],
+    [KeyboardButton(text='По группе')]
+], 'Назад')
 
 frequency_orbits = with_back_button([
-    [InlineKeyboardButton(text='137 МГц', callback_data='freq_137_orbits')],
-    [InlineKeyboardButton(text='1.7 ГГц', callback_data='freq_1700_orbits')]
-], 'back_to_orbits_filter')
+    [KeyboardButton(text='137 МГц')],
+    [KeyboardButton(text='1.7 ГГц')]
+], 'Назад')
 
 type_signal_orbits = with_back_button([
-    [InlineKeyboardButton(text='APT', callback_data='signal_APT_orbits')],
-    [InlineKeyboardButton(text='HRPT', callback_data='signal_HRPT_orbits')],
-    [InlineKeyboardButton(text='LRPT', callback_data='signal_LRPT_orbits')]
-], 'back_to_orbits_filter')
+    [KeyboardButton(text='APT')],
+    [KeyboardButton(text='HRPT')],
+    [KeyboardButton(text='LRPT')]
+], 'Назад')
 
 group_orbits = with_back_button([
-    [InlineKeyboardButton(text='NOAA', callback_data='group_NOAA_orbits')],
-    [InlineKeyboardButton(text='Meteor', callback_data='group_Meteor_orbits')]
-], 'back_to_orbits_filter')
+    [KeyboardButton(text='NOAA')],
+    [KeyboardButton(text='Meteor')]
+], 'Назад')
 
 names_orbits = with_back_button([
-    [InlineKeyboardButton(text='NOAA 15', callback_data='NOAA 15_orbits')],
-    [InlineKeyboardButton(text='NOAA 18', callback_data='NOAA 18_orbits')],
-    [InlineKeyboardButton(text='NOAA 19', callback_data='NOAA 19_orbits')],
-    [InlineKeyboardButton(text='NOAA 20 (JPSS-1)', callback_data='NOAA 20 (JPSS-1)_orbits')],
-    [InlineKeyboardButton(text='NOAA 21 (JPSS-2)', callback_data='NOAA 21 (JPSS-2)_orbits')],
-    [InlineKeyboardButton(text='METEOR-M 2', callback_data='METEOR-M 2_orbits')],
-    [InlineKeyboardButton(text='METEOR-M2 2', callback_data='METEOR-M2 2_orbits')]
-], 'back_to_orbits')
+    [KeyboardButton(text='NOAA 15')],
+    [KeyboardButton(text='NOAA 18')],
+    [KeyboardButton(text='NOAA 19')],
+    [KeyboardButton(text='NOAA 20 (JPSS-1)')],
+    [KeyboardButton(text='NOAA 21 (JPSS-2)')],
+    [KeyboardButton(text='METEOR-M 2')],
+    [KeyboardButton(text='METEOR-M2 2')]
+], 'Назад')
 
 secret_menu = with_back_button([
-    [InlineKeyboardButton(text='Технические данные', callback_data='tech_data')],
-    [InlineKeyboardButton(text='Обновить расчёты', callback_data='refresh_calculations')],
-    [InlineKeyboardButton(text='Отправить HTTP-запрос по спутникам', callback_data='send_http_request')],
-    [InlineKeyboardButton(text='Проверить наличие содержимого файлов', callback_data='check_files')]
-], 'back')
+    [KeyboardButton(text='Технические данные')],
+    [KeyboardButton(text='Обновить расчёты')],
+    [KeyboardButton(text='Отправить HTTP-запрос по спутникам')],
+    [KeyboardButton(text='Проверить наличие содержимого файлов')]
+], 'Назад')
