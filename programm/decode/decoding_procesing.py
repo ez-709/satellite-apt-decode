@@ -28,20 +28,7 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
 
     decoder_apt(cd_record_wav, cd_record_img)
 
-    sats_records = json_to_py(cd_sat_records)
-
-    for sat in sats_records:
-        if sat['name'] == name_of_satellite:
-            wav = sat['cd_wav']
-            img = sat['cd_img']
-            wav.append(cd_record_wav)
-            img.appen(cd_record_img)
-
-            sat['cd_wav'] = wav
-            sat['cd_img'] = img
-
-    update_calculations(sats_records, sats_records)
-
-    write_new_passes(cd_sat_record, cd_record_wav, cd_record_img)
+    write_new_passes(cd_sat_record, cd_record_wav, cd_record_img, name_of_satellite)
+    print(name_of_satellite)
 
 
