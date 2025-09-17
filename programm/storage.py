@@ -211,3 +211,33 @@ def add_rtl_sdr_libs_to_venv(cd, cd_venv):
     else:
         shutil.copy(cd_librtlsdr, cd_venv)
         shutil.copy(cd_libusb, cd_venv)
+
+def create_sat_record_sructure(cd_sat_record, names):
+    try:
+        file = json_to_py(cd_sat_record)
+    except:
+        file = []
+
+    if len(file) == 0:
+        for name in names:
+            file.append({'name': name, 'cd_wav': [], 'cd_img': []})
+    
+    else:
+        for name in names:
+            if name not in [sat['name'] for sat in file]:
+                file.append({'name': name, 'cd_wav': [], 'cd_img': []})
+             
+    with open(cd_sat_record, 'w') as f:
+        json.dump(file, f, indent=4)
+
+
+def write_new_passes(cd_sat_record, cd_wav, cd_img, name):
+    file = json_to_py(cd_sat_record)
+    for sat in file:
+        if name in sat:
+            wav = sat['cd_wav']
+            wav.append(cd_wav)
+            img = sat['cd_img']
+            img.append(cd_img)
+
+

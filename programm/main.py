@@ -5,7 +5,7 @@ import time
 import traceback
 
 from storage import (json_to_py, read_config, add_rtl_sdr_libs_to_venv, 
-                     clear_all_logs, create_decode_folders_by_names)
+                     clear_all_logs, create_decode_folders_by_names, create_sat_record_sructure)
 from tracking.calculation import calculate_samples_from_hours
 from background import background_calculations, background_update_tles
 from telegram_bot.bot import run_telegram_bot
@@ -20,6 +20,7 @@ cd_config = os.path.join(cd, 'programm', 'config.json')
 cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
 cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+cd_sat_record = os.path.join(cd, 'programm', 'data', 'data_base', 'sat_records.json')
 
 cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
@@ -29,10 +30,11 @@ cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 sats = json_to_py(cd_sat)
 names = [sat['name'] for sat in sats]
 
+create_sat_record_sructure(cd_sat_record, names)
+
 create_decode_folders_by_names(cd_decode, names)
 
 clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
-
 
 obs_lon, obs_lat, obs_alt, time_zone, step, end_time_hours, token, venv_name = read_config(cd_config)
 cd_venv = os.path.join(cd, venv_name)

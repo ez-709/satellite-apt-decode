@@ -1,0 +1,37 @@
+[
+    {
+        "name": "NOAA 15",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "NOAA 18",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "NOAA 19",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "NOAA 20 (JPSS-1)",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "NOAA 21 (JPSS-2)",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "METEOR-M 2",
+        "cd_wav": [],
+        "cd_img": []
+    },
+    {
+        "name": "METEOR-M2 2",
+        "cd_wav": [],
+        "cd_img": []
+    }
+]

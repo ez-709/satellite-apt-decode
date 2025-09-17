@@ -1,6 +1,5 @@
 [
-  {
-    "name": "NOAA 15",
+  { "name": "NOAA 15",
     "norad id": 25338,
     "frequency": 137.6200,
     "min record time": "8:00",
