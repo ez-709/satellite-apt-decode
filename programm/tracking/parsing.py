@@ -41,13 +41,13 @@ def get_not_deb_tle(url, active_names):
         return filtered_tles
         
     elif response.status_code == 403:
-        print(f"Доступ запрещен к {url}. Код 403")
+        print(f"Доступ запрещен к {url}. Код 403\n")
         return response.status_code
     elif response.status_code == 429:
-        print(f"Слишком много запросов к {url}. Код 429")
+        print(f"Слишком много запросов к {url}. Код 429\n")
         return response.status_code
     else:
-        print(f"Ошибка загрузки данных. Код ошибки: {response.status_code}")
+        print(f"Ошибка загрузки данных. Код ошибки: {response.status_code}\n")
         return response.status_code
 
 def process_urls():
@@ -65,27 +65,27 @@ def process_urls():
 
                 new_tles = get_not_deb_tle(url, active_names(cd_sat))
                 if new_tles == 429:
-                    write_logs(cd_logs_htpp, f'429 - слишком много запросов для {url} в {unix_to_utc(time.time())}')
+                    write_logs(cd_logs_htpp, f'429 - слишком много запросов для {url} в {unix_to_utc(time.time())}\n')
                     time.sleep(60 * 60)
 
                 elif new_tles == 403:
-                    write_logs(cd_logs_htpp, f'403 - доступ запрещен для {url} в {unix_to_utc(time.time())}')
+                    write_logs(cd_logs_htpp, f'403 - доступ запрещен для {url} в {unix_to_utc(time.time())}\n')
                     break
 
                 elif isinstance(new_tles, int) and new_tles >= 400:
-                    write_logs(cd_logs_htpp, f'HTTP ошибка {new_tles} для {url} в {unix_to_utc(time.time())}')
+                    write_logs(cd_logs_htpp, f'HTTP ошибка {new_tles} для {url} в {unix_to_utc(time.time())}\n')
                     continue
 
                 elif new_tles:
                     tles.append(new_tles)
-                    write_logs(cd_logs_htpp, f"Успешно получено {len(new_tles)} TLE из {url} в {unix_to_utc(time.time())}")
+                    write_logs(cd_logs_htpp, f"Успешно получено {len(new_tles)} TLE из {url} в {unix_to_utc(time.time())}\n")
 
             except Exception as e:
-                write_logs(cd_logs_htpp, f"Неожиданная ошибка для {url}: {e} в {unix_to_utc(time.time())}")
+                write_logs(cd_logs_htpp, f"Неожиданная ошибка для {url}: {e} в {unix_to_utc(time.time())}\n")
                 time.sleep(600)
                 continue
 
         if tles:
             for tle_group in tles:
                 write_or_update_tles(tle_group, cd_tle)
-            write_logs(cd_logs_htpp, f"Обновлено TLE для {sum(len(t) for t in tles)} спутников в {unix_to_utc(time.time())}")
+            write_logs(cd_logs_htpp, f"Обновлено TLE для {sum(len(t) for t in tles)} спутников в {unix_to_utc(time.time())}\n")

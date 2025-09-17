@@ -1,0 +1,5 @@
+Успешно получено 5 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE в 2025-09-17 20:17:18 +3 UTC
+Успешно получено 2 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=Meteor&FORMAT=TLE в 2025-09-17 20:17:22 +3 UTC
+Обновлено TLE для 7 спутников в 2025-09-17 20:17:22 +3 UTC
+Следующий htpp запрос будет в 2025-09-18 23:19:04 +3 UTC
+

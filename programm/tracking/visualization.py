@@ -85,7 +85,7 @@ def plot_legend(ax):
     )
 
 def plot_tittle(sats, end_hour, filter_of = ''):
-    if filter_of != '' and len(sats) > 1:
+    if len(filter_of) != 0  and len(sats) > 1:
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов, отфильтрованы по {", ".join(str(el) for el in filter_of)}', pad=5)
     elif len(sats) == 1:
         name = sats[0]['name']

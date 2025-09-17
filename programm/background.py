@@ -93,7 +93,7 @@ def make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours):
         last_time_utc = unix_to_utc(last_time_unix)
         next_time_utc = unix_to_utc(next_time)
         text = f'В последний раз вычисления обновлялись в {last_time_utc}\n'
-        text += f'Следующее обновление вычислений будет в {next_time_utc}'
+        text += f'Следующее обновление вычислений будет в {next_time_utc}\n'
         write_logs(cd_logs_calc, text, update=False)
         time_end = time.time()
         write_logs(cd_logs_back, f'вычисления заняли {round(time_end - time_start)} секунд \n')

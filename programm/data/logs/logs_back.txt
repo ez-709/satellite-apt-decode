@@ -1,1 +1,3 @@
-Wed Sep 17 11:39:04 2025 - Ошибка в (main.py, строка 71): 'FrameSummary' object has no attribute 'lineno96'
+Ветка 3: уже между пролётами (конец 2025-09-18 18:42:23 +3 UTC - начало 2025-09-18 20:26:16 +3 UTC), перенос не нужен
+вычисления заняли 6 секунд 
+Wed Sep 17 20:17:53 2025 - Ошибка в работе бота (router.py, строка 211): Router is already attached to <Dispatcher '0x2b97167c7d0'>
