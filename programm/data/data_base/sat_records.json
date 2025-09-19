@@ -1,16 +1,8 @@
 [
     {
         "name": "NOAA 15",
-        "cd_wav": [
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\wav\\NOAA_15__2025-09-17_11-39-12_+3_UTC.wav",
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\wav\\NOAA_15__2025-09-17_15-24-48_+3_UTC.wav",
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\wav\\NOAA_15__2025-09-17_15-25-36_+3_UTC.wav"
-        ],
-        "cd_img": [
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\img\\NOAA_15__2025-09-17_11-39-12_+3_UTC.png",
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\img\\NOAA_15__2025-09-17_15-24-48_+3_UTC.png",
-            "D:\\my-files\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\img\\NOAA_15__2025-09-17_15-25-36_+3_UTC.png"
-        ]
+        "cd_wav": [],
+        "cd_img": []
     },
     {
         "name": "NOAA 18",

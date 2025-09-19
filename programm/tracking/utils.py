@@ -212,3 +212,20 @@ def find_next_time_for_updating_calculations(last_time_unix_of_calculations, pas
                 write_logs(cd_logs_back, log_message, update=True)
                 result = events[-1][1] + 5
                 return result
+            
+import time
+
+def sort_passes(passes):
+    sorted_passes = []
+    current_time = time.time()
+    for satellite in passes:
+        name = satellite['name']
+        for point in satellite['points']:
+            if current_time < point['rise']:
+                sorted_passes.append({
+                    'name': name,
+                    'rise': point['rise'],
+                    'duration': point['duration (min:sec)'],
+                })
+    sorted_passes.sort(key=lambda x: x['rise'])
+    return sorted_passes
