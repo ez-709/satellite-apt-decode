@@ -1,26 +1,29 @@
 import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message, KeyboardButton, ReplyKeyboardMarkup
-from aiogram.filters import Command, CommandStart
+import time
 
 from telegram_bot.handlers import router
+from storage import json_to_py
 
-def run_telegram_bot(token_bot, sats_coors, step, lons_obs, lats_obs, tles, passes):
+def run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours):
+    
     async def main():
-        bot  = Bot(token = token_bot)
+        bot = Bot(token=token)
         dp = Dispatcher()
-
-        dp["sats_coors"] = sats_coors
+        
+        dp["obs_lon"] = obs_lon
+        dp["obs_lat"] = obs_lat
+        dp["obs_alt"] = obs_alt
         dp["step"] = step
-        dp["obs_lon"] = lons_obs
-        dp["obs_lat"] = lats_obs
-        dp["sats_tle"] = tles
-        dp["passes"] = passes
+        dp["end_time_hours"] = end_time_hours
 
         dp.include_router(router)
-        await dp.start_polling(bot)
 
+        try:
+            await dp.start_polling(bot)
+        finally:
+            pass
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        print('Бот остановлен ')
+        print('Бот остановлен')

@@ -2,17 +2,17 @@ import io
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from datetime import datetime
 from skyfield.api import load
 from cartopy.feature.nightshade import Nightshade
 from aiogram.types import BufferedInputFile
 
 from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
-from .utils import binary_search, find_next_passe, unix_to_utc, filter_by_names
+from .utils import binary_search, find_next_passes_for_satellites, unix_to_utc, filter_by_names
 
 def setup_map(time_now_utc):
     plt.figure(figsize=(12, 12))
     ax = plt.axes(projection=ccrs.PlateCarree())
+    ax.set_global()
     ax.add_feature(Nightshade(time_now_utc, alpha=0.3))
     ax.add_feature(cfeature.LAND)
     ax.add_feature(cfeature.OCEAN)
@@ -84,35 +84,30 @@ def plot_legend(ax):
         framealpha=0.6             # Полупрозрачный фон
     )
 
-def plot_tittle(sats, end_hour, filter_of):
-    if filter_of == True and len(sats) > 1:
+def plot_tittle(sats, end_hour, filter_of = ''):
+    if len(filter_of) != 0  and len(sats) > 1:
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов, отфильтрованы по {", ".join(str(el) for el in filter_of)}', pad=5)
     elif len(sats) == 1:
         name = sats[0]['name']
         plt.title(f'Орбита спутника {name} на ближайшие {end_hour} часов', pad=5)
-    else:
+    else: 
         plt.title(f'Орбиты спутников на ближайшие {end_hour} часов', pad=5)
 
-def return_legend(time_now_unix,tles, passes, names):
-    most_closest_sat_name_passe, most_closest_time_rise, most_closest_time_set, duration = find_next_passe(time_now_unix, passes, names)
-    rise_str = unix_to_utc(most_closest_time_rise)
-    set_str = unix_to_utc(most_closest_time_set)
-
-    tles = filter_by_names(names, tles)
+def return_legend(time_now_unix, tles, passes, names):
+    next_passes = find_next_passes_for_satellites(passes, names)
     
-    minutes_duration, seconds_duration = [int(i) for i in duration.split(':')]
-
     text = f'Данные орбиты рассчитаны для времени: {unix_to_utc(time_now_unix)}\n\n'
     
-    text += (
-        f"Следующий пролёт у {most_closest_sat_name_passe}\n"
-        f"Восход: {rise_str}\n"
-        f"Заход: {set_str}\n"
-        f"Длительность: {minutes_duration} мин {seconds_duration} сек\n\n"
-    )
-
+    for next_passe in next_passes:
+        if 'Ближайший' in next_passe:
+            text += next_passe
+            break
+        elif 'сейчас' in next_passe:
+            text += next_passe + '\n\n'
+    
     text += f'Текущая высота спутников:\n\n'
 
+    tles = filter_by_names(names, tles)
     for tle in tles:
         now_longitudes, now_latitudes, now_altitude = calculate_now_position(tle)
         name = tle['name']

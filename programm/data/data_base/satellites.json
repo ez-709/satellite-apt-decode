@@ -1,9 +1,8 @@
 [
-  {
-    "name": "NOAA 15",
+  { "name": "NOAA 15",
     "norad id": 25338,
     "frequency": 137.6200,
-    "min record time": "4:00",
+    "min record time": "8:00",
     "signal type": "APT",
     "group": "NOAA"
   },
@@ -11,7 +10,7 @@
     "name": "NOAA 18",
     "norad id": 28654,
     "frequency": 137.9125,
-    "min record time": "4:00",
+    "min record time": "8:00",
     "signal type": "APT",
     "group": "NOAA"
   },
@@ -19,7 +18,7 @@
     "name": "NOAA 19",
     "norad id": 33591,
     "frequency": 137.1000,
-    "min record time": "4:00",
+    "min record time": "8:00",
     "signal type": "APT",
     "group": "NOAA"
   },
@@ -27,7 +26,7 @@
     "name": "NOAA 20 (JPSS-1)",
     "norad id": 43013,
     "frequency": 1698.4750,
-    "min record time": "4:00",
+    "min record time": "8:00",
     "signal type": "HRPT",
     "group": "NOAA"
   },
@@ -35,7 +34,7 @@
     "name": "NOAA 21 (JPSS-2)",
     "norad id": 54234,
     "frequency": 1698.2250,
-    "min record time": "4:00",
+    "min record time": "8:00",
     "signal type": "HRPT",
     "group": "NOAA"
   },
@@ -43,7 +42,7 @@
     "name": "METEOR-M 2",
     "norad id": 40069,
     "frequency": 137.9000,
-    "min record time": "6:00",
+    "min record time": "10:00",
     "signal type": "LRPT",
     "group": "Meteor"
   },
@@ -51,7 +50,7 @@
     "name": "METEOR-M2 2",
     "norad id": 44387,
     "frequency": 137.1000,
-    "min record time": "6:00",
+    "min record time": "10:00",
     "signal type": "LRPT",
     "group": "Meteor"
   }

@@ -1,51 +1,52 @@
-import os
-import scipy.io.wavfile as wav
-import scipy.signal
-import numpy as np
-import matplotlib.pyplot as plt
+import time
+from decode.decoding_procesing import record_and_decode_satellite, recors_sats_from_passes
 
-waw_path = r'D:\my-files\satellite-apt-decode\programm\data\data_decode\NOAA 15_decode\waw\noaa-15-example.wav'
+def generate_passes(k, duration=2):
+    """
+    Генерирует k спутников, у каждого — по 2 прохождения.
+    Общая продолжительность прохождения = duration секунд.
+    """
+    satellites = [
+        "NOAA 15",
+        "NOAA 18",
+        "NOAA 19",
+        "NOAA 20 (JPSS-1)",
+        "NOAA 21 (JPSS-2)"
+    ]
+    
+    passes = []
+    start_time = time.time() + 5  # Через 5 секунд от запуска
 
-def normalize(signal, plow=5, phigh=95):
-    low, high = np.percentile(signal, (plow, phigh))
-    data = np.round(255 * (signal - low) / (high - low))
-    return np.clip(data, 0, 255).astype(np.uint8)
+    for i in range(k):
+        sat_name = satellites[i % len(satellites)]  # Циклически выбираем спутник
+        points = []
+        current_time = start_time + i * 10  # Каждый спутник — с интервалом 10 секунд (2 пролёта по 5 сек)
 
-def make_lines(signal):
-    syncA = np.array([0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 255, 255,
-                      0, 0, 255, 255, 0, 0, 0, 0, 0,
-                      0, 0, 0]) - 128
-    peaks = [(0, 0)]
-    mindistance = 2000
-    signalshifted = signal.astype(np.int16) - 128
-    for i in range(len(signal)-len(syncA)):
-        corr = np.dot(syncA, signalshifted[i : i+len(syncA)])
-        if i - peaks[-1][0] > mindistance:
-            peaks.append((i, corr))
-        elif corr > peaks[-1][1]:
-            peaks[-1] = (i, corr)
-    matrix = []
-    for i in range(len(peaks) - 1):
-        row = signal[peaks[i][0] : peaks[i][0] + 2080]
-        if len(row) == 2080:
-            matrix.append(row)
-    return np.array(matrix)
+        for j in range(2):  # Два пролёта на спутник
+            rise = current_time + j * 5  # Каждые 5 секунд новый пролёт
+            set_time = rise + duration
+            culmination = (rise + set_time) / 2
+            duration_formatted = f"{duration // 60}:{duration % 60:02d}"
 
-def decoder_apt(waw_path):
-    fs, data = wav.read(waw_path)
-    if data.ndim > 1:
-        data = data[:, 0]
-    coef = 20800 / fs
-    samples = int(coef * len(data))
-    data_resampled = scipy.signal.resample(data, samples)
-    analytic_signal = np.abs(scipy.signal.hilbert(data_resampled))
-    normalized_signal = normalize(analytic_signal)
-    matrix = make_lines(normalized_signal)
-    plt.imshow(matrix, cmap='gray', aspect='auto')
-    plt.axis('off')
-    plt.tight_layout()
-    plt.show()
+            points.append({
+                "rise": round(rise, 6),
+                "culmination": f"{round(culmination, 6)} with 799.736 altitude and 45.0 degrees above horizon",
+                "set": round(set_time, 6),
+                "duration (min:sec)": duration_formatted
+            })
 
-decoder_apt(waw_path)
+        passes.append({
+            "name": sat_name,
+            "points": points
+        })
+
+    return passes
+
+# Пример использования:
+k = 3
+result = generate_passes(k, duration=3)
+import json
+print(json.dumps(result, indent=2))
+print('\n\n')
+
+recors_sats_from_passes(result)

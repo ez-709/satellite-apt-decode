@@ -2,6 +2,7 @@ import numpy as np
 import os
 from skyfield.api import load, EarthSatellite, wgs84, utc
 from datetime import datetime, timedelta
+import time
 
 from .utils import julian_time_to_unix, seconds_to_minutes_and_seconds, minutes_and_seconds_to_seconds
 from storage import json_to_py
@@ -58,7 +59,7 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
     }
     return sat_coordinates
 
-
+#поправить чтобы все ключи создавались всегда
 def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10):
     cd = os.getcwd() 
     cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
@@ -87,40 +88,43 @@ def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs
         
         if event_type == 0:  
             current_passe = {'rise': time_unix}
+        
         elif event_type == 1: 
             latitudes, longitudes, altitude = calculate_now_position(sat_tle)
             difference = sat - observer
             topocentric = difference.at(times[i])
             alt, az, distance = topocentric.altaz()
             angle_above_horizon = alt.degrees
-
-            if 'rise' in current_passe:
-                current_passe['culmination'] = f'{time_unix} with {str(altitude)[:7]} altitude'
-            else:
-                current_passe = {'culmination': f'{time_unix} with {str(altitude)[:7]} altitude and {angle_above_horizon} degrees above horizon'}
+            
+            if 'rise' not in current_passe:
+                current_passe['rise'] = 1
+            current_passe['culmination'] = f'{time_unix} with {str(altitude)[:7]} altitude and {angle_above_horizon} degrees above horizon'
+        
         elif event_type == 2:  
+            if 'rise' not in current_passe:
+                current_passe['rise'] = 1
+                
             if 'culmination' in current_passe or 'rise' in current_passe:
                 current_passe['set'] = time_unix
-                if 'rise' in current_passe and 'set' in current_passe:
+                if current_passe['rise'] != 1 and 'set' in current_passe:
                     duration = current_passe['set'] - current_passe['rise']
                     if duration < minutes_and_seconds_to_seconds(min_record_time):
+                        current_passe = {}
                         continue
-                    elif duration < 1.5 * minutes_and_seconds_to_seconds(min_record_time) and duration > minutes_and_seconds_to_seconds(min_record_time):
+                    else:
                         current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
-                        current_passe['mark of passe is'] = 1
-                    
-                    elif duration < 2 * minutes_and_seconds_to_seconds(min_record_time) and duration > 1.5 * minutes_and_seconds_to_seconds(min_record_time):
+                else:
+                    duration = current_passe['set'] - time.time()
+                    if duration < minutes_and_seconds_to_seconds(min_record_time):
+                        current_passe = {}
+                        continue
+                    else:
                         current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
-                        current_passe['mark of passe is'] = 2
-
-                    elif duration > 2 * minutes_and_seconds_to_seconds(min_record_time):
-                        current_passe['duration (min:sec)'] = seconds_to_minutes_and_seconds(duration)
-                        current_passe['mark of passe is'] = 3
-
+   
                 points.append(current_passe)
                 current_passe = {} 
             else:
-                current_passe = {'set': time_unix}
+                current_passe['set'] = time_unix
 
     sat_passe = {
         'name': sat_tle['name'],

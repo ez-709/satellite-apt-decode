@@ -30,6 +30,7 @@ back_to_group_orbits = back_button('back_to_group_orbits')
 back_to_frequency_orbits = back_button('back_to_frequency_orbits')
 back_to_signal_orbits = back_button('back_to_signal_orbits')
 back_to_names_orbits = back_button('back_to_names_orbits')
+back_to_secret_menu = back_button('back_to_secret_menu')
 
 filter_passes = with_back_button([
     [InlineKeyboardButton(text='Ближайшие пролеты каждого спутника', callback_data='filter_names_passes')],
@@ -197,3 +198,10 @@ names_orbits = with_back_button([
     [InlineKeyboardButton(text='METEOR-M 2', callback_data='METEOR-M 2_orbits')],
     [InlineKeyboardButton(text='METEOR-M2 2', callback_data='METEOR-M2 2_orbits')]
 ], 'back_to_orbits')
+
+secret_menu = with_back_button([
+    [InlineKeyboardButton(text='Технические данные', callback_data='tech_data')],
+    [InlineKeyboardButton(text='Обновить расчёты', callback_data='refresh_calculations')],
+    [InlineKeyboardButton(text='Отправить HTTP-запрос по спутникам', callback_data='send_http_request')],
+    [InlineKeyboardButton(text='Проверить наличие содержимого файлов', callback_data='check_files')]
+], 'back')
