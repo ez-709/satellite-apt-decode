@@ -61,4 +61,4 @@ def recors_sats_from_passes():
             write_logs(cd_logs_back, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
             sorted_passes.pop(0)
         
-        time.sleep(1)
+        time.sleep(15)
