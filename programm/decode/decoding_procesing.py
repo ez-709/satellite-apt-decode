@@ -4,7 +4,7 @@ import time
 from decode.rtl_sdr import record_radio_wav
 from decode.decoder_apt import decoder_apt
 from storage import json_to_py, make_decode_results_names, folder_name_by_sat_name, write_new_passes, write_logs
-from tracking.utils import sort_passes
+from tracking.utils import sort_passes, unix_to_utc
 
 def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', bandwidth=2.048e6):
     cd = os.getcwd() 
@@ -31,12 +31,12 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
     decoder_apt(cd_record_wav, cd_record_img)
 
     write_new_passes(cd_sat_record, cd_record_wav, cd_record_img, name_of_satellite)
-    write_logs(cd_logs_back, f'\nзаписан {name_of_satellite}\n')
 
 def recors_sats_from_passes():
     cd = os.getcwd()
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
     cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 
     passes = json_to_py(cd_passes)
     sorted_passes = sort_passes(passes)
@@ -58,6 +58,7 @@ def recors_sats_from_passes():
             min, sec = sat['duration'].split(':')
             duration = int(min) * 60 + int(sec)
             record_and_decode_satellite(sat['name'], (duration + 60)/60)
+            write_logs(cd_logs_back, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
             sorted_passes.pop(0)
         
         time.sleep(1)

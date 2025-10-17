@@ -1,36 +1,18 @@
 [
     {
         "name": "NOAA 15",
-        "cd_wav": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\wav\\NOAA_15__2025-10-14_09-08-35_+3_UTC.wav",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\wav\\NOAA_15__2025-10-14_09-08-41_+3_UTC.wav"
-        ],
-        "cd_img": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\img\\NOAA_15__2025-10-14_09-08-35_+3_UTC.png",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_15_decode\\img\\NOAA_15__2025-10-14_09-08-41_+3_UTC.png"
-        ]
+        "cd_wav": [],
+        "cd_img": []
     },
     {
         "name": "NOAA 18",
-        "cd_wav": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\wav\\NOAA_18__2025-10-14_09-08-45_+3_UTC.wav",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\wav\\NOAA_18__2025-10-14_09-08-51_+3_UTC.wav"
-        ],
-        "cd_img": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\img\\NOAA_18__2025-10-14_09-08-45_+3_UTC.png",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\img\\NOAA_18__2025-10-14_09-08-51_+3_UTC.png"
-        ]
+        "cd_wav": [],
+        "cd_img": []
     },
     {
         "name": "NOAA 19",
-        "cd_wav": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_19_decode\\wav\\NOAA_19__2025-10-14_09-08-55_+3_UTC.wav",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_19_decode\\wav\\NOAA_19__2025-10-14_09-09-01_+3_UTC.wav"
-        ],
-        "cd_img": [
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_19_decode\\img\\NOAA_19__2025-10-14_09-08-55_+3_UTC.png",
-            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_19_decode\\img\\NOAA_19__2025-10-14_09-09-01_+3_UTC.png"
-        ]
+        "cd_wav": [],
+        "cd_img": []
     },
     {
         "name": "NOAA 20 (JPSS-1)",
