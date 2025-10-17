@@ -9,6 +9,7 @@ from storage import (json_to_py, read_config, add_rtl_sdr_libs_to_venv,
 from tracking.calculation import calculate_samples_from_hours
 from background import background_calculations, background_update_tles
 from telegram_bot.bot import run_telegram_bot
+from decode.decoding_procesing import recors_sats_from_passes
 
 ts = load.timescale()
 unix_time_now = ts.now().utc_datetime().timestamp()
@@ -54,6 +55,11 @@ try:
 
     background_tles_thread = threading.Thread(
         target=background_update_tles, 
+        args=(),
+        daemon=True
+    )
+    backgorun_record_sats = threading.Thread(
+        target=recors_sats_from_passes,
         args=(),
         daemon=True
     )
