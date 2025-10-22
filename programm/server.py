@@ -5,6 +5,6 @@ app = FastAPI()
 
 @app.get("/test")
 def test():
-    return {"status": "работает из другой сети!"}
+    return {"status": "sosal"}
 
 uvicorn.run(app, host="0.0.0.0", port=8000)
