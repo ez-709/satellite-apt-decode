@@ -11,7 +11,6 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
     cd_decode = os.path.join(cd, 'programm', 'data_decode')
     cd_sats = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
     cd_sat_record = os.path.join(cd, 'programm', 'data', 'data_base', 'sat_records.json')
-    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 
     name_folder = folder_name_by_sat_name(name_of_satellite)
 
@@ -22,7 +21,7 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
     sats = json_to_py(cd_sats)
     for sat in sats:
         if sat["name"] == name_of_satellite:
-            frequency = sat["frequency"] * 1e3
+            frequency = sat["frequency"] * 1e6
             if frequency > 139 * 1e3:
                 frequency = 137 * 1e3
 
