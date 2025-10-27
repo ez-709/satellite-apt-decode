@@ -27,7 +27,7 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
 
     record_radio_wav(frequency, cd_record_wav, duration, gain, bandwidth)
 
-    decoder_apt(cd_record_wav, cd_record_img)
+    #decoder_apt(cd_record_wav, cd_record_img)
 
     write_new_passes(cd_sat_record, cd_record_wav, cd_record_img, name_of_satellite)
 
