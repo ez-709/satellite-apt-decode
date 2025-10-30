@@ -6,8 +6,12 @@
     },
     {
         "name": "NOAA 18",
-        "cd_wav": [],
-        "cd_img": []
+        "cd_wav": [
+            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\wav\\NOAA_18__2025-10-30_16-16-18_+3_UTC.wav"
+        ],
+        "cd_img": [
+            "D:\\my-files\\my_projects\\satellite-apt-decode\\programm\\data_decode\\NOAA_18_decode\\img\\NOAA_18__2025-10-30_16-16-18_+3_UTC.png"
+        ]
     },
     {
         "name": "NOAA 19",
