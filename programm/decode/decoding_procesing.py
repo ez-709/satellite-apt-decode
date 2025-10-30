@@ -35,7 +35,7 @@ def recors_sats_from_passes():
     cd = os.getcwd()
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
     cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-    cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+    cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
     passes = json_to_py(cd_passes)
     sorted_passes = sort_passes(passes)

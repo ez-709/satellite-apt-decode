@@ -23,7 +23,7 @@ cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
 cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
-cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
 router = Router()
 
