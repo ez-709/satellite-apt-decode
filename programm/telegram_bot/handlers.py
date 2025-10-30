@@ -23,6 +23,7 @@ cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
 cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 
 router = Router()
 
@@ -454,6 +455,7 @@ async def secret_menu_handler(message: Message):
     "check_files", 
     "rebot"
 }))
+
 async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = None, obs_lat: float = None, 
                                    obs_alt: float = None, end_time_hours: int = None):
     action = callback.data
@@ -470,6 +472,9 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
             text += f.read()
         with open(cd_logs_htpp, 'r', encoding='utf-8') as f:
             text += '\n\nЛоги http сервера: \n'
+            text += f.read()
+        with open(cd_logs_decode, 'r', encoding='utf-8') as f:
+            text += '\n\nЛоги функций записи и декодинга спутников: \n'
             text += f.read()
 
         

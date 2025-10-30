@@ -58,7 +58,7 @@ try:
         args=(),
         daemon=True
     )
-    backgorun_record_sats = threading.Thread(
+    backgorground_record_sats = threading.Thread(
         target=recors_sats_from_passes,
         args=(),
         daemon=True

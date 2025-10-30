@@ -22,8 +22,8 @@ def record_and_decode_satellite(name_of_satellite, duration, gain = 'auto', band
     for sat in sats:
         if sat["name"] == name_of_satellite:
             frequency = sat["frequency"] * 1e6
-            if frequency > 139 * 1e3:
-                frequency = 137 * 1e3
+            if frequency > 139 * 1e6:
+                frequency = 137 * 1e6
 
     record_radio_wav(frequency, cd_record_wav, duration, gain, bandwidth)
 
@@ -35,7 +35,7 @@ def recors_sats_from_passes():
     cd = os.getcwd()
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
     cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+    cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 
     passes = json_to_py(cd_passes)
     sorted_passes = sort_passes(passes)
@@ -56,8 +56,8 @@ def recors_sats_from_passes():
             sat = sorted_passes[0]
             min, sec = sat['duration'].split(':')
             duration = int(min) * 60 + int(sec)
-            record_and_decode_satellite(sat['name'], (duration + 60)/60)
-            write_logs(cd_logs_back, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
+            record_and_decode_satellite(sat['name'], duration + 60)
+            write_logs(cd_logs_decode, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
             sorted_passes.pop(0)
         
-        time.sleep(1)
+        time.sleep(5)
