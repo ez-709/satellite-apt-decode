@@ -22,7 +22,7 @@ def background_update_tles(cd_sat, cd_tle, cd_logs_htpp, update=False):
             time.sleep(sleep_time)
             
 
-def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes):
+def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_sat, cd_tle, cd_coordinates, cd_passes):
     dt = datetime.now(tz=utc)
     last_time_unix_of_calculations = dt.timestamp()
 
@@ -36,13 +36,13 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_
     update_calculations(calc_sats, cd_coordinates)
     calc_passes = []
     for sat_tle in sats_tle:
-        calc_passes.append(calculate_passes(sat_tle, end_time_hours, obs_lon, obs_lat, obs_alt))
+        calc_passes.append(calculate_passes(cd_sat, sat_tle, end_time_hours, obs_lon, obs_lat, obs_alt))
 
     update_calculations(calc_passes, cd_passes)
     
     return last_time_unix_of_calculations
 
-def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_calc, cd_logs_back):
+def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_sat, cd_tle, cd_coordinates, cd_passes, cd_logs_calc, cd_logs_back):
     passes = json_to_py(cd_passes)
     next_time = time.time()   
     while True:
@@ -50,7 +50,7 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, c
         try:
             if time_now >= next_time:
                 time_start = time.time()
-                last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes)
+                last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours,cd_sat,  cd_tle, cd_coordinates, cd_passes)
                 next_time = find_next_time_for_updating_calculations(last_time_unix, passes, cd_logs_back)
                 last_time_utc = unix_to_utc(last_time_unix)
                 next_time_utc = unix_to_utc(next_time)

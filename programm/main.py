@@ -56,7 +56,7 @@ calculation_complete_event = None
 try:
     background_thread = threading.Thread(
         target=background_calculations, 
-        args=(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_tech, cd_logs_back),
+        args=(obs_lon, obs_lat, obs_alt, end_time_hours, cd_sat, cd_tle, cd_coordinates, cd_passes, cd_logs_tech, cd_logs_back),
         daemon=True
     )
     background_thread.start()
@@ -86,7 +86,7 @@ try:
             error_time = time.asctime(time.localtime(time.time()))
             tb = traceback.extract_tb(e.__traceback__)[-1]
             file_name = tb.filename.split('\\')[-1]
-            line_number = tb.lineno96
+            line_number = tb.lineno
             error_message = f'{error_time} - Ошибка в работе бота ({file_name}, строка {line_number}): {str(e)}\n'
             
             try:
