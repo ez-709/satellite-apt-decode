@@ -36,7 +36,6 @@ def recors_sats_from_passes():
     cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
     cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
     cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
-
     passes = json_to_py(cd_passes)
     sorted_passes = sort_passes(passes)
 
@@ -47,7 +46,7 @@ def recors_sats_from_passes():
                 line = file.readline().strip()
                 if line:
                     next_time_to_update_passes = float(line)
-                    write_logs(cd_logs_decode, f"\nПолучил  начальное время для обновления пролето: {unix_to_utc(next_time_to_update_passes)}\n")
+                    write_logs(cd_logs_decode, f"Получил  начальное время для обновления пролето: {unix_to_utc(next_time_to_update_passes)}\n")
                 else:
                     time.sleep(5)  
         except (FileNotFoundError, ValueError, OSError):

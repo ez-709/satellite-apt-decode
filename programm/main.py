@@ -37,8 +37,11 @@ clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
 
 obs_lon, obs_lat, obs_alt, time_zone, step, end_time_hours, token, venv_name = read_config(cd_config)
 cd_venv = os.path.join(cd, venv_name)
-add_rtl_sdr_libs_to_venv(cd, cd_venv)
+
+add_rtl_sdr_libs_to_venv(cd, cd_venv) #будет ошибка, если файлы dll для rtl_sdr не былм доавлены в venv/Scripts предварительно
+
 from decode.decoding_procesing import recors_sats_from_passes
+
 samples, step = calculate_samples_from_hours(end_time_hours)
 tles = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
@@ -59,12 +62,14 @@ try:
         args=(),
         daemon=True
     )
+    background_tles_thread.start()
+
     backgorground_record_sats = threading.Thread(
         target=recors_sats_from_passes,
         args=(),
         daemon=True
     )
-    background_tles_thread.start()
+    backgorground_record_sats.start()
 
     while True:
         try:
