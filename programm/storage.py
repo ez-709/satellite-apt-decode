@@ -201,16 +201,24 @@ def make_path_to_decode_sat(cd_decode, name, wav = False, img = False):
     return path 
 
 def add_rtl_sdr_libs_to_venv(cd, cd_venv):
-    cd_librtlsdr = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs', 'librtlsdr.dll')
-    cd_libusb = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs', 'libusb-1.0.dll')
-    cd_venv = os.path.join(cd_venv, 'Scripts')
-    if os.path.exists(os.path.join(cd_venv, 'librtlsdr.dll')):
-        return None
-    if os.path.exists(os.path.join(cd_venv, 'libusb-1.0.dll')):
-        return None
-    else:
-        shutil.copy(cd_librtlsdr, cd_venv)
-        shutil.copy(cd_libusb, cd_venv)
+    src_dir = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs')
+    dst_dir = os.path.join(cd_venv, 'Scripts')
+
+    librtlsdr_src = os.path.join(src_dir, 'librtlsdr.dll')
+    libusb_src = os.path.join(src_dir, 'libusb-1.0.dll')
+
+    librtlsdr_dst = os.path.join(dst_dir, 'librtlsdr.dll')
+    libusb_dst = os.path.join(dst_dir, 'libusb-1.0.dll')
+
+    if not os.path.isfile(librtlsdr_src):
+        raise FileNotFoundError(f"Source file not found: {librtlsdr_src}")
+    if not os.path.isfile(libusb_src):
+        raise FileNotFoundError(f"Source file not found: {libusb_src}")
+
+    if not os.path.exists(librtlsdr_dst):
+        shutil.copy(librtlsdr_src, dst_dir)
+    if not os.path.exists(libusb_dst):
+        shutil.copy(libusb_src, dst_dir)
 
 def create_sat_record_sructure(cd_sat_record, names):
     try:
