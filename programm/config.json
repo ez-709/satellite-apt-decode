@@ -5,6 +5,6 @@
   "time zone utc": 3,
   "step": 120, 
   "calculations for next (hours)": 48,
-  "telegram bot token": "8008201427:AAGaKXP-CgxQBPBjZjz8Yl4XaPgNe8Zttxc",
+  "telegram bot token": "",
   "venv name":".venv"
 }
