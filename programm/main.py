@@ -21,6 +21,7 @@ cd_config = os.path.join(cd, 'programm', 'config.json')
 cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
 cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
 cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+cd_sat_record = os.path.join(cd, 'programm', 'data', 'data_base', 'sat_records.json')
 
 cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
@@ -69,7 +70,7 @@ try:
 
     backgorground_record_sats = threading.Thread(
         target=recors_sats_from_passes,
-        args=(),
+        args=(cd_passes, cd_logs_tech, cd_logs_decode, cd_decode, cd_sat, cd_sat_record),
         daemon=True
     )
     backgorground_record_sats.start()

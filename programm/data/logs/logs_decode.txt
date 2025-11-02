@@ -1,1 +1,165 @@
-Получил  начальное время для обновления пролето: 2025-11-03 18:27:59 +3 UTC
+Получил  начальное время для обновления пролето: 2025-11-03 21:44:41 +3 UTC
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
+
+Попал в ветку записи пролетов
+
+Ошибка в recors_sats_from_passes: <LIBUSB_ERROR_IO (-1): Input/output error> "Could not open SDR (device index = 0)"
