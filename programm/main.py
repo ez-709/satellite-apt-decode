@@ -26,13 +26,14 @@ cd_decode = os.path.join(cd, 'programm', 'data_decode')
 cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
 cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
 sats = json_to_py(cd_sat)
 names = [sat['name'] for sat in sats]
 
 create_decode_folders_by_names(cd_decode, names)
 
-clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
+clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech, cd_logs_decode)
 
 
 obs_lon, obs_lat, obs_alt, time_zone, step, end_time_hours, token, venv_name = read_config(cd_config)
