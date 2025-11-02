@@ -39,25 +39,41 @@ def recors_sats_from_passes():
 
     passes = json_to_py(cd_passes)
     sorted_passes = sort_passes(passes)
-    
-    with open(cd_logs_tech, 'r', encoding='utf-8') as file:
-        next_time_to_update_passes = float(file.readline().strip())
+
+    next_time_to_update_passes = None
+    while next_time_to_update_passes is None:
+        try:
+            with open(cd_logs_tech, 'r', encoding='utf-8') as file:
+                line = file.readline().strip()
+                if line:
+                    next_time_to_update_passes = float(line)
+                    write_logs(cd_logs_decode, f"\nПолучил  начальное время для обновления пролето: {unix_to_utc(next_time_to_update_passes)}\n")
+                else:
+                    time.sleep(5)  
+        except (FileNotFoundError, ValueError, OSError):
+            time.sleep(5)
     
     while True:
-        time_now = time.time()
-        
-        if time_now >= next_time_to_update_passes + 130:
-            sorted_passes = sort_passes(passes)
-            with open(cd_logs_tech, 'r', encoding='utf-8') as file:
-                first_line = file.readline().strip()
-                next_time_to_update_passes = float(first_line)
+        try:
+            time_now = time.time()
+            if time_now >= next_time_to_update_passes + 130:
+                passes = json_to_py(cd_passes)
+                sorted_passes = sort_passes(passes)
+                with open(cd_logs_tech, 'r', encoding='utf-8') as file:
+                    first_line = file.readline().strip()
+                    next_time_to_update_passes = float(first_line)
+                    write_logs(cd_logs_decode, f"\nПолучил время для обновления пролето: {unix_to_utc(next_time_to_update_passes)}\n")
 
-        elif time_now >= sorted_passes[0]['rise'] - 3:
-            sat = sorted_passes[0]
-            min, sec = sat['duration'].split(':')
-            duration = int(min) * 60 + int(sec)
-            record_and_decode_satellite(sat['name'], duration + 60)
-            write_logs(cd_logs_decode, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
-            sorted_passes.pop(0)
-        
-        time.sleep(5)
+            elif time_now >= sorted_passes[0]['rise'] - 3:
+                write_logs(cd_logs_decode, f'\nПопал в ветку записи пролетов\n')
+                sat = sorted_passes[0]
+                min, sec = sat['duration'].split(':')
+                duration = int(min) * 60 + int(sec)
+                record_and_decode_satellite(sat['name'], duration + 60)
+                write_logs(cd_logs_decode, f'\nЗаписан {sat["name"]} в {unix_to_utc(time.time())}\n')
+                sorted_passes.pop(0)
+            
+            time.sleep(5)
+        except Exception as e:
+            write_logs(cd_logs_decode, f"\nОшибка в recors_sats_from_passes: {e}\n")
+            time.sleep(10)
