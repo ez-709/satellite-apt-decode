@@ -11,24 +11,18 @@ from tracking.calculation import calculate_orbit, calculate_samples_from_hours, 
 from tracking.utils import find_next_time_for_updating_calculations, unix_to_utc
 
 
-def background_update_tles(update=False):
-    cd = os.getcwd()
-    cd_logs_htpp = os.path.join(cd, 'programm', 'data', 'logs', 'logs_htpp.txt')
+def background_update_tles(cd_sat, cd_tle, cd_logs_htpp, update=False):
     if update == True:
-        process_urls()
+        process_urls(cd_sat, cd_tle, cd_logs_htpp)
     else:
         while True:
-            process_urls()
+            process_urls(cd_sat, cd_tle, cd_logs_htpp)
             sleep_time = 60 * 60 * random.uniform(24, 48)
             write_logs(cd_logs_htpp, f"Следующий htpp запрос будет в {unix_to_utc(time.time() + sleep_time)}\n\n")
             time.sleep(sleep_time)
             
 
-def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
-    cd = os.getcwd() 
-    cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-    cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
-    cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes):
     dt = datetime.now(tz=utc)
     last_time_unix_of_calculations = dt.timestamp()
 
@@ -48,11 +42,7 @@ def make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
     
     return last_time_unix_of_calculations
 
-def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
-    cd = os.getcwd() 
-    cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-    cd_logs_calc = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_calc, cd_logs_back):
     passes = json_to_py(cd_passes)
     next_time = time.time()   
     while True:
@@ -60,8 +50,8 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
         try:
             if time_now >= next_time:
                 time_start = time.time()
-                last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours)
-                next_time = find_next_time_for_updating_calculations(last_time_unix, passes)
+                last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes)
+                next_time = find_next_time_for_updating_calculations(last_time_unix, passes, cd_logs_back)
                 last_time_utc = unix_to_utc(last_time_unix)
                 next_time_utc = unix_to_utc(next_time)
                 text = str(next_time) + '\n'
@@ -80,17 +70,13 @@ def background_calculations(obs_lon, obs_lat, obs_alt, end_time_hours):
             time.sleep(600)
         time.sleep(30)
 
-def make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours):
-    cd = os.getcwd() 
-    cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-    cd_logs_calc = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+def make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_calc, cd_logs_back):
     passes = json_to_py(cd_passes)
     next_time = time.time()   
     try:
         time_start = time.time()
-        last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours)
-        next_time = find_next_time_for_updating_calculations(last_time_unix, passes)
+        last_time_unix = make_all_calculations(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes)
+        next_time = find_next_time_for_updating_calculations(last_time_unix, passes, cd_logs_back)
         last_time_utc = unix_to_utc(last_time_unix)
         next_time_utc = unix_to_utc(next_time)
         text = str(next_time) + '\n'

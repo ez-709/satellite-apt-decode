@@ -50,12 +50,7 @@ def get_not_deb_tle(url, active_names):
         print(f"Ошибка загрузки данных. Код ошибки: {response.status_code}\n")
         return response.status_code
 
-def process_urls():
-        cd = os.getcwd()
-        cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
-        cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-        cd_logs_htpp = os.path.join(cd, 'programm', 'data', 'logs', 'logs_htpp.txt')
-
+def process_urls(cd_sat, cd_tle, cd_logs_htpp):
         tles = []
         urls = create_urls_to_htpp(cd_sat)
         for i, url in enumerate(urls):

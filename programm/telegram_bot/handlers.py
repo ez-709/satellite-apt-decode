@@ -1,4 +1,3 @@
-import os
 import time
 from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery
@@ -11,19 +10,6 @@ from storage import json_to_py, find_satellites
 from tracking.utils import (find_next_passes_for_satellites, find_next_passes_for_one_satellite)
 from tracking.visualization import orbits_and_legend
 from background import make_all_calculations_ones
-
-cd = os.getcwd() 
-cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_processing = os.path.join(cd, 'programm', 'data', 'data_base', 'processing.json')
-cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
-cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
-cd_config = os.path.join(cd, 'programm', 'config.json')
-cd_decode = os.path.join(cd, 'programm', 'data_decode')
-cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
-cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
-cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
 router = Router()
 
@@ -55,7 +41,7 @@ async def back_handler(callback: CallbackQuery):
     await callback.answer()
 
 @router.callback_query(F.data.in_(["satellites_base", "about", 'orbits', 'passes', 'photos']))
-async def menu_handler(callback: CallbackQuery):
+async def menu_handler(callback: CallbackQuery, cd_sat: str):
     if callback.data == 'satellites_base':
         satellites = json_to_py(cd_sat)
         text = ""
@@ -110,7 +96,7 @@ filter_handlers = {
 }
 
 @router.callback_query(F.data.in_(list(filter_handlers['passes'].keys()) + list(filter_handlers['orbits'].keys())))
-async def handle_filters(callback: CallbackQuery):
+async def handle_filters(callback: CallbackQuery, cd_sat: str, cd_passes: str):
     filter_type = 'passes' if 'passes' in callback.data else 'orbits'
     config = filter_handlers[filter_type][callback.data]
     
@@ -139,10 +125,17 @@ freq_config = {
 }
 
 @router.callback_query(F.data.in_(list(freq_config['passes'].keys()) + list(freq_config['orbits'].keys())))
-async def freq_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def freq_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
 
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     frequency, keyboard = freq_config[handler_type][callback.data]
@@ -188,10 +181,17 @@ signal_config = {
 }
 
 @router.callback_query(F.data.in_(list(signal_config['passes'].keys()) + list(signal_config['orbits'].keys())))
-async def signal_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def signal_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
 
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     signal_type, keyboard = signal_config[handler_type][callback.data]
@@ -235,10 +235,17 @@ group_config = {
 }
 
 @router.callback_query(F.data.in_(list(group_config['passes'].keys()) + list(group_config['orbits'].keys())))
-async def group_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def group_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
 
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     group_name, keyboard = group_config[handler_type][callback.data]
@@ -292,10 +299,17 @@ satellite_config = {
 }
 
 @router.callback_query(F.data.in_(list(satellite_config['passes'].keys()) + list(satellite_config['orbits'].keys())))
-async def satellite_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def satellite_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
 
     handler_type = 'passes' if 'passes' in callback.data else 'orbits'
     satellite_name, keyboard = satellite_config[handler_type][callback.data]
@@ -327,10 +341,17 @@ async def satellite_handler(callback: CallbackQuery, step: int = None,
     await callback.answer()
 
 @router.callback_query(F.data.in_({"orbits_all_2h", "orbits_by_filter", "orbits_one_satellite"}))
-async def orbits_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def orbits_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
     
     if callback.data == 'orbits_all_2h':
         await callback.answer("Идет загрузка, подождите...")
@@ -362,15 +383,20 @@ async def orbits_handler(callback: CallbackQuery, step: int = None,
     await callback.answer()
 
 @router.callback_query(F.data.startswith('update_'))
-async def update_orbit_handler(callback: CallbackQuery, step: int = None,
-                              obs_lon: float = None, obs_lat: float = None):
-    
-    sats_coors, sats_tle, passes = get_cached_data()
+async def update_orbit_handler(
+    callback: CallbackQuery,
+    step: int = None,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_sat: str = None,
+    cd_passes: str = None,
+):
+    sats_coors, sats_tle, passes = get_cached_data(cd_tle, cd_coordinates, cd_passes)
     
     update_type = callback.data
-    
     unix_time_now = time.time()
-
     await callback.answer("Идет загрузка, подождите...")
 
     if update_type == 'update_orbit_all':
@@ -436,7 +462,6 @@ async def update_orbit_handler(callback: CallbackQuery, step: int = None,
     )
     
     await callback.message.delete()
-    
     await callback.message.answer_photo(photo=buffer, caption=text, reply_markup=keyboard)
     await callback.answer()
 
@@ -444,7 +469,6 @@ async def update_orbit_handler(callback: CallbackQuery, step: int = None,
 async def secret_menu_handler(message: Message):
     text = "Выберите действие:"
     keyboard = kb.secret_menu  
-    
     await message.delete()
     await message.answer(text, reply_markup=keyboard)
 
@@ -455,9 +479,21 @@ async def secret_menu_handler(message: Message):
     "check_files", 
     "rebot"
 }))
-
-async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = None, obs_lat: float = None, 
-                                   obs_alt: float = None, end_time_hours: int = None):
+async def handle_secret_menu_buttons(
+    callback: CallbackQuery,
+    obs_lon: float = None,
+    obs_lat: float = None,
+    obs_alt: float = None,
+    end_time_hours: int = None,
+    cd_sat: str = None,
+    cd_tle: str = None,
+    cd_coordinates: str = None,
+    cd_passes: str = None,
+    cd_logs_tech: str = None,
+    cd_logs_back: str = None,
+    cd_logs_htpp: str = None,
+    cd_logs_decode: str = None,
+):
     action = callback.data
     parse_mode = None
     keyboard = kb.back_to_secret_menu
@@ -477,12 +513,11 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
             text += '\n\nЛоги функций записи и декодинга спутников: \n'
             text += f.read()
 
-        
     elif action == "refresh_calculations":
         await callback.answer("Идет загрузка, подождите...")
         await callback.message.delete()
         text = "Вычисления обновлены"
-        make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours)
+        make_all_calculations_ones(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_tech, cd_logs_back)
 
     elif action == "send_http_request":
         await callback.answer("Идет загрузка, подождите...")
@@ -502,7 +537,6 @@ async def handle_secret_menu_buttons(callback: CallbackQuery, obs_lon: float = N
         text += f'В tles.json находится {len(tles)} спутников\n'
         text += f'В coordinates.json находится {len(coordinates)} спутников\n'
         text += f'В passes.json находится {len(passes)} спутников\n'
-    
     
     await callback.message.answer(text, parse_mode=parse_mode, reply_markup=keyboard)
     await callback.answer()

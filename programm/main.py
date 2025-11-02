@@ -28,6 +28,8 @@ cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
 cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
 cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
+cd_libs = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs')
+
 sats = json_to_py(cd_sat)
 names = [sat['name'] for sat in sats]
 
@@ -39,7 +41,7 @@ clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech, cd_logs_decode)
 obs_lon, obs_lat, obs_alt, time_zone, step, end_time_hours, token, venv_name = read_config(cd_config)
 cd_venv = os.path.join(cd, venv_name)
 
-add_rtl_sdr_libs_to_venv(cd, cd_venv) #будет ошибка, если файлы dll для rtl_sdr не былм доавлены в venv/Scripts предварительно
+add_rtl_sdr_libs_to_venv(cd, cd_venv, cd_libs) #будет ошибка, если файлы dll для rtl_sdr не былм доавлены в venv/Scripts предварительно
 
 from decode.decoding_procesing import recors_sats_from_passes
 
@@ -53,14 +55,14 @@ calculation_complete_event = None
 try:
     background_thread = threading.Thread(
         target=background_calculations, 
-        args=(obs_lon, obs_lat, obs_alt, end_time_hours),
+        args=(obs_lon, obs_lat, obs_alt, end_time_hours, cd_tle, cd_coordinates, cd_passes, cd_logs_tech, cd_logs_back),
         daemon=True
     )
     background_thread.start()
 
     background_tles_thread = threading.Thread(
         target=background_update_tles, 
-        args=(),
+        args=(cd_sat, cd_tle, cd_logs_htpp),
         daemon=True
     )
     background_tles_thread.start()
@@ -74,7 +76,11 @@ try:
 
     while True:
         try:
-            run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours)
+            run_telegram_bot(
+    token, obs_lon, obs_lat, obs_alt, step, end_time_hours,
+    cd_sat, cd_tle, cd_coordinates, cd_passes, cd_config, cd_decode,
+    cd_logs_htpp, cd_logs_tech, cd_logs_back, cd_logs_decode
+    )   
         except Exception as e:
             error_time = time.asctime(time.localtime(time.time()))
             tb = traceback.extract_tb(e.__traceback__)[-1]

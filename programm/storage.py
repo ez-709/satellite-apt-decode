@@ -194,19 +194,18 @@ def create_decode_folders_by_names(cd_decode, names):
 
 def make_path_to_decode_sat(cd_decode, name, wav = False, img = False):
     if wav == True:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'wav')
+        path = os.path.join(cd_decode, name, 'wav')
     if img == True:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'img')
+        path = os.path.join(cd_decode, name, 'img')
     else:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name)
+        path = os.path.join(cd_decode, name)
     return path 
 
-def add_rtl_sdr_libs_to_venv(cd, cd_venv):
-    src_dir = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs')
+def add_rtl_sdr_libs_to_venv(cd, cd_venv, cd_libs):
     dst_dir = os.path.join(cd_venv, 'Scripts')
 
-    librtlsdr_src = os.path.join(src_dir, 'librtlsdr.dll')
-    libusb_src = os.path.join(src_dir, 'libusb-1.0.dll')
+    librtlsdr_src = os.path.join(cd_libs, 'librtlsdr.dll')
+    libusb_src = os.path.join(cd_libs, 'libusb-1.0.dll')
 
     librtlsdr_dst = os.path.join(dst_dir, 'librtlsdr.dll')
     libusb_dst = os.path.join(dst_dir, 'libusb-1.0.dll')
