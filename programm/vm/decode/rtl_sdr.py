@@ -4,12 +4,12 @@ import wave
 import time
 import os
 
-from storage import write_logs
-from tracking.utils import unix_to_utc
+from common.storage import write_logs
+from common.utils import unix_to_utc
 
 def record_radio_wav(center_freq_hz, cd_record, record_time=15 * 60, gain='auto', bandwidth=2.048e6):
     cd = os.getcwd() 
-    cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
+    cd_logs_decode = os.path.join(cd, 'programm', 'data','logs', 'logs_decode.txt')
 
     sdr = RtlSdr()
     sdr.sample_rate = bandwidth 

@@ -1,12 +1,6 @@
 import time
-import os
 
-from storage import json_to_py
-
-cd = os.getcwd() 
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
-cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+from common.storage import json_to_py
 
 data_cache = {
     'coordinates': None,
@@ -16,7 +10,7 @@ data_cache = {
 }
 duration = 24 * 60 * 60  
 
-def get_cached_data():
+def get_cached_data(cd_tle, cd_coordinates, cd_passes):
     global data_cache
     
     if (time.time() - data_cache['last_update']) > duration or data_cache['coordinates'] is None:

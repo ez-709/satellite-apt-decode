@@ -3,7 +3,7 @@ import numpy as np
 import os
 import shutil
 
-from tracking.utils import unix_to_utc
+from common.utils import unix_to_utc
 
 def json_to_py(cd_json):
     '''Читает json с путем  'cd_json' и возвращает список словарей'''
@@ -128,7 +128,7 @@ def write_logs(cd_logs, text, update=True):
         with open(cd_logs, 'w', encoding='utf-8') as f:
             f.write(text)
     
-def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech):
+def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech, cd_logs_decode):
     with open(cd_logs_back, 'w') as f:
         pass 
     
@@ -137,7 +137,8 @@ def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech):
         
     with open(cd_logs_tech, 'w') as f:
         pass
-            
+    with open(cd_logs_decode, 'w') as f:
+        pass
     
 def read_config(cd_config, observer_longitude=True, observer_latitude=True, 
                 observer_altitude=True, time_zone = True, step = True,
@@ -193,24 +194,31 @@ def create_decode_folders_by_names(cd_decode, names):
 
 def make_path_to_decode_sat(cd_decode, name, wav = False, img = False):
     if wav == True:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'wav')
+        path = os.path.join(cd_decode, name, 'wav')
     if img == True:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name, 'img')
+        path = os.path.join(cd_decode, name, 'img')
     else:
-        path = os.path.join(cd_decode, 'programm', 'data', 'data_decode', name)
+        path = os.path.join(cd_decode, name)
     return path 
 
-def add_rtl_sdr_libs_to_venv(cd, cd_venv):
-    cd_librtlsdr = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs', 'librtlsdr.dll')
-    cd_libusb = os.path.join(cd, 'programm', 'decode', 'rlt_sdr_libs', 'libusb-1.0.dll')
-    cd_venv = os.path.join(cd_venv, 'Scripts')
-    if os.path.exists(os.path.join(cd_venv, 'librtlsdr.dll')):
-        return None
-    if os.path.exists(os.path.join(cd_venv, 'libusb-1.0.dll')):
-        return None
-    else:
-        shutil.copy(cd_librtlsdr, cd_venv)
-        shutil.copy(cd_libusb, cd_venv)
+def add_rtl_sdr_libs_to_venv(cd, cd_venv, cd_libs):
+    dst_dir = os.path.join(cd_venv, 'Scripts')
+
+    librtlsdr_src = os.path.join(cd_libs, 'librtlsdr.dll')
+    libusb_src = os.path.join(cd_libs, 'libusb-1.0.dll')
+
+    librtlsdr_dst = os.path.join(dst_dir, 'librtlsdr.dll')
+    libusb_dst = os.path.join(dst_dir, 'libusb-1.0.dll')
+
+    if not os.path.isfile(librtlsdr_src):
+        raise FileNotFoundError(f"Source file not found: {librtlsdr_src}")
+    if not os.path.isfile(libusb_src):
+        raise FileNotFoundError(f"Source file not found: {libusb_src}")
+
+    if not os.path.exists(librtlsdr_dst):
+        shutil.copy(librtlsdr_src, dst_dir)
+    if not os.path.exists(libusb_dst):
+        shutil.copy(libusb_src, dst_dir)
 
 def create_sat_record_sructure(cd_sat_record, names):
     try:

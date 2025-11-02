@@ -6,8 +6,8 @@ from skyfield.api import load
 from cartopy.feature.nightshade import Nightshade
 from aiogram.types import BufferedInputFile
 
-from .calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
-from .utils import binary_search, find_next_passes_for_satellites, unix_to_utc, filter_by_names
+from vm.tracking.calculation import calculate_now_position, calculate_radius_and_coordinates_of_circle
+from common.utils import binary_search, find_next_passes_for_satellites, unix_to_utc, filter_by_names
 
 def setup_map(time_now_utc):
     plt.figure(figsize=(12, 12))

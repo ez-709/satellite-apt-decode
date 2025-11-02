@@ -1,4 +1,3 @@
-import os
 from datetime import datetime, timezone, timedelta
 import time
 
@@ -181,14 +180,11 @@ def check_end_time_hours_correct(time_now_unix, end_time_hour, sats_coordinates)
     else:
         return True
     
-def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes):
-    from storage import write_logs
-    
+def find_next_time_for_updating_calculations(last_time_unix_of_calculations, passes, cd_logs_back):
+    from common.storage import write_logs
     next_time_unix = last_time_unix_of_calculations + 24 * 60 * 60
     min_gap = 122
     events = []
-    cd = os.getcwd()
-    cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
     
     for sat in passes:
         for point in sat['points']:

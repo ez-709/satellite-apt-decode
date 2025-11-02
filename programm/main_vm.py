@@ -4,40 +4,48 @@ import threading
 import time
 import traceback
 
-from storage import (json_to_py, read_config, add_rtl_sdr_libs_to_venv, 
+from common.storage import (json_to_py, read_config, add_rtl_sdr_libs_to_venv, 
                      clear_all_logs, create_decode_folders_by_names)
-from tracking.calculation import calculate_samples_from_hours
-from background import background_calculations, background_update_tles
-from telegram_bot.bot import run_telegram_bot
-from programm.pi.record import recors_sats_from_passes
+from vm.tracking.calculation import calculate_samples_from_hours
+from vm.background import background_calculations, background_update_tles
+from vm.telegram_bot.bot import run_telegram_bot
+
 
 ts = load.timescale()
 unix_time_now = ts.now().utc_datetime().timestamp()
 
 cd = os.getcwd() 
-cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
+cd_sat = os.path.join(cd, 'programm', 'vm', 'data', 'data_base', 'satellites.json')
 cd_config = os.path.join(cd, 'programm', 'config.json')
 
-cd_tle = os.path.join(cd, 'programm', 'data', 'data_base', 'tle.json')
-cd_coordinates = os.path.join(cd, 'programm', 'data', 'data_base', 'coordinates.json')
-cd_passes = os.path.join(cd, 'programm', 'data', 'data_base', 'passes.json')
+cd_tle = os.path.join(cd, 'programm','vm', 'data', 'data_base', 'tle.json')
+cd_coordinates = os.path.join(cd, 'programm','vm', 'data', 'data_base', 'coordinates.json')
+cd_passes = os.path.join(cd, 'programm','vm', 'data', 'data_base', 'passes.json')
+cd_sat_record = os.path.join(cd, 'programm','vm', 'data', 'data_base', 'sat_records.json')
 
-cd_decode = os.path.join(cd, 'programm', 'data_decode')
-cd_logs_htpp = os.path.join(cd, 'programm', 'data','logs', 'logs_htpp.txt')
-cd_logs_tech = os.path.join(cd, 'programm', 'data','logs', 'logs_tech.txt')
-cd_logs_back = os.path.join(cd, 'programm', 'data','logs', 'logs_back.txt')
+cd_decode = os.path.join(cd, 'programm','vm', 'data_decode')
+cd_logs_htpp = os.path.join(cd, 'programm','vm', 'data','logs', 'logs_htpp.txt')
+cd_logs_tech = os.path.join(cd, 'programm','vm', 'data','logs', 'logs_tech.txt')
+cd_logs_back = os.path.join(cd, 'programm','vm', 'data','logs', 'logs_back.txt')
+cd_logs_decode = os.path.join(cd, 'programm','vm', 'data','logs', 'logs_decode.txt')
+
+cd_libs = os.path.join(cd, 'programm','vm', 'decode', 'rlt_sdr_libs')
 
 sats = json_to_py(cd_sat)
 names = [sat['name'] for sat in sats]
 
 create_decode_folders_by_names(cd_decode, names)
 
-clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech)
+clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech, cd_logs_decode)
 
 
 obs_lon, obs_lat, obs_alt, time_zone, step, end_time_hours, token, venv_name = read_config(cd_config)
 cd_venv = os.path.join(cd, venv_name)
-add_rtl_sdr_libs_to_venv(cd, cd_venv)
+
+add_rtl_sdr_libs_to_venv(cd, cd_venv, cd_libs) #будет ошибка, если файлы dll для rtl_sdr не былм доавлены в venv/Scripts предварительно
+
+from vm.decode.decoding_procesing import recors_sats_from_passes
+
 samples, step = calculate_samples_from_hours(end_time_hours)
 tles = json_to_py(cd_tle)
 sats_coor = json_to_py(cd_coordinates)
@@ -48,31 +56,37 @@ calculation_complete_event = None
 try:
     background_thread = threading.Thread(
         target=background_calculations, 
-        args=(obs_lon, obs_lat, obs_alt, end_time_hours),
+        args=(obs_lon, obs_lat, obs_alt, end_time_hours, cd_sat, cd_tle, cd_coordinates, cd_passes, cd_logs_tech, cd_logs_back),
         daemon=True
     )
     background_thread.start()
 
     background_tles_thread = threading.Thread(
         target=background_update_tles, 
-        args=(),
-        daemon=True
-    )
-    backgorground_record_sats = threading.Thread(
-        target=recors_sats_from_passes,
-        args=(),
+        args=(cd_sat, cd_tle, cd_logs_htpp),
         daemon=True
     )
     background_tles_thread.start()
 
+    backgorground_record_sats = threading.Thread(
+        target=recors_sats_from_passes,
+        args=(cd_passes, cd_logs_tech, cd_logs_decode, cd_decode, cd_sat, cd_sat_record),
+        daemon=True
+    )
+    backgorground_record_sats.start()
+
     while True:
         try:
-            run_telegram_bot(token, obs_lon, obs_lat, obs_alt, step, end_time_hours)
+            run_telegram_bot(
+    token, obs_lon, obs_lat, obs_alt, step, end_time_hours,
+    cd_sat, cd_tle, cd_coordinates, cd_passes, cd_config, cd_decode,
+    cd_logs_htpp, cd_logs_tech, cd_logs_back, cd_logs_decode
+    )   
         except Exception as e:
             error_time = time.asctime(time.localtime(time.time()))
             tb = traceback.extract_tb(e.__traceback__)[-1]
             file_name = tb.filename.split('\\')[-1]
-            line_number = tb.lineno96
+            line_number = tb.lineno
             error_message = f'{error_time} - Ошибка в работе бота ({file_name}, строка {line_number}): {str(e)}\n'
             
             try:

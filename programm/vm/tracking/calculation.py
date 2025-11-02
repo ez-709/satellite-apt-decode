@@ -4,8 +4,8 @@ from skyfield.api import load, EarthSatellite, wgs84, utc
 from datetime import datetime, timedelta
 import time
 
-from .utils import julian_time_to_unix, seconds_to_minutes_and_seconds, minutes_and_seconds_to_seconds
-from storage import json_to_py
+from common.utils import julian_time_to_unix, seconds_to_minutes_and_seconds, minutes_and_seconds_to_seconds
+from common.storage import json_to_py
 
 def calculate_samples_from_hours(end_time_hours, step = 120): 
     '''
@@ -60,9 +60,7 @@ def calculate_orbit(sat_tle, end_time_hours, samples):
     return sat_coordinates
 
 #поправить чтобы все ключи создавались всегда
-def calculate_passes(sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10):
-    cd = os.getcwd() 
-    cd_sat = os.path.join(cd, 'programm', 'data', 'data_base', 'satellites.json')
+def calculate_passes(cd_sat, sat_tle, end_time_hours, obs_longitudes, obs_latitudes, obs_altitude, altitude_degrees=10):
     sats = json_to_py(cd_sat)
 
     ts = load.timescale()
