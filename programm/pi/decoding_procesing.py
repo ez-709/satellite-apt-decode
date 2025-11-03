@@ -1,8 +1,7 @@
 import os
 import time
 
-from vm.decode.rtl_sdr import record_radio_wav
-from vm.decode.decoder_apt import decoder_apt
+from pi.rtl_sdr import record_radio_wav
 from common.storage import json_to_py, make_decode_results_names, folder_name_by_sat_name, write_new_passes, write_logs
 from common.utils import sort_passes, unix_to_utc
 
@@ -21,8 +20,6 @@ def record_and_decode_satellite(name_of_satellite, duration, cd_decode, cd_sats,
                 frequency = 137 * 1e6
 
     record_radio_wav(frequency, cd_record_wav, duration, gain, bandwidth)
-
-    #decoder_apt(cd_record_wav, cd_record_img)
 
     write_new_passes(cd_sat_record, cd_record_wav, cd_record_img, name_of_satellite)
 

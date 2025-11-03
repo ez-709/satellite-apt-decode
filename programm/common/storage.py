@@ -128,18 +128,20 @@ def write_logs(cd_logs, text, update=True):
         with open(cd_logs, 'w', encoding='utf-8') as f:
             f.write(text)
     
-def clear_all_logs(cd_logs_back, cd_logs_htpp, cd_logs_tech, cd_logs_decode):
-    with open(cd_logs_back, 'w') as f:
-        pass 
-    
-    with open(cd_logs_htpp, 'w') as f:
-        pass
+def clear_all_logs(cd_logs_back = None, cd_logs_htpp = None, cd_logs_tech = None, cd_logs_decode = None, cd_logs_pi = None, pi_mode = False):
+    if pi_mode == False:
+        with open(cd_logs_back, 'w') as f:
+            pass 
+        with open(cd_logs_htpp, 'w') as f:
+            pass
+        with open(cd_logs_tech, 'w') as f:
+            pass
+        with open(cd_logs_decode, 'w') as f:
+            pass
+    else:
+        with open(cd_logs_pi, 'w') as f:
+            pass
         
-    with open(cd_logs_tech, 'w') as f:
-        pass
-    with open(cd_logs_decode, 'w') as f:
-        pass
-    
 def read_config(cd_config, observer_longitude=True, observer_latitude=True, 
                 observer_altitude=True, time_zone = True, step = True,
                 end_time_hours=True, telegram_bot_token=True,

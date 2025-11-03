@@ -1,5 +1,1 @@
-Успешно получено 5 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE в 2025-11-02 23:20:07 +3 UTC
-Успешно получено 2 TLE из https://celestrak.org/NORAD/elements/gp.php?NAME=Meteor&FORMAT=TLE в 2025-11-02 23:20:09 +3 UTC
-Обновлено TLE для 7 спутников в 2025-11-02 23:20:09 +3 UTC
-Следующий htpp запрос будет в 2025-11-04 10:12:40 +3 UTC
-
+Неожиданная ошибка для https://celestrak.org/NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE: HTTPSConnectionPool(host='celestrak.org', port=443): Max retries exceeded with url: /NORAD/elements/gp.php?NAME=NOAA&FORMAT=TLE (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001F3C5444990>: Failed to resolve 'celestrak.org' ([Errno 11001] getaddrinfo failed)")) в 2025-11-03 06:59:59 +3 UTC
