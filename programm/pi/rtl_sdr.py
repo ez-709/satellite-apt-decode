@@ -46,7 +46,7 @@ def record_radio_wav(center_freq_hz, cd_record, record_time=15 * 60, gain='auto'
                     if max_val > 0:
                         apt_block_normalized = apt_block_resampled / max_val
                     else:
-                        apt_block_normalized = apt_block_resampled # Е
+                        apt_block_normalized = apt_block_resampled 
                         
                     apt_block_int16 = np.int16(apt_block_normalized * 32767)
 

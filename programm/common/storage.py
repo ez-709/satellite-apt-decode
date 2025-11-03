@@ -241,18 +241,28 @@ def create_sat_record_sructure(cd_sat_record, names):
         json.dump(file, f, indent=4)
 
 
-def write_new_passes(cd_sat_record, cd_wav, cd_img, name):
+def write_new_passes(cd_sat_record, cd_wav, cd_img, name, pi_mode = False):
     file = json_to_py(cd_sat_record)
-    for i, sat in enumerate(file):
-        if name == sat['name']:   
-            wav = sat['cd_wav']
-            img = sat['cd_img']
-            wav.append(cd_wav)
-            img.append(cd_img)
-            file[i] = {'name':name, 'cd_wav':wav, 'cd_img':img}
-            with open(cd_sat_record, 'w') as f:
-                json.dump(file, f, indent=4)
-            break
+    if pi_mode == False:
+        for i, sat in enumerate(file):
+            if name == sat['name']:   
+                wav = sat['cd_wav']
+                img = sat['cd_img']
+                wav.append(cd_wav)
+                img.append(cd_img)
+                file[i] = {'name':name, 'cd_wav':wav, 'cd_img':img}
+                with open(cd_sat_record, 'w') as f:
+                    json.dump(file, f, indent=4)
+                break
+        else:
+            for i, sat in enumerate(file):
+                if name == sat['name']:   
+                    wav = sat['cd_wav']
+                    wav.append(cd_wav)
+                    file[i] = {'name':name, 'cd_wav':wav}
+                    with open(cd_sat_record, 'w') as f:
+                        json.dump(file, f, indent=4)
+                    break
         
 
 
