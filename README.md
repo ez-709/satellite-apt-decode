@@ -17,6 +17,6 @@ The system is designed to run automatically. When a satellite passes overhead, i
 The next development steps include:
 - Refactoring the system architecture so that the Telegram bot and image decoding run on a virtual machine, while the Raspberry Pi handles only signal reception. This improves stability and makes updates easier.
 - Ensuring reliable and continuous signal recording during satellite passes, with automatic restarts if errors occur.
-- All main configuration settings — including the Telegram bot token, satellite list, file paths, and pass thresholds — are stored in a single configuration file: config.json.
+- All main configuration settings - including the Telegram bot token, satellite list, file paths, and pass thresholds — are stored in a single configuration file: config.json.
 
 The goal is to build a simple, reliable, and fully autonomous system that requires no daily intervention. It is suitable for learning about satellite communications, signal processing, and embedded systems, and can serve as a strong project for those interested in aerospace or robotics.
