@@ -1,3 +1,6 @@
-Mon Nov  3 06:59:59 2025 - Ошибка в работе бота (aiohttp.py, строка 184): HTTP Client says - ClientConnectorDNSError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
 Ветка 5: после всех пролётов, перенос не нужен
-вычисления заняли 3 секунд 
+вычисления заняли 7 секунд 
+Wed Nov 12 12:02:43 2025 - Ошибка в работе бота (router.py, строка 211): Router is already attached to <Dispatcher '0x1b63ff00990'>
+Wed Nov 12 12:02:53 2025 - Ошибка в работе бота (router.py, строка 211): Router is already attached to <Dispatcher '0x1b63ff00990'>
+Wed Nov 12 12:03:03 2025 - Ошибка в работе бота (router.py, строка 211): Router is already attached to <Dispatcher '0x1b63ff00990'>
+Wed Nov 12 12:03:13 2025 - Ошибка в работе бота (router.py, строка 211): Router is already attached to <Dispatcher '0x1b63ff00990'>

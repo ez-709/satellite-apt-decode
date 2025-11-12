@@ -8,7 +8,7 @@ data_cache = {
     'tle': None,
     'last_update': 0
 }
-duration = 24 * 60 * 60  
+duration = 4 * 60 * 60  
 
 def get_cached_data(cd_tle, cd_coordinates, cd_passes):
     global data_cache
