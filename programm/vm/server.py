@@ -1,38 +1,30 @@
 from flask import Flask, request
-import os
-from datetime import datetime
-import argparse
 
-def create_vm_server(upload_dir, port=5000):
-    os.makedirs(upload_dir, exist_ok=True)
-
-    app = Flask(__name__)
-    UPLOAD_DIR = upload_dir
-
-    @app.route('/upload_wav', methods=['POST'])
-    def receive_wav():
-        if 'file' not in request.files:
-            return "No file", 400
-        file = request.files['file']
-        if file.filename == '':
-            return "Empty filename", 400
+class VM_server:
+    def __init__(self, host='0.0.0.0', port=5000):
+        self.host = host
+        self.port = port
+        self.app = Flask(__name__)
+        self.setup_routes()
         
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"wav_{timestamp}.wav"
-        file_path = os.path.join(UPLOAD_DIR, filename)
-        
-        file.save(file_path)
-        print(f"Saved file: {file_path}")  # For debugging
-        return "OK", 20
-    
-    print(f"Server starting on port {port}, saving to: {UPLOAD_DIR}")
-    app.run(host='0.0.0.0', port=port)
+    def setup_routes(self):
+        @self.app.route('/ping', methods=['GET'])
+        def ping():
+            return "pong", 200
 
+        @self.app.route('/receive_file', methods=['POST'])
+        def receive_file():
+            if 'file' not in request.files:
+                return "No file", 400
+            
+            file = request.files['file']
+            if file.filename == '':
+                return "Empty filename", 400
+            
+            file.save(file.filename)
+            print(f"Получен файл: {file.filename}")
+            return "File received", 200
 
-parser = argparse.ArgumentParser(description='VM HTTP Server for receiving .wav files')
-parser.add_argument('D:', required=True, help='Directory to save received files')
-parser.add_argument('--port', type=int, default=5000, help='Port to run server on (default: 5000)')
-
-args = parser.parse_args()
-
-create_vm_server(upload_dir=args.upload_dir, port=args.port)
+    def run(self):
+        print(f"Сервер запущен на {self.host}:{self.port}")
+        self.app.run(host=self.host, port=self.port, debug=False)
